@@ -64,7 +64,7 @@ const LandingPage = () => {
               <Button asChild size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 gap-2 rounded-xl px-8 shadow-glow font-semibold">
                 <Link to="/dashboard">{t("landing.exploreDashboard")} <ArrowRight className="h-4 w-4" /></Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-primary-foreground/15 text-primary-foreground hover:bg-primary-foreground/5 rounded-xl px-8">
+              <Button asChild variant="outline" size="lg" className="border-secondary text-secondary-foreground bg-secondary/15 hover:bg-secondary/30 rounded-xl px-8 font-semibold shadow-glow backdrop-blur-sm transition-all duration-300 hover:scale-[1.03]">
                 <Link to="/schemes">{t("landing.viewAllSchemes")}</Link>
               </Button>
             </div>
