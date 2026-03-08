@@ -40,15 +40,21 @@ const SchemeApplyButton = ({
       {/* Fallback Portal Button - always shown as alternative */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
         {!primaryLink && (
-          <Button
-            asChild
-            size="lg"
-            className="w-full sm:w-auto gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white"
-          >
-            <a href={fallback.url} target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="h-4 w-4" /> Apply via {fallback.name}
-            </a>
-          </Button>
+          <div className="space-y-2">
+            <p className="text-xs text-muted-foreground flex items-center gap-1">
+              <AlertTriangle className="h-3 w-3 text-amber-500" />
+              Direct application link unavailable. Use the official portal below:
+            </p>
+            <Button
+              asChild
+              size="lg"
+              className="w-full sm:w-auto gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white"
+            >
+              <a href={fallback.url} target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="h-4 w-4" /> Open Official Portal - {fallback.name}
+              </a>
+            </Button>
+          </div>
         )}
         {primaryLink && (
           <Button
