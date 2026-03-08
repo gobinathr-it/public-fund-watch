@@ -10,16 +10,24 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 const AshokaChakra = ({ className = "" }: { className?: string }) => (
   <svg viewBox="0 0 200 200" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="100" cy="100" r="90" stroke="currentColor" strokeWidth="1.5" opacity="0.3" />
-    <circle cx="100" cy="100" r="20" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
-    <circle cx="100" cy="100" r="50" stroke="currentColor" strokeWidth="0.5" opacity="0.15" />
+    <circle cx="100" cy="100" r="95" stroke="currentColor" strokeWidth="0.6" opacity="0.3" />
+    <circle cx="100" cy="100" r="90" stroke="currentColor" strokeWidth="1.8" opacity="0.5" />
+    <circle cx="100" cy="100" r="20" stroke="currentColor" strokeWidth="1.8" opacity="0.6" />
+    <circle cx="100" cy="100" r="50" stroke="currentColor" strokeWidth="0.6" opacity="0.25" />
+    <circle cx="100" cy="100" r="70" stroke="currentColor" strokeWidth="0.4" opacity="0.15" />
     {Array.from({ length: 24 }).map((_, i) => {
       const angle = (i * 15 * Math.PI) / 180;
       const x1 = 100 + 22 * Math.cos(angle);
       const y1 = 100 + 22 * Math.sin(angle);
       const x2 = 100 + 88 * Math.cos(angle);
       const y2 = 100 + 88 * Math.sin(angle);
-      return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="0.8" opacity="0.2" />;
+      return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="1" opacity="0.35" />;
+    })}
+    {Array.from({ length: 24 }).map((_, i) => {
+      const angle = (i * 15 * Math.PI) / 180;
+      const cx = 100 + 90 * Math.cos(angle);
+      const cy = 100 + 90 * Math.sin(angle);
+      return <circle key={`d${i}`} cx={cx} cy={cy} r="1.8" fill="currentColor" opacity="0.4" />;
     })}
   </svg>
 );
@@ -67,9 +75,11 @@ const LandingPage = () => {
 
       {/* Hero */}
       <section className="relative overflow-hidden py-28 md:py-36 bg-hero">
-        {/* Ashoka Chakra watermark - slow spinning */}
+        {/* Ashoka Chakra watermark - spinning with glow */}
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <AshokaChakra className="h-[500px] w-[500px] md:h-[650px] md:w-[650px] text-white/[0.05] animate-slow-spin" />
+          {/* Radial glow behind chakra */}
+          <div className="absolute h-[550px] w-[550px] md:h-[700px] md:w-[700px] rounded-full bg-ashoka-blue/[0.06] blur-[80px]" />
+          <AshokaChakra className="h-[550px] w-[550px] md:h-[700px] md:w-[700px] text-white/[0.10] animate-[slow-spin_28s_linear_infinite]" />
         </div>
 
         {/* Decorative orbs */}
