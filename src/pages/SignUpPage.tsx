@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { Eye, EyeOff } from "lucide-react";
 import logo from "@/assets/logo.png";
-import ashokaEmblem from "@/assets/ashoka-emblem.png";
+import ashokaEmblem from "@/assets/india-emblem.png";
 
 const signUpSchema = z.object({
   fullName: z.string().trim().min(2, "Full name is required").max(100),
