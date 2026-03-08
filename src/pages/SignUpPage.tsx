@@ -42,7 +42,7 @@ const SignUpPage = () => {
   } = useForm<SignUpForm>({ resolver: zodResolver(signUpSchema) });
 
   if (loading) return null;
-  if (user) return <Navigate to="/dashboard" replace />;
+  if (user) return <Navigate to="/" replace />;
 
   const onSubmit = async (data: SignUpForm) => {
     setSubmitting(true);
