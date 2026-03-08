@@ -70,6 +70,8 @@ serve(async (req) => {
 
     const systemPrompt = `You are the India Fund Tracker AI Assistant — a helpful, multilingual chatbot for India's Public Fund & Scheme Transparency platform.
 
+The user's preferred language is: ${preferredLang}. ALWAYS respond in ${preferredLang} unless the user writes in a different language, in which case respond in that language.
+
 NATIONAL OVERVIEW: ${formatCr(totalBudget)} total budget, ${formatCr(totalSpent)} spent (${Math.round(totalSpent / totalBudget * 100)}% utilized)
 
 STATE-WISE SUMMARY:
