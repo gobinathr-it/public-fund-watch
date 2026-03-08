@@ -91,7 +91,7 @@ const SignUpPage = () => {
         src={ashokaEmblem}
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] md:w-[400px] lg:w-[480px] opacity-[0.06] select-none"
+        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] md:w-[450px] lg:w-[520px] opacity-[0.08] select-none"
       />
       <div className="relative z-10 w-full max-w-md space-y-6">
         <div className="text-center">
