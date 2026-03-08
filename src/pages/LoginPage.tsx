@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { Eye, EyeOff, User, Building2, ShieldCheck } from "lucide-react";
 import logo from "@/assets/logo.png";
-import ashokaEmblem from "@/assets/ashoka-emblem.png";
+
 
 const DEPARTMENTS = [
   "Agriculture",

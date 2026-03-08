@@ -90,7 +90,7 @@ const SignUpPage = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-white/[0.03] via-transparent to-white/[0.03]" />
       {/* Layer 2: Ashoka Chakra watermark */}
       <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none">
-        <svg viewBox="0 0 200 200" className="h-[280px] w-[280px] md:h-[420px] md:w-[420px] lg:h-[520px] lg:w-[520px] text-ashoka-blue/[0.06]" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 200 200" className="h-[280px] w-[280px] md:h-[420px] md:w-[420px] lg:h-[520px] lg:w-[520px] text-white/[0.06]" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="100" cy="100" r="90" stroke="currentColor" strokeWidth="1.5" />
           <circle cx="100" cy="100" r="20" stroke="currentColor" strokeWidth="1.5" />
           <circle cx="100" cy="100" r="50" stroke="currentColor" strokeWidth="0.5" opacity="0.6" />
