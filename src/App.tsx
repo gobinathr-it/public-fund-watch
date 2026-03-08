@@ -15,6 +15,8 @@ import SchemeDetailPage from "./pages/SchemeDetailPage";
 import ScholarshipsPage from "./pages/ScholarshipsPage";
 import ScholarshipDetailPage from "./pages/ScholarshipDetailPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
+import GovtSchemesPage from "./pages/GovtSchemesPage";
+import GovtSchemeDetailPage from "./pages/GovtSchemeDetailPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
