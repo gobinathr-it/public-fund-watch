@@ -167,7 +167,7 @@ const LoginPage = () => {
         </div>
 
         {/* Role Tabs */}
-        <div className="flex rounded-xl border border-border bg-muted/50 p-1 gap-1">
+        <div className="flex rounded-xl border border-white/10 bg-white/[0.06] backdrop-blur-sm p-1 gap-1">
           {ROLE_TABS.map(({ key, label, icon: Icon }) => (
             <button
               key={key}
