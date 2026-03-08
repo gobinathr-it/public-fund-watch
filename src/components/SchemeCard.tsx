@@ -2,23 +2,24 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Building2 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Scheme, formatCurrency } from "@/lib/mockData";
+import { formatCurrency, type Scheme } from "@/hooks/useSchemes";
 import { motion } from "framer-motion";
 
 const statusColors: Record<string, string> = {
   Active: "bg-success/10 text-success border-success/20",
   Completed: "bg-info/10 text-info border-info/20",
   Upcoming: "bg-warning/10 text-warning border-warning/20",
+  Suspended: "bg-destructive/10 text-destructive border-destructive/20",
 };
 
 const SchemeCard = ({ scheme, index }: { scheme: Scheme; index: number }) => {
-  const progress = Math.round((scheme.spent / scheme.totalBudget) * 100);
+  const progress = scheme.total_budget > 0 ? Math.round((scheme.spent / scheme.total_budget) * 100) : 0;
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: index * 0.08 }}
+      transition={{ duration: 0.4, delay: index * 0.06 }}
     >
       <Link
         to={`/schemes/${scheme.id}`}
@@ -26,7 +27,7 @@ const SchemeCard = ({ scheme, index }: { scheme: Scheme; index: number }) => {
       >
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 space-y-3">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <Badge variant="outline" className={statusColors[scheme.status]}>
                 {scheme.status}
               </Badge>
@@ -37,6 +38,9 @@ const SchemeCard = ({ scheme, index }: { scheme: Scheme; index: number }) => {
             <h3 className="font-display text-lg font-semibold text-foreground group-hover:text-secondary transition-colors">
               {scheme.name}
             </h3>
+            {scheme.name_ta && (
+              <p className="text-sm text-muted-foreground">{scheme.name_ta}</p>
+            )}
             <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
               <Building2 className="h-3.5 w-3.5" />
               {scheme.department}
@@ -50,9 +54,7 @@ const SchemeCard = ({ scheme, index }: { scheme: Scheme; index: number }) => {
             <span className="text-muted-foreground">
               Spent: <span className="font-semibold text-foreground">{formatCurrency(scheme.spent)}</span>
             </span>
-            <span className="text-muted-foreground">
-              of {formatCurrency(scheme.totalBudget)}
-            </span>
+            <span className="text-muted-foreground">of {formatCurrency(scheme.total_budget)}</span>
           </div>
           <Progress value={progress} className="h-2" />
           <p className="text-right text-xs font-medium text-muted-foreground">{progress}% utilized</p>
