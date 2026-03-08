@@ -109,9 +109,9 @@ const LandingPage = () => {
           </motion.div>
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((f, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }} className="group rounded-2xl border border-border/60 bg-card p-6 shadow-card hover-lift">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary/8 transition-colors duration-300 group-hover:bg-secondary/15">
-                  <f.icon className="h-5 w-5 text-secondary" />
+              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }} className="group rounded-2xl border border-border/60 bg-card p-6 shadow-card hover-lift ripple-effect">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary/8 transition-all duration-300 group-hover:bg-secondary/15 group-hover:scale-110 group-hover:shadow-glow">
+                  <f.icon className="h-5 w-5 text-secondary transition-transform duration-300 group-hover:scale-110" />
                 </div>
                 <h3 className="mt-5 font-display text-base font-semibold">{f.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
