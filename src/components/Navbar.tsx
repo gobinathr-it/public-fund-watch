@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import StateSelector from "@/components/StateSelector";
 
 const navItems = [
   { label: "Home", path: "/" },
@@ -23,9 +24,9 @@ const Navbar = () => {
           </div>
           <div className="flex flex-col">
             <span className="font-display text-base font-bold leading-tight text-foreground">
-              TN Fund Tracker
+              India Fund Tracker
             </span>
-            <span className="text-[10px] leading-tight text-muted-foreground">Tamil Nadu Transparency</span>
+            <span className="text-[10px] leading-tight text-muted-foreground">Public Transparency Platform</span>
           </div>
         </Link>
 
@@ -46,8 +47,8 @@ const Navbar = () => {
         </nav>
 
         <div className="hidden md:flex items-center gap-2">
+          <StateSelector />
           <Button variant="outline" size="sm">Report Issue</Button>
-          <Button size="sm" className="bg-secondary text-secondary-foreground hover:bg-secondary/90">Sign In</Button>
         </div>
 
         <button onClick={() => setOpen(!open)} className="md:hidden p-2">
@@ -57,6 +58,9 @@ const Navbar = () => {
 
       {open && (
         <div className="border-t bg-card p-4 md:hidden">
+          <div className="mb-3">
+            <StateSelector className="w-full" />
+          </div>
           <nav className="flex flex-col gap-1">
             {navItems.map((item) => (
               <Link
@@ -71,9 +75,8 @@ const Navbar = () => {
               </Link>
             ))}
           </nav>
-          <div className="mt-3 flex gap-2">
-            <Button variant="outline" size="sm" className="flex-1">Report Issue</Button>
-            <Button size="sm" className="flex-1 bg-secondary text-secondary-foreground">Sign In</Button>
+          <div className="mt-3">
+            <Button variant="outline" size="sm" className="w-full">Report Issue</Button>
           </div>
         </div>
       )}

@@ -1,25 +1,30 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, BarChart3, Eye, FileCheck, Shield, TrendingUp, Users } from "lucide-react";
+import { ArrowRight, BarChart3, Eye, FileCheck, Shield, TrendingUp, Users, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import StatCard from "@/components/StatCard";
 import SchemeCard from "@/components/SchemeCard";
 import { useSchemes, formatCurrency } from "@/hooks/useSchemes";
+import { useStateContext } from "@/contexts/StateContext";
+import StateSelector from "@/components/StateSelector";
 
 const features = [
-  { icon: Eye, title: "Real-Time Tracking", desc: "Monitor every rupee from allocation to expenditure with live updates." },
+  { icon: Eye, title: "Real-Time Tracking", desc: "Monitor every rupee from allocation to expenditure with live updates across all states." },
   { icon: FileCheck, title: "Proof Verification", desc: "Every expense backed by invoices, photos, and geo-location data." },
-  { icon: BarChart3, title: "Data Analytics", desc: "Interactive charts showing spending patterns across departments." },
+  { icon: BarChart3, title: "Data Analytics", desc: "Interactive charts showing spending patterns across departments and states." },
   { icon: Shield, title: "AI Fraud Detection", desc: "Machine learning flags unusual spending patterns automatically." },
-  { icon: Users, title: "Citizen Reporting", desc: "Report fake projects, corruption, or quality issues directly." },
+  { icon: MapPin, title: "Pan-India Coverage", desc: "Track schemes across all 28 states, 8 UTs, and Central Government." },
   { icon: TrendingUp, title: "Transparency Score", desc: "Every project gets a public accountability score." },
 ];
 
 const LandingPage = () => {
-  const { data: schemes = [] } = useSchemes();
+  const { selectedState } = useStateContext();
+  const { data: schemes = [] } = useSchemes(undefined, selectedState);
   const totalBudget = schemes.reduce((s, sc) => s + sc.total_budget, 0);
   const totalSpent = schemes.reduce((s, sc) => s + sc.spent, 0);
   const utilization = totalBudget > 0 ? Math.round((totalSpent / totalBudget) * 100) : 0;
+  const stateCount = new Set(schemes.map(s => s.state).filter(Boolean)).size;
+  const stateLabel = selectedState === "All India" ? "All India" : selectedState;
 
   return (
     <div className="flex flex-col">
@@ -30,15 +35,15 @@ const LandingPage = () => {
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="mx-auto max-w-3xl text-center">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-secondary/30 bg-secondary/10 px-4 py-1.5 text-sm">
               <Shield className="h-4 w-4 text-primary-foreground" />
-              <span className="text-primary-foreground/80">தமிழ்நாடு அரசு வெளிப்படைத்தன்மை தளம்</span>
+              <span className="text-primary-foreground/80">India's Public Fund Transparency Platform</span>
             </div>
             <h1 className="font-display text-4xl font-extrabold leading-tight text-primary-foreground md:text-5xl lg:text-6xl">
-              Tamil Nadu{" "}
+              India{" "}
               <span className="text-secondary">Fund & Scheme</span>{" "}
               Tracker
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-base text-primary-foreground/70 md:text-lg">
-              Real-time visibility into how {formatCurrency(totalBudget)} in Tamil Nadu government welfare schemes is allocated, spent, and verified.
+              Real-time visibility into how {formatCurrency(totalBudget)} in government welfare schemes is allocated, spent, and verified across India.
             </p>
             <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
               <Button asChild size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 gap-2">
@@ -56,10 +61,10 @@ const LandingPage = () => {
       <section className="-mt-8 relative z-10">
         <div className="container">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <StatCard icon={BarChart3} title="Total Budget" value={formatCurrency(totalBudget)} subtitle="Tamil Nadu Schemes" variant="info" />
+            <StatCard icon={BarChart3} title="Total Budget" value={formatCurrency(totalBudget)} subtitle={stateLabel} variant="info" />
             <StatCard icon={TrendingUp} title="Total Spent" value={formatCurrency(totalSpent)} subtitle={`${utilization}% utilized`} variant="success" />
-            <StatCard icon={FileCheck} title="Active Schemes" value={String(schemes.filter(s => s.status === "Active").length)} subtitle="Across 38 districts" variant="default" />
-            <StatCard icon={Users} title="Beneficiaries" value="4.8 Cr" trend={{ value: "15% this quarter", positive: true }} variant="warning" />
+            <StatCard icon={FileCheck} title="Active Schemes" value={String(schemes.filter(s => s.status === "Active").length)} subtitle={`${stateLabel}`} variant="default" />
+            <StatCard icon={Users} title="States Covered" value={String(stateCount)} subtitle="States & UTs" variant="warning" />
           </div>
         </div>
       </section>
@@ -69,7 +74,7 @@ const LandingPage = () => {
         <div className="container">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="font-display text-3xl font-bold">How Transparency Works</h2>
-            <p className="mt-3 text-muted-foreground">Every feature designed to ensure public accountability.</p>
+            <p className="mt-3 text-muted-foreground">Every feature designed to ensure public accountability across India.</p>
           </div>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((f, i) => (
@@ -91,14 +96,16 @@ const LandingPage = () => {
           <div className="flex items-end justify-between">
             <div>
               <h2 className="font-display text-2xl font-bold">Active Schemes</h2>
-              <p className="mt-1 text-sm text-muted-foreground">Latest Tamil Nadu government welfare programmes</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {selectedState === "All India" ? "Government welfare programmes across India" : `Schemes in ${selectedState}`}
+              </p>
             </div>
             <Button asChild variant="ghost" className="hidden sm:inline-flex gap-1 text-secondary">
               <Link to="/schemes">View all <ArrowRight className="h-4 w-4" /></Link>
             </Button>
           </div>
           <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {schemes.slice(0, 3).map((s, i) => (
+            {schemes.slice(0, 6).map((s, i) => (
               <SchemeCard key={s.id} scheme={s} index={i} />
             ))}
           </div>

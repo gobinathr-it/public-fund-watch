@@ -1,22 +1,71 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import type { Tables } from "@/integrations/supabase/types";
 
-export type Scheme = Tables<"schemes">;
-export type DistrictAllocation = Tables<"district_allocations">;
-export type Expense = Tables<"expenses">;
+export type Scheme = {
+  id: string;
+  name: string;
+  name_ta: string | null;
+  department: string;
+  description: string;
+  description_ta: string | null;
+  total_budget: number;
+  spent: number;
+  category: string;
+  status: string;
+  state: string | null;
+  government_type: string;
+  target_beneficiaries: string | null;
+  announcement_date: string | null;
+  start_date: string | null;
+  end_date: string | null;
+  created_at: string;
+  updated_at: string;
+};
 
-export function useSchemes(category?: string) {
+export type DistrictAllocation = {
+  id: string;
+  scheme_id: string;
+  district: string;
+  allocated: number;
+  spent: number;
+  state: string | null;
+  created_at: string;
+};
+
+export type Expense = {
+  id: string;
+  scheme_id: string;
+  title: string;
+  amount: number;
+  expense_date: string;
+  district: string;
+  department: string;
+  description: string | null;
+  category: string;
+  status: string;
+  has_proof: boolean;
+  proof_url: string | null;
+  geo_lat: number | null;
+  geo_lng: number | null;
+  state: string | null;
+  created_at: string;
+};
+
+export function useSchemes(category?: string, state?: string) {
   return useQuery({
-    queryKey: ["schemes", category],
+    queryKey: ["schemes", category, state],
     queryFn: async () => {
       let q = supabase.from("schemes").select("*").order("total_budget", { ascending: false });
       if (category && category !== "All") {
         q = q.eq("category", category as any);
       }
+      if (state && state !== "All India") {
+        // Show state-specific + central schemes for that state
+        q = q.or(`state.eq.${state},state.eq.All India`);
+      }
       const { data, error } = await q;
       if (error) throw error;
-      return data as Scheme[];
+      return (data || []) as unknown as Scheme[];
     },
   });
 }
@@ -28,7 +77,7 @@ export function useScheme(id: string | undefined) {
       if (!id) return null;
       const { data, error } = await supabase.from("schemes").select("*").eq("id", id).single();
       if (error) throw error;
-      return data as Scheme;
+      return data as unknown as Scheme;
     },
     enabled: !!id,
   });
@@ -45,7 +94,7 @@ export function useDistrictAllocations(schemeId: string | undefined) {
         .eq("scheme_id", schemeId)
         .order("allocated", { ascending: false });
       if (error) throw error;
-      return data as DistrictAllocation[];
+      return (data || []) as unknown as DistrictAllocation[];
     },
     enabled: !!schemeId,
   });
@@ -61,18 +110,22 @@ export function useExpenses(schemeId?: string) {
       }
       const { data, error } = await q;
       if (error) throw error;
-      return data as Expense[];
+      return (data || []) as unknown as Expense[];
     },
   });
 }
 
-export function useAllDistrictAllocations() {
+export function useAllDistrictAllocations(state?: string) {
   return useQuery({
-    queryKey: ["all_district_allocations"],
+    queryKey: ["all_district_allocations", state],
     queryFn: async () => {
-      const { data, error } = await supabase.from("district_allocations").select("*");
+      let q = supabase.from("district_allocations").select("*");
+      if (state && state !== "All India") {
+        q = q.eq("state", state);
+      }
+      const { data, error } = await q;
       if (error) throw error;
-      return data as DistrictAllocation[];
+      return (data || []) as unknown as DistrictAllocation[];
     },
   });
 }

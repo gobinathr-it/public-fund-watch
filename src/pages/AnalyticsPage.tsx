@@ -1,7 +1,8 @@
-import { BarChart3, TrendingUp, Building2, PieChart as PieIcon } from "lucide-react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from "recharts";
+import { BarChart3, TrendingUp, Building2, PieChart as PieIcon, MapPin } from "lucide-react";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import StatCard from "@/components/StatCard";
 import { useSchemes, useAllDistrictAllocations, formatCurrency } from "@/hooks/useSchemes";
+import { useStateContext } from "@/contexts/StateContext";
 import { motion } from "framer-motion";
 import { useMemo } from "react";
 
@@ -12,20 +13,20 @@ const COLORS = [
 ];
 
 const AnalyticsPage = () => {
-  const { data: schemes = [] } = useSchemes();
-  const { data: allocations = [] } = useAllDistrictAllocations();
+  const { selectedState } = useStateContext();
+  const { data: schemes = [] } = useSchemes(undefined, selectedState);
+  const { data: allocations = [] } = useAllDistrictAllocations(selectedState);
 
   const totalBudget = schemes.reduce((s, sc) => s + sc.total_budget, 0);
   const totalSpent = schemes.reduce((s, sc) => s + sc.spent, 0);
   const utilization = totalBudget > 0 ? Math.round((totalSpent / totalBudget) * 100) : 0;
+  const stateCount = new Set(schemes.map(s => s.state).filter(Boolean)).size;
 
   const categoryData = useMemo(() => {
     const map: Record<string, number> = {};
     schemes.forEach(s => { map[s.category] = (map[s.category] || 0) + s.total_budget; });
     return Object.entries(map).map(([name, value], i) => ({
-      name,
-      value: Math.round(value / totalBudget * 100),
-      fill: COLORS[i % COLORS.length],
+      name, value: totalBudget > 0 ? Math.round(value / totalBudget * 100) : 0, fill: COLORS[i % COLORS.length],
     }));
   }, [schemes, totalBudget]);
 
@@ -41,9 +42,27 @@ const AnalyticsPage = () => {
       fullName: name,
       allocated: Math.round(v.allocated / 10000000),
       spent: Math.round(v.spent / 10000000),
-      utilization: Math.round(v.spent / v.allocated * 100),
+      utilization: v.allocated > 0 ? Math.round(v.spent / v.allocated * 100) : 0,
     })).sort((a, b) => b.allocated - a.allocated);
   }, [schemes]);
+
+  // State-wise data for All India
+  const stateSpending = useMemo(() => {
+    if (selectedState !== "All India") return [];
+    const map: Record<string, { allocated: number; spent: number }> = {};
+    schemes.forEach(s => {
+      const st = s.state || "Unknown";
+      if (!map[st]) map[st] = { allocated: 0, spent: 0 };
+      map[st].allocated += s.total_budget;
+      map[st].spent += s.spent;
+    });
+    return Object.entries(map).map(([name, v]) => ({
+      name: name.length > 18 ? name.slice(0, 15) + "..." : name,
+      fullName: name,
+      allocated: Math.round(v.allocated / 10000000),
+      spent: Math.round(v.spent / 10000000),
+    })).sort((a, b) => b.allocated - a.allocated);
+  }, [schemes, selectedState]);
 
   const districtData = useMemo(() => {
     const map: Record<string, { allocated: number; spent: number }> = {};
@@ -57,19 +76,21 @@ const AnalyticsPage = () => {
       .sort((a, b) => b.allocated - a.allocated);
   }, [allocations]);
 
+  const stateLabel = selectedState === "All India" ? "All India" : selectedState;
+
   return (
     <div className="py-6 md:py-8">
       <div className="container space-y-8">
         <div>
           <h1 className="font-display text-2xl font-bold md:text-3xl">Analytics</h1>
-          <p className="mt-1 text-sm text-muted-foreground">In-depth analysis of Tamil Nadu public fund utilization</p>
+          <p className="mt-1 text-sm text-muted-foreground">In-depth analysis of {stateLabel} public fund utilization</p>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <StatCard icon={BarChart3} title="Avg. Utilization" value={`${utilization}%`} variant="success" />
           <StatCard icon={TrendingUp} title="Total Schemes" value={String(schemes.length)} variant="info" />
           <StatCard icon={Building2} title="Departments" value={String(new Set(schemes.map(s => s.department)).size)} variant="default" />
-          <StatCard icon={PieIcon} title="Districts Covered" value={String(new Set(allocations.map(a => a.district)).size)} variant="warning" />
+          <StatCard icon={MapPin} title={selectedState === "All India" ? "States Covered" : "Districts"} value={selectedState === "All India" ? String(stateCount) : String(new Set(allocations.map(a => a.district)).size)} variant="warning" />
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
@@ -88,12 +109,14 @@ const AnalyticsPage = () => {
             </div>
           </motion.div>
 
-          {/* District comparison */}
+          {/* State or District comparison */}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="rounded-lg border bg-card p-5 shadow-card">
-            <h3 className="font-display text-base font-semibold">District-wise Comparison</h3>
+            <h3 className="font-display text-base font-semibold">
+              {selectedState === "All India" ? "State-wise Comparison" : "District-wise Comparison"}
+            </h3>
             <div className="mt-4 h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={districtData}>
+                <BarChart data={selectedState === "All India" ? stateSpending : districtData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(214,20%,90%)" />
                   <XAxis dataKey="name" tick={{ fontSize: 10 }} angle={-30} textAnchor="end" height={70} />
                   <YAxis tick={{ fontSize: 11 }} />
