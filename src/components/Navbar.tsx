@@ -36,14 +36,14 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-md">
       {/* Green accent line */}
       <div className="tricolor-bar" />
-      <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2.5 group">
-          <img src={logo} alt="India Fund & Scheme Tracker" className="h-9 w-9 transition-transform duration-200 group-hover:scale-105" />
-          <div className="flex flex-col">
-            <span className="font-display text-sm font-bold leading-tight text-foreground tracking-tight">
+      <div className="container flex h-[68px] items-center justify-between">
+        <Link to="/" className="flex items-center gap-3 group min-w-[220px] lg:min-w-[260px] shrink-0">
+          <img src={logo} alt="India Fund & Scheme Tracker" className="h-10 w-10 shrink-0 transition-transform duration-200 group-hover:scale-105" />
+          <div className="flex flex-col justify-center">
+            <span className="font-display text-sm font-bold leading-tight text-foreground tracking-tight whitespace-nowrap">
               India Fund & Scheme Tracker
             </span>
-            <span className="text-[9px] font-medium uppercase tracking-widest text-muted-foreground">Public Transparency</span>
+            <span className="text-[9px] font-medium uppercase tracking-widest text-muted-foreground leading-tight">Public Transparency</span>
           </div>
         </Link>
 
