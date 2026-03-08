@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Search, GraduationCap, Filter, ArrowRight, MapPin, Users, IndianRupee } from "lucide-react";
+import { Search, GraduationCap, Filter, ArrowRight, MapPin, Users, IndianRupee, ExternalLink } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
