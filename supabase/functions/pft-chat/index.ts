@@ -87,6 +87,21 @@ serve(async (req) => {
   - ID: ${sc.id}`;
     }).join("\n\n");
 
+    // Build government schemes context
+    const govtSchemeContext = govtSchemes.map((gs: any) => {
+      return `**${gs.name}**
+  - State: ${gs.state} | Type: ${gs.government_type} | Category: ${gs.category}
+  - Department: ${gs.department}
+  - Benefit: ${gs.benefit_amount}${gs.coverage_amount ? ` | Coverage: ${gs.coverage_amount}` : ""}${gs.premium ? ` | Premium: ${gs.premium}` : ""}
+  - Target: ${gs.target_beneficiaries || "N/A"}
+  - Eligibility: ${gs.eligibility_criteria}
+  - Gender: ${gs.gender_eligibility} | Age: ${gs.age_min || "N/A"}-${gs.age_max || "N/A"}
+  - Income Limit: ${gs.income_limit ? `₹${(gs.income_limit / 100000).toFixed(1)} Lakh` : "No limit"}
+  - Documents: ${(gs.required_documents || []).join(", ")}
+  - How to Apply: ${gs.application_process || "N/A"}
+  - ID: ${gs.id}`;
+    }).join("\n\n");
+
     const systemPrompt = `You are the India Fund Tracker AI Assistant — a helpful, multilingual chatbot for India's Public Fund & Scheme Transparency platform.
 
 The user's preferred language is: ${preferredLang}. ALWAYS respond in ${preferredLang} unless the user writes in a different language, in which case respond in that language.
