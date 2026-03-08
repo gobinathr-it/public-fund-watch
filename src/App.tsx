@@ -15,6 +15,8 @@ import SchemeDetailPage from "./pages/SchemeDetailPage";
 import ScholarshipsPage from "./pages/ScholarshipsPage";
 import ScholarshipDetailPage from "./pages/ScholarshipDetailPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
+import GovtSchemesPage from "./pages/GovtSchemesPage";
+import GovtSchemeDetailPage from "./pages/GovtSchemeDetailPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -37,6 +39,8 @@ const App = () => (
                   <Route path="/schemes/:id" element={<SchemeDetailPage />} />
                   <Route path="/scholarships" element={<ScholarshipsPage />} />
                   <Route path="/scholarships/:id" element={<ScholarshipDetailPage />} />
+                  <Route path="/govt-schemes" element={<GovtSchemesPage />} />
+                  <Route path="/govt-schemes/:id" element={<GovtSchemeDetailPage />} />
                   <Route path="/analytics" element={<AnalyticsPage />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>

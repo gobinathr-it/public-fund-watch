@@ -117,6 +117,87 @@ export type Database = {
           },
         ]
       }
+      government_schemes: {
+        Row: {
+          age_max: number | null
+          age_min: number | null
+          application_link: string | null
+          application_process: string | null
+          benefit_amount: string
+          category: Database["public"]["Enums"]["govt_scheme_category"]
+          coverage_amount: string | null
+          created_at: string
+          department: string
+          description: string
+          eligibility_criteria: string
+          end_date: string | null
+          gender_eligibility: Database["public"]["Enums"]["gender_eligibility"]
+          government_type: Database["public"]["Enums"]["government_type"]
+          id: string
+          income_limit: number | null
+          name: string
+          premium: string | null
+          required_documents: string[]
+          start_date: string | null
+          state: string
+          status: Database["public"]["Enums"]["scheme_status"]
+          target_beneficiaries: string | null
+          updated_at: string
+        }
+        Insert: {
+          age_max?: number | null
+          age_min?: number | null
+          application_link?: string | null
+          application_process?: string | null
+          benefit_amount: string
+          category: Database["public"]["Enums"]["govt_scheme_category"]
+          coverage_amount?: string | null
+          created_at?: string
+          department: string
+          description: string
+          eligibility_criteria: string
+          end_date?: string | null
+          gender_eligibility?: Database["public"]["Enums"]["gender_eligibility"]
+          government_type?: Database["public"]["Enums"]["government_type"]
+          id?: string
+          income_limit?: number | null
+          name: string
+          premium?: string | null
+          required_documents?: string[]
+          start_date?: string | null
+          state?: string
+          status?: Database["public"]["Enums"]["scheme_status"]
+          target_beneficiaries?: string | null
+          updated_at?: string
+        }
+        Update: {
+          age_max?: number | null
+          age_min?: number | null
+          application_link?: string | null
+          application_process?: string | null
+          benefit_amount?: string
+          category?: Database["public"]["Enums"]["govt_scheme_category"]
+          coverage_amount?: string | null
+          created_at?: string
+          department?: string
+          description?: string
+          eligibility_criteria?: string
+          end_date?: string | null
+          gender_eligibility?: Database["public"]["Enums"]["gender_eligibility"]
+          government_type?: Database["public"]["Enums"]["government_type"]
+          id?: string
+          income_limit?: number | null
+          name?: string
+          premium?: string | null
+          required_documents?: string[]
+          start_date?: string | null
+          state?: string
+          status?: Database["public"]["Enums"]["scheme_status"]
+          target_beneficiaries?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       schemes: {
         Row: {
           announcement_date: string | null
@@ -276,6 +357,17 @@ export type Database = {
       expense_status: "Verified" | "Pending" | "Flagged" | "Rejected"
       gender_eligibility: "Boys" | "Girls" | "Both"
       government_type: "Central" | "State"
+      govt_scheme_category:
+        | "Medical & Health"
+        | "Insurance"
+        | "Welfare Board"
+        | "Disability"
+        | "Senior Citizen"
+        | "Women Welfare"
+        | "Agriculture"
+        | "Housing"
+        | "Employment"
+        | "Social Justice"
       scheme_category:
         | "Education"
         | "Healthcare"
@@ -434,6 +526,18 @@ export const Constants = {
       expense_status: ["Verified", "Pending", "Flagged", "Rejected"],
       gender_eligibility: ["Boys", "Girls", "Both"],
       government_type: ["Central", "State"],
+      govt_scheme_category: [
+        "Medical & Health",
+        "Insurance",
+        "Welfare Board",
+        "Disability",
+        "Senior Citizen",
+        "Women Welfare",
+        "Agriculture",
+        "Housing",
+        "Employment",
+        "Social Justice",
+      ],
       scheme_category: [
         "Education",
         "Healthcare",

@@ -26,17 +26,19 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const [schemesRes, expensesRes, allocationsRes, scholarshipsRes] = await Promise.all([
+    const [schemesRes, expensesRes, allocationsRes, scholarshipsRes, govtSchemesRes] = await Promise.all([
       supabase.from("schemes").select("*").order("total_budget", { ascending: false }),
       supabase.from("expenses").select("*").order("expense_date", { ascending: false }).limit(50),
       supabase.from("district_allocations").select("*"),
       supabase.from("scholarships").select("*").order("name"),
+      supabase.from("government_schemes").select("*").order("name"),
     ]);
 
     const schemes = schemesRes.data || [];
     const expenses = expensesRes.data || [];
     const allocations = allocationsRes.data || [];
     const scholarships = scholarshipsRes.data || [];
+    const govtSchemes = govtSchemesRes.data || [];
 
     const formatCr = (amt: number) => `₹${(amt / 10000000).toFixed(0)} Cr`;
     const totalBudget = schemes.reduce((s: number, sc: any) => s + sc.total_budget, 0);
@@ -85,6 +87,21 @@ serve(async (req) => {
   - ID: ${sc.id}`;
     }).join("\n\n");
 
+    // Build government schemes context
+    const govtSchemeContext = govtSchemes.map((gs: any) => {
+      return `**${gs.name}**
+  - State: ${gs.state} | Type: ${gs.government_type} | Category: ${gs.category}
+  - Department: ${gs.department}
+  - Benefit: ${gs.benefit_amount}${gs.coverage_amount ? ` | Coverage: ${gs.coverage_amount}` : ""}${gs.premium ? ` | Premium: ${gs.premium}` : ""}
+  - Target: ${gs.target_beneficiaries || "N/A"}
+  - Eligibility: ${gs.eligibility_criteria}
+  - Gender: ${gs.gender_eligibility} | Age: ${gs.age_min || "N/A"}-${gs.age_max || "N/A"}
+  - Income Limit: ${gs.income_limit ? `₹${(gs.income_limit / 100000).toFixed(1)} Lakh` : "No limit"}
+  - Documents: ${(gs.required_documents || []).join(", ")}
+  - How to Apply: ${gs.application_process || "N/A"}
+  - ID: ${gs.id}`;
+    }).join("\n\n");
+
     const systemPrompt = `You are the India Fund Tracker AI Assistant — a helpful, multilingual chatbot for India's Public Fund & Scheme Transparency platform.
 
 The user's preferred language is: ${preferredLang}. ALWAYS respond in ${preferredLang} unless the user writes in a different language, in which case respond in that language.
@@ -100,16 +117,21 @@ ${schemeContext}
 ALL SCHOLARSHIPS (${scholarships.length} total):
 ${scholarshipContext}
 
+ALL GOVERNMENT WELFARE SCHEMES (${govtSchemes.length} total - Medical, Insurance, Welfare Board, Disability, Senior Citizen, Women Welfare, Agriculture):
+${govtSchemeContext}
+
 Your role:
-- Help citizens understand government schemes AND scholarships across ALL Indian states and Central Government
+- Help citizens understand government schemes, scholarships, AND welfare programs across ALL Indian states and Central Government
 - Answer accurately using ONLY the data above
-- When asked about a specific state, filter and show only relevant schemes/scholarships
+- When asked about a specific state, filter and show only relevant schemes/scholarships/welfare programs
 - When asked about scholarships, provide eligibility details, benefit amounts, required documents, and application process
+- When asked about medical, insurance, welfare, disability, senior citizen, or women schemes, use the government welfare schemes data
 - Your default response language is ${preferredLang}. If the user writes in another language, respond in that language instead.
 - Use ₹ currency and Indian formatting (Crore, Lakh)
 - Use markdown: tables, bold, bullet points
-- When referencing a scheme, include navigation link: [View Details](/schemes/{scheme_id})
+- When referencing a fund scheme, include navigation link: [View Details](/schemes/{scheme_id})
 - When referencing a scholarship, include navigation link: [View Details](/scholarships/{scholarship_id})
+- When referencing a government welfare scheme, include navigation link: [View Details](/govt-schemes/{scheme_id})
 - Clearly distinguish between Central Government and State Government schemes/scholarships
 - Suggest follow-up questions
 - If asked about data not available, say so honestly`;
