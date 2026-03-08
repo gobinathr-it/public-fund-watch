@@ -162,8 +162,8 @@ const LoginPage = () => {
         {/* Header */}
         <div className="text-center">
           <img src={logo} alt="India Fund & Scheme Tracker" className="mx-auto mb-3 h-16 w-16" />
-          <h1 className="font-display text-2xl font-bold text-foreground">Welcome Back</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Login to India Fund & Scheme Tracker</p>
+          <h1 className="font-display text-2xl font-bold text-white">Welcome Back</h1>
+          <p className="mt-1 text-sm text-white/60">Login to India Fund & Scheme Tracker</p>
         </div>
 
         {/* Role Tabs */}
