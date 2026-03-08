@@ -51,7 +51,8 @@ const LandingPage = () => {
             </motion.div>
             <h1 className="font-display text-4xl font-extrabold leading-[1.1] md:text-5xl lg:text-6xl">
               <span className="text-foreground">{t("landing.title1")}</span>{" "}
-              <span className="text-foreground">{t("landing.title2")}</span>{" "}
+              <span className="text-foreground">{t("landing.title2").split("&")[0]}&</span>{" "}
+              <span className="text-white">{t("landing.title2").split("&")[1]}</span>{" "}
               <span className="text-white">{t("landing.title3")}</span>
             </h1>
             <p className="mx-auto mt-6 max-w-xl text-base text-white/60 md:text-lg leading-relaxed">
