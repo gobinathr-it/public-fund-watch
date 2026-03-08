@@ -204,7 +204,7 @@ const LoginPage = () => {
 
         {/* Government Authority Form */}
         {role === "government" && (
-          <form onSubmit={govForm.handleSubmit(onGovSubmit)} className="space-y-4 rounded-2xl border border-border bg-card/95 backdrop-blur-sm p-6 shadow-lg">
+          <form onSubmit={govForm.handleSubmit(onGovSubmit)} className="space-y-4 rounded-2xl border border-white/10 p-6 shadow-2xl backdrop-blur-xl" style={{ background: "rgba(0,0,0,0.35)" }}>
             <div>
               <Label htmlFor="gov-email">Government Email ID</Label>
               <Input id="gov-email" type="email" placeholder="name@gov.in" {...govForm.register("email")} />
