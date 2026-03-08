@@ -176,7 +176,7 @@ const LoginPage = () => {
               className={`flex-1 flex items-center justify-center gap-1.5 rounded-lg px-2 py-2.5 text-xs font-medium transition-all ${
                 role === key
                   ? "bg-primary text-primary-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground hover:bg-background/60"
+                  : "text-white/50 hover:text-white hover:bg-white/10"
               }`}
             >
               <Icon className="h-3.5 w-3.5" />
