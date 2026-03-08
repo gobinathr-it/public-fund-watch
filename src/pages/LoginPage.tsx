@@ -102,25 +102,28 @@ const LoginPage = () => {
     }
   };
 
+  const glassInputClass = "flex h-10 w-full rounded-md border border-white/15 bg-white/[0.08] px-3 py-2 text-sm text-white placeholder:text-white/40 ring-offset-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50";
+
   const PasswordField = ({ id, registerProps, error }: { id: string; registerProps: any; error?: string }) => (
     <div>
-      <Label htmlFor={id}>Password</Label>
+      <Label htmlFor={id} className="text-white/80">Password</Label>
       <div className="relative">
         <Input
           id={id}
           type={showPassword ? "text" : "password"}
           placeholder="Enter your password"
+          className={glassInputClass}
           {...registerProps}
         />
         <button
           type="button"
           onClick={() => setShowPassword(!showPassword)}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white"
         >
           {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
         </button>
       </div>
-      {error && <p className="mt-1 text-xs text-destructive">{error}</p>}
+      {error && <p className="mt-1 text-xs text-red-400">{error}</p>}
     </div>
   );
 
