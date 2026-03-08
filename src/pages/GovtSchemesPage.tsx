@@ -108,7 +108,6 @@ const SchemeCard = ({ s, index }: { s: GovernmentScheme; index: number }) => (
           </div>
         </CardContent>
       </Card>
-    </Link>
   </motion.div>
 );
 
