@@ -129,6 +129,10 @@ export default {
           "0%, 100%": { transform: "translateY(0px)" },
           "50%": { transform: "translateY(-6px)" },
         },
+        "slow-spin": {
+          from: { transform: "rotate(0deg)" },
+          to: { transform: "rotate(360deg)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -139,6 +143,7 @@ export default {
         "shimmer": "shimmer 2s infinite linear",
         "pulse-gentle": "pulse-gentle 2s infinite ease-in-out",
         "float": "float 3s infinite ease-in-out",
+        "slow-spin": "slow-spin 50s linear infinite",
       },
     },
   },
