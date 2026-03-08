@@ -10,12 +10,14 @@ type Msg = { role: "user" | "assistant"; content: string };
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/pft-chat`;
 
 const suggestions = [
-  "Show latest government schemes",
-  "Which district received the highest funding?",
-  "How much of the ₹10,000 crore road fund has been used?",
-  "Show spending details for healthcare in Karnataka",
-  "कृषि योजना में कितना खर्च हुआ?",
-  "சென்னையில் கல்வி திட்டத்தின் விவரங்கள்",
+  "Show all Tamil Nadu government schemes",
+  "Which scheme has the highest budget?",
+  "சென்னையில் எந்த திட்டங்கள் நடைபெறுகின்றன?",
+  "Show spending details of breakfast scheme",
+  "கலைஞர் மகளிர் உரிமைத் திட்டம் பற்றி சொல்லுங்கள்",
+  "Which district received the most funds?",
+  "Show healthcare schemes",
+  "How much has been spent on housing?",
 ];
 
 async function streamChat({
@@ -44,10 +46,7 @@ async function streamChat({
     return;
   }
 
-  if (!resp.body) {
-    onError("No response body");
-    return;
-  }
+  if (!resp.body) { onError("No response body"); return; }
 
   const reader = resp.body.getReader();
   const decoder = new TextDecoder();
@@ -65,10 +64,7 @@ async function streamChat({
       if (line.endsWith("\r")) line = line.slice(0, -1);
       if (!line.startsWith("data: ")) continue;
       const json = line.slice(6).trim();
-      if (json === "[DONE]") {
-        onDone();
-        return;
-      }
+      if (json === "[DONE]") { onDone(); return; }
       try {
         const parsed = JSON.parse(json);
         const content = parsed.choices?.[0]?.delta?.content;
@@ -104,14 +100,14 @@ const Chatbot = () => {
   const send = useCallback(async (text: string) => {
     if (!text.trim() || loading) return;
     const userMsg: Msg = { role: "user", content: text.trim() };
-    setMessages((prev) => [...prev, userMsg]);
+    setMessages(prev => [...prev, userMsg]);
     setInput("");
     setLoading(true);
 
     let assistantSoFar = "";
     const upsert = (chunk: string) => {
       assistantSoFar += chunk;
-      setMessages((prev) => {
+      setMessages(prev => {
         const last = prev[prev.length - 1];
         if (last?.role === "assistant") {
           return prev.map((m, i) => (i === prev.length - 1 ? { ...m, content: assistantSoFar } : m));
@@ -125,10 +121,7 @@ const Chatbot = () => {
         messages: [...messages, userMsg],
         onDelta: upsert,
         onDone: () => setLoading(false),
-        onError: (err) => {
-          upsert(`⚠️ ${err}`);
-          setLoading(false);
-        },
+        onError: (err) => { upsert(`⚠️ ${err}`); setLoading(false); },
       });
     } catch {
       upsert("⚠️ Connection error. Please try again.");
@@ -137,21 +130,13 @@ const Chatbot = () => {
   }, [messages, loading]);
 
   const toggleVoice = () => {
-    if (listening) {
-      recognitionRef.current?.stop();
-      setListening(false);
-      return;
-    }
+    if (listening) { recognitionRef.current?.stop(); setListening(false); return; }
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SR) return;
     const recognition = new SR();
     recognition.continuous = false;
     recognition.interimResults = false;
-    recognition.onresult = (e: any) => {
-      const transcript = e.results[0][0].transcript;
-      setInput(transcript);
-      setListening(false);
-    };
+    recognition.onresult = (e: any) => { setInput(e.results[0][0].transcript); setListening(false); };
     recognition.onerror = () => setListening(false);
     recognition.onend = () => setListening(false);
     recognitionRef.current = recognition;
@@ -159,29 +144,20 @@ const Chatbot = () => {
     setListening(true);
   };
 
-  // Handle link clicks inside markdown
   const handleLinkClick = (e: React.MouseEvent) => {
-    const target = e.target as HTMLElement;
-    const anchor = target.closest("a");
+    const anchor = (e.target as HTMLElement).closest("a");
     if (anchor) {
       const href = anchor.getAttribute("href");
-      if (href?.startsWith("/")) {
-        e.preventDefault();
-        navigate(href);
-        setOpen(false);
-      }
+      if (href?.startsWith("/")) { e.preventDefault(); navigate(href); setOpen(false); }
     }
   };
 
   return (
     <>
-      {/* Floating button */}
       <AnimatePresence>
         {!open && (
           <motion.button
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            exit={{ scale: 0 }}
+            initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}
             onClick={() => setOpen(true)}
             className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-secondary shadow-elevated text-secondary-foreground hover:scale-105 transition-transform"
           >
@@ -190,7 +166,6 @@ const Chatbot = () => {
         )}
       </AnimatePresence>
 
-      {/* Chat panel */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -200,32 +175,29 @@ const Chatbot = () => {
             transition={{ duration: 0.2 }}
             className="fixed bottom-6 right-6 z-50 flex h-[520px] w-[380px] max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-xl border bg-card shadow-elevated"
           >
-            {/* Header */}
             <div className="flex items-center justify-between bg-primary px-4 py-3">
               <div className="flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-secondary" />
-                <span className="font-display text-sm font-semibold text-primary-foreground">PFT AI Assistant</span>
+                <div>
+                  <span className="font-display text-sm font-semibold text-primary-foreground">TN Fund Tracker AI</span>
+                  <p className="text-[10px] text-primary-foreground/60">Multilingual • Live Data</p>
+                </div>
               </div>
               <button onClick={() => setOpen(false)} className="text-primary-foreground/70 hover:text-primary-foreground">
                 <X className="h-5 w-5" />
               </button>
             </div>
 
-            {/* Messages */}
             <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-3" onClick={handleLinkClick}>
               {messages.length === 0 && (
                 <div className="space-y-3">
                   <p className="text-sm text-muted-foreground">
-                    👋 Welcome! I can help you explore government fund data. Ask me anything in any language.
+                    👋 வணக்கம்! I can help you explore Tamil Nadu government schemes and spending data. Ask in any language.
                   </p>
                   <div className="space-y-2">
-                    <p className="text-xs font-medium text-muted-foreground">Try asking:</p>
-                    {suggestions.map((s) => (
-                      <button
-                        key={s}
-                        onClick={() => send(s)}
-                        className="block w-full rounded-md border bg-muted/50 px-3 py-2 text-left text-xs text-foreground hover:bg-muted transition-colors"
-                      >
+                    <p className="text-xs font-medium text-muted-foreground">Quick questions:</p>
+                    {suggestions.map(s => (
+                      <button key={s} onClick={() => send(s)} className="block w-full rounded-md border bg-muted/50 px-3 py-2 text-left text-xs text-foreground hover:bg-muted transition-colors">
                         {s}
                       </button>
                     ))}
@@ -234,20 +206,12 @@ const Chatbot = () => {
               )}
               {messages.map((m, i) => (
                 <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
-                  <div
-                    className={`max-w-[85%] rounded-lg px-3 py-2 text-sm ${
-                      m.role === "user"
-                        ? "bg-secondary text-secondary-foreground"
-                        : "bg-muted text-foreground"
-                    }`}
-                  >
+                  <div className={`max-w-[85%] rounded-lg px-3 py-2 text-sm ${m.role === "user" ? "bg-secondary text-secondary-foreground" : "bg-muted text-foreground"}`}>
                     {m.role === "assistant" ? (
                       <div className="prose prose-sm max-w-none [&_a]:text-secondary [&_a]:underline [&_table]:text-xs [&_p]:mb-1 [&_ul]:mb-1 [&_li]:mb-0">
                         <ReactMarkdown>{m.content}</ReactMarkdown>
                       </div>
-                    ) : (
-                      m.content
-                    )}
+                    ) : m.content}
                   </div>
                 </div>
               ))}
@@ -264,33 +228,12 @@ const Chatbot = () => {
               )}
             </div>
 
-            {/* Input */}
             <div className="border-t p-3">
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  send(input);
-                }}
-                className="flex items-center gap-2"
-              >
-                <button
-                  type="button"
-                  onClick={toggleVoice}
-                  className={`flex-shrink-0 rounded-md p-2 transition-colors ${
-                    listening ? "bg-destructive/10 text-destructive" : "text-muted-foreground hover:bg-muted"
-                  }`}
-                  title="Voice input"
-                >
+              <form onSubmit={(e) => { e.preventDefault(); send(input); }} className="flex items-center gap-2">
+                <button type="button" onClick={toggleVoice} className={`flex-shrink-0 rounded-md p-2 transition-colors ${listening ? "bg-destructive/10 text-destructive" : "text-muted-foreground hover:bg-muted"}`} title="Voice input">
                   {listening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
                 </button>
-                <input
-                  ref={inputRef}
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Ask about any scheme..."
-                  className="flex-1 rounded-md border bg-background px-3 py-2 text-sm outline-none focus:ring-1 focus:ring-secondary"
-                  disabled={loading}
-                />
+                <input ref={inputRef} value={input} onChange={e => setInput(e.target.value)} placeholder="Ask about any scheme..." className="flex-1 rounded-md border bg-background px-3 py-2 text-sm outline-none focus:ring-1 focus:ring-secondary" disabled={loading} />
                 <Button type="submit" size="sm" disabled={!input.trim() || loading} className="bg-secondary text-secondary-foreground hover:bg-secondary/90 h-9 w-9 p-0">
                   <Send className="h-4 w-4" />
                 </Button>
