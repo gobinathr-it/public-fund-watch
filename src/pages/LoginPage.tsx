@@ -188,7 +188,7 @@ const LoginPage = () => {
 
         {/* Public User Form */}
         {role === "public" && (
-          <form onSubmit={publicForm.handleSubmit(onPublicSubmit)} className="space-y-4 rounded-2xl border border-border bg-card/95 backdrop-blur-sm p-6 shadow-lg">
+          <form onSubmit={publicForm.handleSubmit(onPublicSubmit)} className="space-y-4 rounded-2xl border border-white/10 p-6 shadow-2xl backdrop-blur-xl" style={{ background: "rgba(0,0,0,0.35)" }}>
             <div>
               <Label htmlFor="pub-mobile">Mobile Number</Label>
               <Input id="pub-mobile" placeholder="10-digit mobile number" {...publicForm.register("mobileNumber")} />
