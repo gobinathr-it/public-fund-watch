@@ -42,7 +42,7 @@ const SignUpPage = () => {
   } = useForm<SignUpForm>({ resolver: zodResolver(signUpSchema) });
 
   if (loading) return null;
-  if (user) return <Navigate to="/dashboard" replace />;
+  if (user) return <Navigate to="/" replace />;
 
   const onSubmit = async (data: SignUpForm) => {
     setSubmitting(true);
@@ -67,7 +67,7 @@ const SignUpPage = () => {
       }
 
       toast({ title: "Account created!", description: "Welcome to the platform." });
-      navigate("/dashboard");
+      navigate("/");
     } catch (err: any) {
       toast({ title: "Sign up failed", description: err.message, variant: "destructive" });
     } finally {
