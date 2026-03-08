@@ -248,7 +248,7 @@ const LoginPage = () => {
           </form>
         )}
 
-        <p className="text-center text-sm text-muted-foreground">
+        <p className="text-center text-sm text-white/60">
           Don't have an account?{" "}
           <Link to="/signup" className="font-medium text-primary hover:underline">Sign Up</Link>
         </p>
