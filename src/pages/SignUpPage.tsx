@@ -85,12 +85,12 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center px-4 py-10 overflow-hidden" style={{ background: "linear-gradient(145deg, hsl(145 65% 28%) 0%, hsl(145 50% 18%) 25%, hsl(210 15% 10%) 55%, hsl(0 0% 5%) 100%)" }}>
+    <div className="relative flex min-h-screen items-center justify-center px-4 py-10 overflow-hidden bg-hero">
       {/* Layer 1: subtle overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-white/[0.03] via-transparent to-white/[0.03]" />
-      {/* Layer 2: Ashoka Chakra watermark */}
+      {/* Layer 2: Ashoka Chakra watermark - slow spinning */}
       <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none">
-        <svg viewBox="0 0 200 200" className="h-[280px] w-[280px] md:h-[420px] md:w-[420px] lg:h-[520px] lg:w-[520px] text-white/[0.06]" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 200 200" className="h-[320px] w-[320px] md:h-[480px] md:w-[480px] lg:h-[580px] lg:w-[580px] text-white/[0.05] animate-slow-spin" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="100" cy="100" r="90" stroke="currentColor" strokeWidth="1.5" />
           <circle cx="100" cy="100" r="20" stroke="currentColor" strokeWidth="1.5" />
           <circle cx="100" cy="100" r="50" stroke="currentColor" strokeWidth="0.5" opacity="0.6" />

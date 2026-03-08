@@ -5,7 +5,12 @@ const Footer = () => {
   const { t } = useLanguage();
   return (
     <footer className="border-t border-border/40 bg-background">
-      <div className="tricolor-bar" />
+      {/* Tricolor accent */}
+      <div className="flex h-[3px]">
+        <div className="flex-1 bg-saffron" />
+        <div className="flex-1 bg-background" />
+        <div className="flex-1 bg-primary" />
+      </div>
       <div className="container py-8">
         <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between">
           <div className="flex items-center gap-2.5">
