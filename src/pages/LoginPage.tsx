@@ -146,17 +146,26 @@ const LoginPage = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-white/[0.03] via-transparent to-white/[0.03]" />
       {/* Layer 2: Ashoka Chakra watermark - slow spinning */}
       <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none">
-        <svg viewBox="0 0 200 200" className="h-[320px] w-[320px] md:h-[480px] md:w-[480px] lg:h-[580px] lg:w-[580px] text-white/[0.05] animate-slow-spin" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="100" cy="100" r="90" stroke="currentColor" strokeWidth="1.5" />
-          <circle cx="100" cy="100" r="20" stroke="currentColor" strokeWidth="1.5" />
-          <circle cx="100" cy="100" r="50" stroke="currentColor" strokeWidth="0.5" opacity="0.6" />
+        <svg viewBox="0 0 200 200" className="h-[85vw] w-[85vw] max-h-[750px] max-w-[750px] md:h-[80vw] md:w-[80vw] md:max-h-[850px] md:max-w-[850px] lg:h-[90vh] lg:w-[90vh] lg:max-h-[950px] lg:max-w-[950px] text-white/[0.04] animate-slow-spin" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="95" stroke="currentColor" strokeWidth="0.8" opacity="0.4" />
+          <circle cx="100" cy="100" r="90" stroke="currentColor" strokeWidth="1.2" />
+          <circle cx="100" cy="100" r="20" stroke="currentColor" strokeWidth="1.2" />
+          <circle cx="100" cy="100" r="50" stroke="currentColor" strokeWidth="0.5" opacity="0.5" />
+          <circle cx="100" cy="100" r="70" stroke="currentColor" strokeWidth="0.3" opacity="0.3" />
           {Array.from({ length: 24 }).map((_, i) => {
             const angle = (i * 15 * Math.PI) / 180;
             const x1 = 100 + 22 * Math.cos(angle);
             const y1 = 100 + 22 * Math.sin(angle);
             const x2 = 100 + 88 * Math.cos(angle);
             const y2 = 100 + 88 * Math.sin(angle);
-            return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="0.8" />;
+            return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="0.7" />;
+          })}
+          {/* Small dots at spoke ends */}
+          {Array.from({ length: 24 }).map((_, i) => {
+            const angle = (i * 15 * Math.PI) / 180;
+            const cx = 100 + 90 * Math.cos(angle);
+            const cy = 100 + 90 * Math.sin(angle);
+            return <circle key={`d${i}`} cx={cx} cy={cy} r="1.5" fill="currentColor" opacity="0.5" />;
           })}
         </svg>
       </div>
