@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Search, Heart, Shield, Users, Accessibility, Clock, Baby, Tractor, ArrowRight, MapPin, IndianRupee } from "lucide-react";
+import { Search, Heart, Shield, Users, Accessibility, Clock, Baby, Tractor, ArrowRight, MapPin, IndianRupee, ExternalLink } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -54,8 +55,7 @@ const SchemeCard = ({ s, index }: { s: GovernmentScheme; index: number }) => (
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay: index * 0.03, duration: 0.3 }}
   >
-    <Link to={`/govt-schemes/${s.id}`}>
-      <Card className="group hover-lift cursor-pointer border-border/60 bg-card transition-all duration-300 hover:border-secondary/40 hover:shadow-md h-full">
+      <Card className="group hover-lift border-border/60 bg-card transition-all duration-300 hover:border-secondary/40 hover:shadow-md h-full">
         <CardContent className="p-5 space-y-3">
           <div className="flex items-start justify-between gap-2">
             <div className="flex-1 min-w-0">
@@ -91,9 +91,23 @@ const SchemeCard = ({ s, index }: { s: GovernmentScheme; index: number }) => (
               <IndianRupee className="h-3 w-3" /> {s.benefit_amount}
             </span>
           </div>
+
+          <div className="flex gap-2 pt-1">
+            <Link to={`/govt-schemes/${s.id}`} className="flex-1">
+              <Button variant="outline" size="sm" className="w-full text-xs h-8 rounded-lg gap-1">
+                View Details <ArrowRight className="h-3 w-3" />
+              </Button>
+            </Link>
+            {s.application_link && (
+              <a href={s.application_link} target="_blank" rel="noopener noreferrer" className="flex-1" onClick={(e) => e.stopPropagation()}>
+                <Button size="sm" className="w-full text-xs h-8 rounded-lg gap-1 bg-emerald-600 hover:bg-emerald-700 text-white">
+                  <ExternalLink className="h-3 w-3" /> Apply Now
+                </Button>
+              </a>
+            )}
+          </div>
         </CardContent>
       </Card>
-    </Link>
   </motion.div>
 );
 

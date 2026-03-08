@@ -147,12 +147,15 @@ const GovtSchemeDetailPage = () => {
         )}
 
         {s.application_link && (
-          <div className="pt-2">
-            <Button asChild size="lg" className="w-full sm:w-auto gap-2 rounded-xl">
+          <div className="pt-2 space-y-2">
+            <Button asChild size="lg" className="w-full sm:w-auto gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white">
               <a href={s.application_link} target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="h-4 w-4" /> Visit Official Portal
+                <ExternalLink className="h-4 w-4" /> Apply Now - Official Portal
               </a>
             </Button>
+            <p className="text-[11px] text-muted-foreground flex items-center gap-1">
+              <Shield className="h-3 w-3" /> This platform redirects users to official government websites for submitting applications.
+            </p>
           </div>
         )}
       </div>
