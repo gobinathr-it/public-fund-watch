@@ -19,7 +19,7 @@ const SchemeApplyButton = ({
   schemeName,
   icon,
 }: SchemeApplyButtonProps) => {
-  const fallback = getFallbackPortal(state, category, governmentType);
+  const fallback = getFallbackPortal(state, category, governmentType, schemeName);
   const primaryLink = applicationLink ? ensureHttps(applicationLink) : null;
 
   return (
