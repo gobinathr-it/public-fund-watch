@@ -90,29 +90,37 @@ const SignUpPage = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-white/[0.03] via-transparent to-white/[0.03]" />
       {/* Layer 2: Ashoka Chakra watermark - slow spinning */}
       <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none">
-        <svg viewBox="0 0 200 200" className="h-[320px] w-[320px] md:h-[480px] md:w-[480px] lg:h-[580px] lg:w-[580px] text-white/[0.05] animate-slow-spin" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="100" cy="100" r="90" stroke="currentColor" strokeWidth="1.5" />
-          <circle cx="100" cy="100" r="20" stroke="currentColor" strokeWidth="1.5" />
-          <circle cx="100" cy="100" r="50" stroke="currentColor" strokeWidth="0.5" opacity="0.6" />
+        <svg viewBox="0 0 200 200" className="h-[85vw] w-[85vw] max-h-[750px] max-w-[750px] md:h-[80vw] md:w-[80vw] md:max-h-[850px] md:max-w-[850px] lg:h-[90vh] lg:w-[90vh] lg:max-h-[950px] lg:max-w-[950px] text-white/[0.04] animate-slow-spin" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="95" stroke="currentColor" strokeWidth="0.8" opacity="0.4" />
+          <circle cx="100" cy="100" r="90" stroke="currentColor" strokeWidth="1.2" />
+          <circle cx="100" cy="100" r="20" stroke="currentColor" strokeWidth="1.2" />
+          <circle cx="100" cy="100" r="50" stroke="currentColor" strokeWidth="0.5" opacity="0.5" />
+          <circle cx="100" cy="100" r="70" stroke="currentColor" strokeWidth="0.3" opacity="0.3" />
           {Array.from({ length: 24 }).map((_, i) => {
             const angle = (i * 15 * Math.PI) / 180;
             const x1 = 100 + 22 * Math.cos(angle);
             const y1 = 100 + 22 * Math.sin(angle);
             const x2 = 100 + 88 * Math.cos(angle);
             const y2 = 100 + 88 * Math.sin(angle);
-            return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="0.8" />;
+            return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="0.7" />;
+          })}
+          {Array.from({ length: 24 }).map((_, i) => {
+            const angle = (i * 15 * Math.PI) / 180;
+            const cx = 100 + 90 * Math.cos(angle);
+            const cy = 100 + 90 * Math.sin(angle);
+            return <circle key={`d${i}`} cx={cx} cy={cy} r="1.5" fill="currentColor" opacity="0.5" />;
           })}
         </svg>
       </div>
       {/* Layer 3: Form card */}
-      <div className="relative z-10 w-full max-w-md space-y-6">
+      <div className="relative z-10 w-full max-w-[560px] space-y-6 px-2 sm:px-0">
         <div className="text-center">
           <img src={logo} alt="India Fund & Scheme Tracker" className="mx-auto mb-4 h-16 w-16" />
           <h1 className="font-display text-2xl font-bold text-white">Create Account</h1>
           <p className="mt-1 text-sm text-white/60">Join India Fund & Scheme Tracker</p>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 rounded-2xl border border-white/10 p-6 shadow-2xl backdrop-blur-xl" style={{ background: "rgba(0,0,0,0.35)" }}>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 rounded-2xl border border-white/10 p-7 sm:p-9 shadow-2xl backdrop-blur-xl" style={{ background: "rgba(0,0,0,0.35)" }}>
           <div>
             <Label htmlFor="fullName" className="text-white/80">Full Name</Label>
             <Input id="fullName" placeholder="Enter your full name" className="border-white/15 bg-white/[0.08] text-white placeholder:text-white/40 focus-visible:ring-primary/50" {...register("fullName")} />
