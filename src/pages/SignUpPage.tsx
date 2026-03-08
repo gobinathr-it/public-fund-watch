@@ -104,7 +104,7 @@ const SignUpPage = () => {
           <p className="mt-1 text-sm text-muted-foreground">Join India Fund & Scheme Tracker</p>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 rounded-2xl border border-border bg-card p-6 shadow-card">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 rounded-2xl border border-border bg-card/95 backdrop-blur-sm p-6 shadow-lg">
           <div>
             <Label htmlFor="fullName">Full Name</Label>
             <Input id="fullName" placeholder="Enter your full name" {...register("fullName")} />
