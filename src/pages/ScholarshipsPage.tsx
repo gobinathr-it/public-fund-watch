@@ -71,9 +71,23 @@ const ScholarshipCard = ({ s, index }: { s: Scholarship; index: number }) => {
                 Income Limit: ₹{(s.income_limit / 100000).toFixed(1)} Lakh
               </p>
             )}
+
+            <div className="flex gap-2 pt-1">
+              <Link to={`/scholarships/${s.id}`} className="flex-1">
+                <Button variant="outline" size="sm" className="w-full text-xs h-8 rounded-lg gap-1">
+                  View Details <ArrowRight className="h-3 w-3" />
+                </Button>
+              </Link>
+              {s.application_link && (
+                <a href={s.application_link} target="_blank" rel="noopener noreferrer" className="flex-1" onClick={(e) => e.stopPropagation()}>
+                  <Button size="sm" className="w-full text-xs h-8 rounded-lg gap-1 bg-emerald-600 hover:bg-emerald-700 text-white">
+                    <ExternalLink className="h-3 w-3" /> Apply Now
+                  </Button>
+                </a>
+              )}
+            </div>
           </CardContent>
         </Card>
-      </Link>
     </motion.div>
   );
 };
