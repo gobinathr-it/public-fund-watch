@@ -4,6 +4,7 @@ import { ArrowRight, BarChart3, Eye, FileCheck, Shield, TrendingUp, Users, MapPi
 import { Button } from "@/components/ui/button";
 import StatCard from "@/components/StatCard";
 import SchemeCard from "@/components/SchemeCard";
+import TricolorBackground from "@/components/TricolorBackground";
 import { useSchemes, formatCurrency } from "@/hooks/useSchemes";
 import { useStateContext } from "@/contexts/StateContext";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -31,10 +32,10 @@ const LandingPage = () => {
     <div className="flex flex-col">
       {/* Hero */}
       <section className="bg-hero relative overflow-hidden py-24 md:py-32">
+        {/* Indian tricolor animated background */}
+        <TricolorBackground />
         {/* Decorative elements */}
         <div className="absolute inset-0 pattern-dots opacity-30" />
-        <div className="absolute top-20 left-10 h-64 w-64 rounded-full bg-secondary/5 blur-3xl" />
-        <div className="absolute bottom-10 right-10 h-48 w-48 rounded-full bg-saffron/5 blur-3xl" />
 
         <div className="container relative">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="mx-auto max-w-3xl text-center">
@@ -61,10 +62,10 @@ const LandingPage = () => {
               {t("landing.subtitle")}
             </p>
             <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-              <Button asChild size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 gap-2 rounded-xl px-8 shadow-glow font-semibold">
+              <Button asChild size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 gap-2 rounded-xl px-8 shadow-glow font-semibold ripple-effect btn-glow">
                 <Link to="/dashboard">{t("landing.exploreDashboard")} <ArrowRight className="h-4 w-4" /></Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-secondary text-secondary-foreground bg-secondary/15 hover:bg-secondary/30 rounded-xl px-8 font-semibold shadow-glow backdrop-blur-sm transition-all duration-300 hover:scale-[1.03]">
+              <Button asChild variant="outline" size="lg" className="border-secondary text-secondary-foreground bg-secondary/15 hover:bg-secondary/30 rounded-xl px-8 font-semibold shadow-glow backdrop-blur-sm transition-all duration-300 hover:scale-[1.03] ripple-effect">
                 <Link to="/schemes">{t("landing.viewAllSchemes")}</Link>
               </Button>
             </div>
@@ -108,9 +109,9 @@ const LandingPage = () => {
           </motion.div>
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((f, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }} className="group rounded-2xl border border-border/60 bg-card p-6 shadow-card hover-lift">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary/8 transition-colors duration-300 group-hover:bg-secondary/15">
-                  <f.icon className="h-5 w-5 text-secondary" />
+              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }} className="group rounded-2xl border border-border/60 bg-card p-6 shadow-card hover-lift ripple-effect">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary/8 transition-all duration-300 group-hover:bg-secondary/15 group-hover:scale-110 group-hover:shadow-glow">
+                  <f.icon className="h-5 w-5 text-secondary transition-transform duration-300 group-hover:scale-110" />
                 </div>
                 <h3 className="mt-5 font-display text-base font-semibold">{f.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
