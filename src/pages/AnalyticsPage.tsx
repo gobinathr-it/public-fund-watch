@@ -3,6 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import StatCard from "@/components/StatCard";
 import { useSchemes, useAllDistrictAllocations, formatCurrency } from "@/hooks/useSchemes";
 import { useStateContext } from "@/contexts/StateContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { motion } from "framer-motion";
 import { useMemo } from "react";
 
@@ -14,6 +15,7 @@ const COLORS = [
 
 const AnalyticsPage = () => {
   const { selectedState } = useStateContext();
+  const { t } = useLanguage();
   const { data: schemes = [] } = useSchemes(undefined, selectedState);
   const { data: allocations = [] } = useAllDistrictAllocations(selectedState);
 
@@ -46,7 +48,6 @@ const AnalyticsPage = () => {
     })).sort((a, b) => b.allocated - a.allocated);
   }, [schemes]);
 
-  // State-wise data for All India
   const stateSpending = useMemo(() => {
     if (selectedState !== "All India") return [];
     const map: Record<string, { allocated: number; spent: number }> = {};
@@ -82,21 +83,20 @@ const AnalyticsPage = () => {
     <div className="py-6 md:py-8">
       <div className="container space-y-8">
         <div>
-          <h1 className="font-display text-2xl font-bold md:text-3xl">Analytics</h1>
-          <p className="mt-1 text-sm text-muted-foreground">In-depth analysis of {stateLabel} public fund utilization</p>
+          <h1 className="font-display text-2xl font-bold md:text-3xl">{t("analytics.title")}</h1>
+          <p className="mt-1 text-sm text-muted-foreground">{t("analytics.subtitle")} — {stateLabel}</p>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <StatCard icon={BarChart3} title="Avg. Utilization" value={`${utilization}%`} variant="success" />
-          <StatCard icon={TrendingUp} title="Total Schemes" value={String(schemes.length)} variant="info" />
-          <StatCard icon={Building2} title="Departments" value={String(new Set(schemes.map(s => s.department)).size)} variant="default" />
-          <StatCard icon={MapPin} title={selectedState === "All India" ? "States Covered" : "Districts"} value={selectedState === "All India" ? String(stateCount) : String(new Set(allocations.map(a => a.district)).size)} variant="warning" />
+          <StatCard icon={BarChart3} title={t("stat.avgUtilization")} value={`${utilization}%`} variant="success" />
+          <StatCard icon={TrendingUp} title={t("stat.totalSchemes")} value={String(schemes.length)} variant="info" />
+          <StatCard icon={Building2} title={t("stat.departments")} value={String(new Set(schemes.map(s => s.department)).size)} variant="default" />
+          <StatCard icon={MapPin} title={selectedState === "All India" ? t("stat.statesCovered") : t("stat.districts")} value={selectedState === "All India" ? String(stateCount) : String(new Set(allocations.map(a => a.district)).size)} variant="warning" />
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          {/* Category pie */}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="rounded-lg border bg-card p-5 shadow-card">
-            <h3 className="font-display text-base font-semibold">Category Distribution</h3>
+            <h3 className="font-display text-base font-semibold">{t("analytics.categoryDist")}</h3>
             <div className="mt-4 h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
@@ -109,10 +109,9 @@ const AnalyticsPage = () => {
             </div>
           </motion.div>
 
-          {/* State or District comparison */}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="rounded-lg border bg-card p-5 shadow-card">
             <h3 className="font-display text-base font-semibold">
-              {selectedState === "All India" ? "State-wise Comparison" : "District-wise Comparison"}
+              {selectedState === "All India" ? t("analytics.stateComparison") : t("analytics.districtComparison")}
             </h3>
             <div className="mt-4 h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
@@ -129,18 +128,17 @@ const AnalyticsPage = () => {
           </motion.div>
         </div>
 
-        {/* Department table */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="rounded-lg border bg-card p-5 shadow-card">
-          <h3 className="font-display text-base font-semibold">Department Performance</h3>
+          <h3 className="font-display text-base font-semibold">{t("analytics.deptPerformance")}</h3>
           <div className="mt-4 overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b text-left text-xs text-muted-foreground">
-                  <th className="pb-3 font-medium">Department</th>
-                  <th className="pb-3 font-medium">Allocated (₹ Cr)</th>
-                  <th className="pb-3 font-medium">Spent (₹ Cr)</th>
-                  <th className="pb-3 font-medium">Utilization</th>
-                  <th className="pb-3 font-medium">Status</th>
+                  <th className="pb-3 font-medium">{t("analytics.department")}</th>
+                  <th className="pb-3 font-medium">{t("analytics.allocatedCr")}</th>
+                  <th className="pb-3 font-medium">{t("analytics.spentCr")}</th>
+                  <th className="pb-3 font-medium">{t("detail.utilization")}</th>
+                  <th className="pb-3 font-medium">{t("analytics.status")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -152,7 +150,7 @@ const AnalyticsPage = () => {
                     <td className="py-3">{d.utilization}%</td>
                     <td className="py-3">
                       <span className={`text-xs font-medium ${d.utilization > 70 ? "text-success" : d.utilization > 50 ? "text-warning" : "text-destructive"}`}>
-                        {d.utilization > 70 ? "On Track" : d.utilization > 50 ? "Moderate" : "Behind"}
+                        {d.utilization > 70 ? t("analytics.onTrack") : d.utilization > 50 ? t("analytics.moderate") : t("analytics.behind")}
                       </span>
                     </td>
                   </tr>

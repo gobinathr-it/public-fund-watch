@@ -3,17 +3,20 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import StateSelector from "@/components/StateSelector";
-
-const navItems = [
-  { label: "Home", path: "/" },
-  { label: "Dashboard", path: "/dashboard" },
-  { label: "Schemes", path: "/schemes" },
-  { label: "Analytics", path: "/analytics" },
-];
+import LanguageSelector from "@/components/LanguageSelector";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const { t } = useLanguage();
+
+  const navItems = [
+    { label: t("nav.home"), path: "/" },
+    { label: t("nav.dashboard"), path: "/dashboard" },
+    { label: t("nav.schemes"), path: "/schemes" },
+    { label: t("nav.analytics"), path: "/analytics" },
+  ];
 
   return (
     <header className="sticky top-0 z-50 border-b bg-card/80 backdrop-blur-lg">
@@ -47,8 +50,9 @@ const Navbar = () => {
         </nav>
 
         <div className="hidden md:flex items-center gap-2">
+          <LanguageSelector />
           <StateSelector />
-          <Button variant="outline" size="sm">Report Issue</Button>
+          <Button variant="outline" size="sm">{t("nav.reportIssue")}</Button>
         </div>
 
         <button onClick={() => setOpen(!open)} className="md:hidden p-2">
@@ -58,8 +62,9 @@ const Navbar = () => {
 
       {open && (
         <div className="border-t bg-card p-4 md:hidden">
-          <div className="mb-3">
-            <StateSelector className="w-full" />
+          <div className="mb-3 flex gap-2">
+            <LanguageSelector className="flex-1" />
+            <StateSelector className="flex-1" />
           </div>
           <nav className="flex flex-col gap-1">
             {navItems.map((item) => (
@@ -76,7 +81,7 @@ const Navbar = () => {
             ))}
           </nav>
           <div className="mt-3">
-            <Button variant="outline" size="sm" className="w-full">Report Issue</Button>
+            <Button variant="outline" size="sm" className="w-full">{t("nav.reportIssue")}</Button>
           </div>
         </div>
       )}

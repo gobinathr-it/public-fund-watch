@@ -6,25 +6,26 @@ import StatCard from "@/components/StatCard";
 import SchemeCard from "@/components/SchemeCard";
 import { useSchemes, formatCurrency } from "@/hooks/useSchemes";
 import { useStateContext } from "@/contexts/StateContext";
-import StateSelector from "@/components/StateSelector";
-
-const features = [
-  { icon: Eye, title: "Real-Time Tracking", desc: "Monitor every rupee from allocation to expenditure with live updates across all states." },
-  { icon: FileCheck, title: "Proof Verification", desc: "Every expense backed by invoices, photos, and geo-location data." },
-  { icon: BarChart3, title: "Data Analytics", desc: "Interactive charts showing spending patterns across departments and states." },
-  { icon: Shield, title: "AI Fraud Detection", desc: "Machine learning flags unusual spending patterns automatically." },
-  { icon: MapPin, title: "Pan-India Coverage", desc: "Track schemes across all 28 states, 8 UTs, and Central Government." },
-  { icon: TrendingUp, title: "Transparency Score", desc: "Every project gets a public accountability score." },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const LandingPage = () => {
   const { selectedState } = useStateContext();
+  const { t } = useLanguage();
   const { data: schemes = [] } = useSchemes(undefined, selectedState);
   const totalBudget = schemes.reduce((s, sc) => s + sc.total_budget, 0);
   const totalSpent = schemes.reduce((s, sc) => s + sc.spent, 0);
   const utilization = totalBudget > 0 ? Math.round((totalSpent / totalBudget) * 100) : 0;
   const stateCount = new Set(schemes.map(s => s.state).filter(Boolean)).size;
   const stateLabel = selectedState === "All India" ? "All India" : selectedState;
+
+  const features = [
+    { icon: Eye, title: t("feature.realTimeTracking"), desc: t("feature.realTimeTrackingDesc") },
+    { icon: FileCheck, title: t("feature.proofVerification"), desc: t("feature.proofVerificationDesc") },
+    { icon: BarChart3, title: t("feature.dataAnalytics"), desc: t("feature.dataAnalyticsDesc") },
+    { icon: Shield, title: t("feature.aiFraudDetection"), desc: t("feature.aiFraudDetectionDesc") },
+    { icon: MapPin, title: t("feature.panIndiaCoverage"), desc: t("feature.panIndiaCoverageDesc") },
+    { icon: TrendingUp, title: t("feature.transparencyScore"), desc: t("feature.transparencyScoreDesc") },
+  ];
 
   return (
     <div className="flex flex-col">
@@ -35,22 +36,22 @@ const LandingPage = () => {
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="mx-auto max-w-3xl text-center">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-secondary/30 bg-secondary/10 px-4 py-1.5 text-sm">
               <Shield className="h-4 w-4 text-primary-foreground" />
-              <span className="text-primary-foreground/80">India's Public Fund Transparency Platform</span>
+              <span className="text-primary-foreground/80">{t("landing.badge")}</span>
             </div>
             <h1 className="font-display text-4xl font-extrabold leading-tight text-primary-foreground md:text-5xl lg:text-6xl">
-              India{" "}
-              <span className="text-secondary">Fund & Scheme</span>{" "}
-              Tracker
+              {t("landing.title1")}{" "}
+              <span className="text-secondary">{t("landing.title2")}</span>{" "}
+              {t("landing.title3")}
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-base text-primary-foreground/70 md:text-lg">
-              Real-time visibility into how {formatCurrency(totalBudget)} in government welfare schemes is allocated, spent, and verified across India.
+              {t("landing.subtitle")}
             </p>
             <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
               <Button asChild size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 gap-2">
-                <Link to="/dashboard">Explore Dashboard <ArrowRight className="h-4 w-4" /></Link>
+                <Link to="/dashboard">{t("landing.exploreDashboard")} <ArrowRight className="h-4 w-4" /></Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10">
-                <Link to="/schemes">View All Schemes</Link>
+                <Link to="/schemes">{t("landing.viewAllSchemes")}</Link>
               </Button>
             </div>
           </motion.div>
@@ -61,10 +62,10 @@ const LandingPage = () => {
       <section className="-mt-8 relative z-10">
         <div className="container">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <StatCard icon={BarChart3} title="Total Budget" value={formatCurrency(totalBudget)} subtitle={stateLabel} variant="info" />
-            <StatCard icon={TrendingUp} title="Total Spent" value={formatCurrency(totalSpent)} subtitle={`${utilization}% utilized`} variant="success" />
-            <StatCard icon={FileCheck} title="Active Schemes" value={String(schemes.filter(s => s.status === "Active").length)} subtitle={`${stateLabel}`} variant="default" />
-            <StatCard icon={Users} title="States Covered" value={String(stateCount)} subtitle="States & UTs" variant="warning" />
+            <StatCard icon={BarChart3} title={t("stat.totalBudget")} value={formatCurrency(totalBudget)} subtitle={stateLabel} variant="info" />
+            <StatCard icon={TrendingUp} title={t("stat.totalSpent")} value={formatCurrency(totalSpent)} subtitle={`${utilization}% ${t("stat.utilized")}`} variant="success" />
+            <StatCard icon={FileCheck} title={t("stat.activeSchemes")} value={String(schemes.filter(s => s.status === "Active").length)} subtitle={stateLabel} variant="default" />
+            <StatCard icon={Users} title={t("stat.statesCovered")} value={String(stateCount)} subtitle={t("stat.statesUTs")} variant="warning" />
           </div>
         </div>
       </section>
@@ -73,12 +74,12 @@ const LandingPage = () => {
       <section className="py-16 md:py-20">
         <div className="container">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="font-display text-3xl font-bold">How Transparency Works</h2>
-            <p className="mt-3 text-muted-foreground">Every feature designed to ensure public accountability across India.</p>
+            <h2 className="font-display text-3xl font-bold">{t("landing.howItWorks")}</h2>
+            <p className="mt-3 text-muted-foreground">{t("landing.howItWorksDesc")}</p>
           </div>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((f, i) => (
-              <motion.div key={f.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="rounded-lg border bg-card p-6 shadow-card">
+              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="rounded-lg border bg-card p-6 shadow-card">
                 <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-secondary/10">
                   <f.icon className="h-5 w-5 text-secondary" />
                 </div>
@@ -95,13 +96,13 @@ const LandingPage = () => {
         <div className="container">
           <div className="flex items-end justify-between">
             <div>
-              <h2 className="font-display text-2xl font-bold">Active Schemes</h2>
+              <h2 className="font-display text-2xl font-bold">{t("landing.activeSchemes")}</h2>
               <p className="mt-1 text-sm text-muted-foreground">
-                {selectedState === "All India" ? "Government welfare programmes across India" : `Schemes in ${selectedState}`}
+                {selectedState === "All India" ? t("landing.govProgrammes") : `${t("landing.schemesIn")} ${selectedState}`}
               </p>
             </div>
             <Button asChild variant="ghost" className="hidden sm:inline-flex gap-1 text-secondary">
-              <Link to="/schemes">View all <ArrowRight className="h-4 w-4" /></Link>
+              <Link to="/schemes">{t("landing.viewAll")} <ArrowRight className="h-4 w-4" /></Link>
             </Button>
           </div>
           <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">

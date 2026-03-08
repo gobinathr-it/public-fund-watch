@@ -13,7 +13,12 @@ serve(async (req) => {
   }
 
   try {
-    const { messages } = await req.json();
+    const { messages, language } = await req.json();
+    const langMap: Record<string, string> = {
+      en: "English", ta: "Tamil (தமிழ்)", hi: "Hindi (हिन्दी)", ml: "Malayalam (മലയാളം)",
+      te: "Telugu (తెలుగు)", kn: "Kannada (ಕನ್ನಡ)", mr: "Marathi (मराठी)", bn: "Bengali (বাংলা)",
+    };
+    const preferredLang = langMap[language] || "English";
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
@@ -65,6 +70,8 @@ serve(async (req) => {
 
     const systemPrompt = `You are the India Fund Tracker AI Assistant — a helpful, multilingual chatbot for India's Public Fund & Scheme Transparency platform.
 
+The user's preferred language is: ${preferredLang}. ALWAYS respond in ${preferredLang} unless the user writes in a different language, in which case respond in that language.
+
 NATIONAL OVERVIEW: ${formatCr(totalBudget)} total budget, ${formatCr(totalSpent)} spent (${Math.round(totalSpent / totalBudget * 100)}% utilized)
 
 STATE-WISE SUMMARY:
@@ -77,7 +84,7 @@ Your role:
 - Help citizens understand government schemes across ALL Indian states and Central Government
 - Answer accurately using ONLY the data above
 - When asked about a specific state, filter and show only relevant schemes
-- Respond in the SAME LANGUAGE the user writes in (Tamil, Hindi, Telugu, Malayalam, Kannada, Bengali, Marathi, English, etc.)
+- Your default response language is ${preferredLang}. If the user writes in another language, respond in that language instead.
 - Use ₹ currency and Indian formatting (Crore, Lakh)
 - Use markdown: tables, bold, bullet points
 - When referencing a scheme, include navigation link: [View Details](/schemes/{scheme_id})

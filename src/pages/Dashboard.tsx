@@ -4,6 +4,7 @@ import StatCard from "@/components/StatCard";
 import SchemeCard from "@/components/SchemeCard";
 import { useSchemes, useAllDistrictAllocations, useExpenses, formatCurrency } from "@/hooks/useSchemes";
 import { useStateContext } from "@/contexts/StateContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { motion } from "framer-motion";
 import { useMemo } from "react";
 
@@ -15,6 +16,7 @@ const COLORS = [
 
 const Dashboard = () => {
   const { selectedState } = useStateContext();
+  const { t } = useLanguage();
   const { data: schemes = [] } = useSchemes(undefined, selectedState);
   const { data: allocations = [] } = useAllDistrictAllocations(selectedState);
   const { data: expenses = [] } = useExpenses();
@@ -33,13 +35,12 @@ const Dashboard = () => {
     }));
   }, [schemes, totalBudget]);
 
-  // State-wise spending (only for All India view)
   const stateData = useMemo(() => {
     if (selectedState !== "All India") return [];
     const map: Record<string, { allocated: number; spent: number }> = {};
     schemes.forEach(s => {
       const st = s.state || "Unknown";
-      if (st === "All India") return; // skip central for state chart
+      if (st === "All India") return;
       if (!map[st]) map[st] = { allocated: 0, spent: 0 };
       map[st].allocated += s.total_budget;
       map[st].spent += s.spent;
@@ -84,29 +85,28 @@ const Dashboard = () => {
     <div className="py-6 md:py-8">
       <div className="container space-y-8">
         <div>
-          <h1 className="font-display text-2xl font-bold md:text-3xl">Citizen Dashboard</h1>
+          <h1 className="font-display text-2xl font-bold md:text-3xl">{t("dashboard.title")}</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Real-time overview of {stateLabel} public fund utilization
+            {t("dashboard.subtitle")} — {stateLabel}
           </p>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <StatCard icon={IndianRupee} title="Total Budget" value={formatCurrency(totalBudget)} subtitle={`${schemes.length} schemes`} variant="info" />
-          <StatCard icon={TrendingUp} title="Total Spent" value={formatCurrency(totalSpent)} subtitle={`${utilization}% utilized`} variant="success" />
-          <StatCard icon={FileCheck} title="Verified Expenses" value={String(verifiedCount)} trend={{ value: "from database", positive: true }} variant="default" />
-          <StatCard icon={AlertTriangle} title="Flagged Items" value={String(flaggedCount)} subtitle="Needs review" variant="warning" />
+          <StatCard icon={IndianRupee} title={t("stat.totalBudget")} value={formatCurrency(totalBudget)} subtitle={`${schemes.length} ${t("nav.schemes").toLowerCase()}`} variant="info" />
+          <StatCard icon={TrendingUp} title={t("stat.totalSpent")} value={formatCurrency(totalSpent)} subtitle={`${utilization}% ${t("stat.utilized")}`} variant="success" />
+          <StatCard icon={FileCheck} title={t("stat.verifiedExpenses")} value={String(verifiedCount)} trend={{ value: t("stat.fromDatabase"), positive: true }} variant="default" />
+          <StatCard icon={AlertTriangle} title={t("stat.flaggedItems")} value={String(flaggedCount)} subtitle={t("stat.needsReview")} variant="warning" />
         </div>
 
         <div className="grid gap-6 lg:grid-cols-3">
-          {/* State-wise or District spending */}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="rounded-lg border bg-card p-5 shadow-card lg:col-span-2">
             <div className="flex items-center gap-2">
               <MapPin className="h-4 w-4 text-muted-foreground" />
               <h3 className="font-display text-base font-semibold">
-                {selectedState === "All India" ? "State-wise Allocation" : "Top Districts by Allocation"}
+                {selectedState === "All India" ? t("dashboard.stateAllocation") : t("dashboard.topDistricts")}
               </h3>
             </div>
-            <p className="text-xs text-muted-foreground">Budget vs Spent (₹ Crore)</p>
+            <p className="text-xs text-muted-foreground">{t("dashboard.budgetVsSpent")}</p>
             <div className="mt-4 h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={selectedState === "All India" ? stateData : districtData}>
@@ -121,10 +121,9 @@ const Dashboard = () => {
             </div>
           </motion.div>
 
-          {/* Category pie */}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="rounded-lg border bg-card p-5 shadow-card">
-            <h3 className="font-display text-base font-semibold">By Category</h3>
-            <p className="text-xs text-muted-foreground">Fund distribution</p>
+            <h3 className="font-display text-base font-semibold">{t("dashboard.byCategory")}</h3>
+            <p className="text-xs text-muted-foreground">{t("dashboard.fundDistribution")}</p>
             <div className="mt-4 h-[220px]">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
@@ -147,11 +146,10 @@ const Dashboard = () => {
           </motion.div>
         </div>
 
-        {/* Department bar chart */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="rounded-lg border bg-card p-5 shadow-card">
           <div className="flex items-center gap-2">
             <Building2 className="h-4 w-4 text-muted-foreground" />
-            <h3 className="font-display text-base font-semibold">Department-wise Spending</h3>
+            <h3 className="font-display text-base font-semibold">{t("dashboard.deptSpending")}</h3>
           </div>
           <div className="mt-4 h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -167,9 +165,8 @@ const Dashboard = () => {
           </div>
         </motion.div>
 
-        {/* Schemes */}
         <div>
-          <h2 className="font-display text-xl font-bold">All Active Schemes</h2>
+          <h2 className="font-display text-xl font-bold">{t("dashboard.allActiveSchemes")}</h2>
           <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {schemes.map((s, i) => <SchemeCard key={s.id} scheme={s} index={i} />)}
           </div>

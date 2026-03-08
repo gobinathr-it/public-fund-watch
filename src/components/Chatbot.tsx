@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
@@ -21,12 +22,13 @@ const suggestions = [
 ];
 
 async function streamChat({
-  messages, onDelta, onDone, onError,
+  messages, onDelta, onDone, onError, language,
 }: {
   messages: Msg[];
   onDelta: (text: string) => void;
   onDone: () => void;
   onError: (err: string) => void;
+  language: string;
 }) {
   const resp = await fetch(CHAT_URL, {
     method: "POST",
@@ -34,7 +36,7 @@ async function streamChat({
       "Content-Type": "application/json",
       Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
     },
-    body: JSON.stringify({ messages }),
+    body: JSON.stringify({ messages, language }),
   });
 
   if (!resp.ok) {
@@ -85,6 +87,7 @@ const Chatbot = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<any>(null);
   const navigate = useNavigate();
+  const { t, language } = useLanguage();
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
@@ -119,12 +122,13 @@ const Chatbot = () => {
         onDelta: upsert,
         onDone: () => setLoading(false),
         onError: (err) => { upsert(`⚠️ ${err}`); setLoading(false); },
+        language,
       });
     } catch {
       upsert("⚠️ Connection error. Please try again.");
       setLoading(false);
     }
-  }, [messages, loading]);
+  }, [messages, loading, language]);
 
   const toggleVoice = () => {
     if (listening) { recognitionRef.current?.stop(); setListening(false); return; }
@@ -176,8 +180,8 @@ const Chatbot = () => {
               <div className="flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-secondary" />
                 <div>
-                  <span className="font-display text-sm font-semibold text-primary-foreground">India Fund Tracker AI</span>
-                  <p className="text-[10px] text-primary-foreground/60">Multilingual • All States • Live Data</p>
+                  <span className="font-display text-sm font-semibold text-primary-foreground">{t("chatbot.title")}</span>
+                  <p className="text-[10px] text-primary-foreground/60">{t("chatbot.subtitle")}</p>
                 </div>
               </div>
               <button onClick={() => setOpen(false)} className="text-primary-foreground/70 hover:text-primary-foreground">
@@ -189,10 +193,10 @@ const Chatbot = () => {
               {messages.length === 0 && (
                 <div className="space-y-3">
                   <p className="text-sm text-muted-foreground">
-                    🇮🇳 Namaste! I can help you explore government schemes and spending data across all Indian states. Ask in any language.
+                    {t("chatbot.welcome")}
                   </p>
                   <div className="space-y-2">
-                    <p className="text-xs font-medium text-muted-foreground">Quick questions:</p>
+                    <p className="text-xs font-medium text-muted-foreground">{t("chatbot.quickQuestions")}</p>
                     {suggestions.map(s => (
                       <button key={s} onClick={() => send(s)} className="block w-full rounded-md border bg-muted/50 px-3 py-2 text-left text-xs text-foreground hover:bg-muted transition-colors">
                         {s}
@@ -230,7 +234,7 @@ const Chatbot = () => {
                 <button type="button" onClick={toggleVoice} className={`flex-shrink-0 rounded-md p-2 transition-colors ${listening ? "bg-destructive/10 text-destructive" : "text-muted-foreground hover:bg-muted"}`} title="Voice input">
                   {listening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
                 </button>
-                <input ref={inputRef} value={input} onChange={e => setInput(e.target.value)} placeholder="Ask about any scheme or state..." className="flex-1 rounded-md border bg-background px-3 py-2 text-sm outline-none focus:ring-1 focus:ring-secondary" disabled={loading} />
+                <input ref={inputRef} value={input} onChange={e => setInput(e.target.value)} placeholder={t("chatbot.placeholder")} className="flex-1 rounded-md border bg-background px-3 py-2 text-sm outline-none focus:ring-1 focus:ring-secondary" disabled={loading} />
                 <Button type="submit" size="sm" disabled={!input.trim() || loading} className="bg-secondary text-secondary-foreground hover:bg-secondary/90 h-9 w-9 p-0">
                   <Send className="h-4 w-4" />
                 </Button>
