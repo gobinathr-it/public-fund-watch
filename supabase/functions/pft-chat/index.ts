@@ -13,7 +13,12 @@ serve(async (req) => {
   }
 
   try {
-    const { messages } = await req.json();
+    const { messages, language } = await req.json();
+    const langMap: Record<string, string> = {
+      en: "English", ta: "Tamil (தமிழ்)", hi: "Hindi (हिन्दी)", ml: "Malayalam (മലയാളം)",
+      te: "Telugu (తెలుగు)", kn: "Kannada (ಕನ್ನಡ)", mr: "Marathi (मराठी)", bn: "Bengali (বাংলা)",
+    };
+    const preferredLang = langMap[language] || "English";
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
