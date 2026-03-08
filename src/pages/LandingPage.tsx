@@ -72,10 +72,7 @@ const LandingPage = () => {
           <AshokaChakra className="h-[500px] w-[500px] md:h-[650px] md:w-[650px] text-white/[0.06]" />
         </div>
 
-        {/* India map outline */}
-        <div className="pointer-events-none absolute right-0 top-0 h-full">
-          <IndiaMapOutline className="h-full w-auto text-white" />
-        </div>
+        {/* India map outline removed for cleaner look */}
 
         {/* Decorative orbs */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -108,10 +105,11 @@ const LandingPage = () => {
 
             {/* Title */}
             <h1 className="font-display text-4xl font-extrabold leading-[1.08] md:text-5xl lg:text-[3.5rem] xl:text-6xl">
-              <span className="text-white/90">India</span>{" "}
+              <span className="text-white">India</span>{" "}
               <span className="text-saffron">Fund</span>{" "}
               <span className="text-white/60">&</span>{" "}
-              <span className="text-primary-foreground">Scheme Tracker</span>
+              <span className="text-saffron">Scheme</span>{" "}
+              <span className="text-white">Tracker</span>
             </h1>
 
             {/* Subtitle */}
