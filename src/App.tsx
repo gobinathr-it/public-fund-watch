@@ -12,12 +12,6 @@ import SchemesPage from "./pages/SchemesPage";
 import SchemeDetailPage from "./pages/SchemeDetailPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import NotFound from "./pages/NotFound";
-import LandingPage from "./pages/LandingPage";
-import Dashboard from "./pages/Dashboard";
-import SchemesPage from "./pages/SchemesPage";
-import SchemeDetailPage from "./pages/SchemeDetailPage";
-import AnalyticsPage from "./pages/AnalyticsPage";
-import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
