@@ -101,6 +101,7 @@ const SignUpPage = () => {
         aria-hidden="true"
         className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] md:w-[400px] lg:w-[480px] opacity-[0.06] select-none"
       />
+      <div className="relative z-10 w-full max-w-md space-y-6">
         <div className="text-center">
           <img src={logo} alt="India Fund & Scheme Tracker" className="mx-auto mb-4 h-16 w-16" />
           <h1 className="font-display text-2xl font-bold text-foreground">Create Account</h1>
