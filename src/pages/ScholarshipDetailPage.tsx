@@ -1,10 +1,10 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, GraduationCap, MapPin, Calendar, Users, IndianRupee, FileText, ExternalLink, CheckCircle2, AlertCircle } from "lucide-react";
+import { ArrowLeft, GraduationCap, MapPin, Users, IndianRupee, FileText, CheckCircle2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { useScholarship } from "@/hooks/useScholarships";
+import SchemeApplyButton from "@/components/SchemeApplyButton";
 import { motion } from "framer-motion";
 
 const ScholarshipDetailPage = () => {
@@ -154,18 +154,16 @@ const ScholarshipDetailPage = () => {
         )}
 
         {/* Apply Button */}
-        {s.application_link && (
-          <div className="pt-2 space-y-2">
-            <Button asChild size="lg" className="w-full sm:w-auto gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white">
-              <a href={s.application_link} target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="h-4 w-4" /> Apply Now - Official Portal
-              </a>
-            </Button>
-            <p className="text-[11px] text-muted-foreground flex items-center gap-1">
-              <GraduationCap className="h-3 w-3" /> This platform redirects users to official government websites for submitting applications.
-            </p>
-          </div>
-        )}
+        <div className="pt-2">
+          <SchemeApplyButton
+            applicationLink={s.application_link}
+            state={s.state}
+            category={s.category}
+            governmentType={s.government_type}
+            schemeName={s.name}
+            icon={<GraduationCap className="h-3 w-3" />}
+          />
+        </div>
       </div>
     </div>
   );
