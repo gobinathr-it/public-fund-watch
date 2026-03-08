@@ -26,15 +26,17 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const [schemesRes, expensesRes, allocationsRes] = await Promise.all([
+    const [schemesRes, expensesRes, allocationsRes, scholarshipsRes] = await Promise.all([
       supabase.from("schemes").select("*").order("total_budget", { ascending: false }),
       supabase.from("expenses").select("*").order("expense_date", { ascending: false }).limit(50),
       supabase.from("district_allocations").select("*"),
+      supabase.from("scholarships").select("*").order("name"),
     ]);
 
     const schemes = schemesRes.data || [];
     const expenses = expensesRes.data || [];
     const allocations = allocationsRes.data || [];
+    const scholarships = scholarshipsRes.data || [];
 
     const formatCr = (amt: number) => `₹${(amt / 10000000).toFixed(0)} Cr`;
     const totalBudget = schemes.reduce((s: number, sc: any) => s + sc.total_budget, 0);
