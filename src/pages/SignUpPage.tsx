@@ -85,14 +85,18 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center bg-gradient-to-b from-background via-muted/30 to-background px-4 py-10 overflow-hidden">
-      {/* Ashoka Emblem watermark */}
+    <div className="relative flex min-h-screen items-center justify-center bg-background px-4 py-10 overflow-hidden">
+      {/* Layer 1: Subtle gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-muted/20 via-background to-muted/20" />
+      {/* Layer 2: Ashoka Lion Capital watermark */}
       <img
         src={ashokaEmblem}
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] md:w-[450px] lg:w-[520px] opacity-80 select-none"
+        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px] md:w-[400px] lg:w-[500px] opacity-[0.06] select-none grayscale"
+        style={{ filter: "grayscale(100%) brightness(1.2)" }}
       />
+      {/* Layer 3: Form card */}
       <div className="relative z-10 w-full max-w-md space-y-6">
         <div className="text-center">
           <img src={logo} alt="India Fund & Scheme Tracker" className="mx-auto mb-4 h-16 w-16" />
@@ -100,7 +104,7 @@ const SignUpPage = () => {
           <p className="mt-1 text-sm text-muted-foreground">Join India Fund & Scheme Tracker</p>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 rounded-2xl border border-border bg-card p-6 shadow-card">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 rounded-2xl border border-border bg-card/95 backdrop-blur-sm p-6 shadow-lg">
           <div>
             <Label htmlFor="fullName">Full Name</Label>
             <Input id="fullName" placeholder="Enter your full name" {...register("fullName")} />
