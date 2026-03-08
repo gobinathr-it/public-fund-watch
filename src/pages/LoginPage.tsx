@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { Eye, EyeOff } from "lucide-react";
 import logo from "@/assets/logo.png";
+import ashokaEmblem from "@/assets/ashoka-emblem.png";
 
 const loginSchema = z.object({
   mobileNumber: z.string().regex(/^\d{10}$/, "Enter a valid 10-digit mobile number"),
@@ -60,8 +61,14 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4 py-10">
-      <div className="w-full max-w-md space-y-6">
+    <div className="relative flex min-h-screen items-center justify-center bg-gradient-to-b from-background via-muted/30 to-background px-4 py-10 overflow-hidden">
+      <img
+        src={ashokaEmblem}
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] md:w-[400px] lg:w-[480px] opacity-[0.06] select-none"
+      />
+      <div className="relative z-10 w-full max-w-md space-y-6">
         <div className="text-center">
           <img src={logo} alt="India Fund & Scheme Tracker" className="mx-auto mb-4 h-16 w-16" />
           <h1 className="font-display text-2xl font-bold text-foreground">Welcome Back</h1>
