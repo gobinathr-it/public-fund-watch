@@ -5,6 +5,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useScheme, useDistrictAllocations, useExpenses, formatCurrency } from "@/hooks/useSchemes";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { motion } from "framer-motion";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -21,6 +22,7 @@ const statusColor: Record<string, string> = {
 
 const SchemeDetailPage = () => {
   const { id } = useParams();
+  const { t } = useLanguage();
   const { data: scheme, isLoading: schemeLoading } = useScheme(id);
   const { data: allocations = [] } = useDistrictAllocations(id);
   const { data: expenses = [] } = useExpenses(id);
@@ -41,9 +43,9 @@ const SchemeDetailPage = () => {
   if (!scheme) {
     return (
       <div className="container py-20 text-center">
-        <h2 className="text-xl font-bold">Scheme not found</h2>
+        <h2 className="text-xl font-bold">{t("detail.notFound")}</h2>
         <Button asChild variant="outline" className="mt-4">
-          <Link to="/schemes">Back to Schemes</Link>
+          <Link to="/schemes">{t("detail.backToSchemes")}</Link>
         </Button>
       </div>
     );
@@ -60,7 +62,7 @@ const SchemeDetailPage = () => {
     <div className="py-6 md:py-8">
       <div className="container space-y-8">
         <Button asChild variant="ghost" size="sm" className="gap-1.5 text-muted-foreground">
-          <Link to="/schemes"><ArrowLeft className="h-4 w-4" /> All Schemes</Link>
+          <Link to="/schemes"><ArrowLeft className="h-4 w-4" /> {t("detail.allSchemes")}</Link>
         </Button>
 
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="rounded-lg border bg-card p-6 shadow-card">
@@ -70,7 +72,7 @@ const SchemeDetailPage = () => {
                 <Badge variant="outline" className="bg-success/10 text-success border-success/20">{scheme.status}</Badge>
                 <Badge variant="outline">{scheme.category}</Badge>
                 {scheme.government_type === "Central" && (
-                  <Badge variant="outline" className="bg-info/10 text-info border-info/20">Central Govt</Badge>
+                  <Badge variant="outline" className="bg-info/10 text-info border-info/20">{t("card.centralGovt")}</Badge>
                 )}
               </div>
               <h1 className="font-display text-2xl font-bold md:text-3xl">{scheme.name}</h1>
@@ -93,13 +95,13 @@ const SchemeDetailPage = () => {
 
           <div className="mt-6 space-y-2">
             <div className="flex justify-between text-sm">
-              <span>Spent: <strong>{formatCurrency(scheme.spent)}</strong></span>
-              <span>Budget: <strong>{formatCurrency(scheme.total_budget)}</strong></span>
+              <span>{t("detail.spent")}: <strong>{formatCurrency(scheme.spent)}</strong></span>
+              <span>{t("detail.budget")}: <strong>{formatCurrency(scheme.total_budget)}</strong></span>
             </div>
             <Progress value={progress} className="h-3" />
             <div className="flex justify-between text-xs text-muted-foreground">
-              <span>{progress}% utilized</span>
-              <span>Remaining: {formatCurrency(scheme.total_budget - scheme.spent)}</span>
+              <span>{progress}% {t("stat.utilized")}</span>
+              <span>{t("detail.remaining")}: {formatCurrency(scheme.total_budget - scheme.spent)}</span>
             </div>
           </div>
         </motion.div>
@@ -107,7 +109,7 @@ const SchemeDetailPage = () => {
         <div className="grid gap-6 lg:grid-cols-2">
           {districtData.length > 0 && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="rounded-lg border bg-card p-5 shadow-card">
-              <h3 className="font-display text-base font-semibold">District-wise Allocation</h3>
+              <h3 className="font-display text-base font-semibold">{t("detail.districtAllocation")}</h3>
               <div className="mt-4 h-[280px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={districtData}>
@@ -124,9 +126,9 @@ const SchemeDetailPage = () => {
           )}
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }} className="rounded-lg border bg-card p-5 shadow-card">
-            <h3 className="font-display text-base font-semibold">Recent Expenses ({expenses.length})</h3>
+            <h3 className="font-display text-base font-semibold">{t("detail.recentExpenses")} ({expenses.length})</h3>
             <div className="mt-4 space-y-3 max-h-[350px] overflow-y-auto">
-              {expenses.length === 0 && <p className="text-sm text-muted-foreground">No expenses recorded yet.</p>}
+              {expenses.length === 0 && <p className="text-sm text-muted-foreground">{t("detail.noExpenses")}</p>}
               {expenses.map((exp) => {
                 const StatusIcon = statusIcon[exp.status] || Clock;
                 return (
@@ -159,16 +161,16 @@ const SchemeDetailPage = () => {
 
         {allocations.length > 0 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="rounded-lg border bg-card p-5 shadow-card">
-            <h3 className="font-display text-base font-semibold">District Breakdown</h3>
+            <h3 className="font-display text-base font-semibold">{t("detail.districtBreakdown")}</h3>
             <div className="mt-4 overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b text-left text-xs text-muted-foreground">
-                    <th className="pb-3 font-medium">District</th>
-                    <th className="pb-3 font-medium">Allocated</th>
-                    <th className="pb-3 font-medium">Spent</th>
-                    <th className="pb-3 font-medium">Utilization</th>
-                    <th className="pb-3 font-medium w-40">Progress</th>
+                    <th className="pb-3 font-medium">{t("detail.district")}</th>
+                    <th className="pb-3 font-medium">{t("detail.allocated")}</th>
+                    <th className="pb-3 font-medium">{t("detail.spent")}</th>
+                    <th className="pb-3 font-medium">{t("detail.utilization")}</th>
+                    <th className="pb-3 font-medium w-40">{t("detail.progress")}</th>
                   </tr>
                 </thead>
                 <tbody>

@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import SchemeCard from "@/components/SchemeCard";
 import { useSchemes } from "@/hooks/useSchemes";
 import { useStateContext } from "@/contexts/StateContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const categories = ["All", "Education", "Healthcare", "Agriculture", "Welfare", "Infrastructure", "Housing", "Employment"];
 const govTypes = ["All", "Central", "State"];
@@ -14,6 +15,7 @@ const SchemesPage = () => {
   const [category, setCategory] = useState("All");
   const [govType, setGovType] = useState("All");
   const { selectedState } = useStateContext();
+  const { t } = useLanguage();
   const { data: schemes = [], isLoading } = useSchemes(undefined, selectedState);
 
   const filtered = schemes.filter((s) => {
@@ -31,21 +33,20 @@ const SchemesPage = () => {
       <div className="container space-y-6">
         <div>
           <h1 className="font-display text-2xl font-bold md:text-3xl">
-            {selectedState === "All India" ? "All India Government Schemes" : `${selectedState} Schemes`}
+            {selectedState === "All India" ? t("schemes.allIndia") : `${selectedState} ${t("schemes.stateSchemes")}`}
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Browse and track public welfare programmes • Use the state selector in the navbar to filter by state
+            {t("schemes.browseDesc")}
           </p>
         </div>
 
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input placeholder="Search schemes, states, departments..." className="pl-9" value={search} onChange={(e) => setSearch(e.target.value)} />
+            <Input placeholder={t("schemes.search")} className="pl-9" value={search} onChange={(e) => setSearch(e.target.value)} />
           </div>
         </div>
 
-        {/* Gov type filter */}
         <div className="flex flex-wrap gap-2">
           {govTypes.map((g) => (
             <Badge
@@ -54,7 +55,7 @@ const SchemesPage = () => {
               className={`cursor-pointer ${govType === g ? "bg-primary text-primary-foreground" : "hover:bg-muted"}`}
               onClick={() => setGovType(g)}
             >
-              {g === "All" ? "All Types" : `${g} Govt`}
+              {g === "All" ? t("schemes.allTypes") : g === "Central" ? t("schemes.centralGovt") : t("schemes.stateGovt")}
             </Badge>
           ))}
           <span className="mx-2 border-l" />
@@ -71,7 +72,7 @@ const SchemesPage = () => {
         </div>
 
         {isLoading ? (
-          <div className="py-20 text-center text-muted-foreground">Loading schemes...</div>
+          <div className="py-20 text-center text-muted-foreground">{t("schemes.loading")}</div>
         ) : (
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {filtered.map((s, i) => <SchemeCard key={s.id} scheme={s} index={i} />)}
@@ -79,7 +80,7 @@ const SchemesPage = () => {
         )}
 
         {!isLoading && filtered.length === 0 && (
-          <div className="py-20 text-center text-muted-foreground">No schemes found matching your criteria.</div>
+          <div className="py-20 text-center text-muted-foreground">{t("schemes.noResults")}</div>
         )}
       </div>
     </div>
