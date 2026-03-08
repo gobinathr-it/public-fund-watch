@@ -137,7 +137,7 @@ const LandingPage = () => {
               transition={{ delay: 0.5, duration: 0.5 }}
               className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
             >
-              <Button asChild size="lg" className="gap-2 rounded-xl px-8 font-semibold shadow-glow ripple-effect text-primary-foreground" style={{ background: "linear-gradient(135deg, hsl(145 65% 35%), hsl(145 55% 28%))" }}>
+              <Button asChild size="lg" className="gap-2 rounded-xl px-8 font-semibold shadow-glow ripple-effect bg-primary text-primary-foreground hover:bg-primary/90">
                 <Link to="/dashboard">
                   {t("landing.exploreDashboard")}
                   <ArrowRight className="h-4 w-4" />
