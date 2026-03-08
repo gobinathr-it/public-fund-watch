@@ -32,10 +32,10 @@ const LandingPage = () => {
     <div className="flex flex-col">
       {/* Hero */}
       <section className="bg-hero relative overflow-hidden py-24 md:py-32">
+        {/* Indian tricolor animated background */}
+        <TricolorBackground />
         {/* Decorative elements */}
         <div className="absolute inset-0 pattern-dots opacity-30" />
-        <div className="absolute top-20 left-10 h-64 w-64 rounded-full bg-secondary/5 blur-3xl" />
-        <div className="absolute bottom-10 right-10 h-48 w-48 rounded-full bg-saffron/5 blur-3xl" />
 
         <div className="container relative">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="mx-auto max-w-3xl text-center">
