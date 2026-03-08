@@ -108,8 +108,8 @@ const SignUpPage = () => {
       <div className="relative z-10 w-full max-w-md space-y-6">
         <div className="text-center">
           <img src={logo} alt="India Fund & Scheme Tracker" className="mx-auto mb-4 h-16 w-16" />
-          <h1 className="font-display text-2xl font-bold text-foreground">Create Account</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Join India Fund & Scheme Tracker</p>
+          <h1 className="font-display text-2xl font-bold text-white">Create Account</h1>
+          <p className="mt-1 text-sm text-white/60">Join India Fund & Scheme Tracker</p>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 rounded-2xl border border-border bg-card/95 backdrop-blur-sm p-6 shadow-lg">
