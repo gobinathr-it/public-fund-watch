@@ -239,9 +239,9 @@ const LoginPage = () => {
         {role === "admin" && (
           <form onSubmit={adminForm.handleSubmit(onAdminSubmit)} className="space-y-4 rounded-2xl border border-white/10 p-6 shadow-2xl backdrop-blur-xl" style={{ background: "rgba(0,0,0,0.35)" }}>
             <div>
-              <Label htmlFor="admin-email">Admin Email</Label>
-              <Input id="admin-email" type="email" placeholder="admin@platform.gov.in" {...adminForm.register("email")} />
-              {adminForm.formState.errors.email && <p className="mt-1 text-xs text-destructive">{adminForm.formState.errors.email.message}</p>}
+              <Label htmlFor="admin-email" className="text-white/80">Admin Email</Label>
+              <Input id="admin-email" type="email" placeholder="admin@platform.gov.in" className={glassInputClass} {...adminForm.register("email")} />
+              {adminForm.formState.errors.email && <p className="mt-1 text-xs text-red-400">{adminForm.formState.errors.email.message}</p>}
             </div>
             <PasswordField id="admin-pw" registerProps={adminForm.register("password")} error={adminForm.formState.errors.password?.message} />
             <Button type="submit" className="w-full rounded-xl font-semibold" disabled={submitting}>
