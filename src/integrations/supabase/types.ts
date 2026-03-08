@@ -180,6 +180,84 @@ export type Database = {
         }
         Relationships: []
       }
+      scholarships: {
+        Row: {
+          age_max: number | null
+          age_min: number | null
+          application_link: string | null
+          application_process: string | null
+          benefit_amount: string
+          category: Database["public"]["Enums"]["scholarship_category"]
+          course_type: string | null
+          created_at: string
+          department: string
+          description: string
+          education_level: Database["public"]["Enums"]["education_level"]
+          eligibility_criteria: string
+          end_date: string | null
+          gender_eligibility: Database["public"]["Enums"]["gender_eligibility"]
+          government_type: Database["public"]["Enums"]["government_type"]
+          id: string
+          income_limit: number | null
+          name: string
+          required_documents: string[]
+          start_date: string | null
+          state: string
+          status: Database["public"]["Enums"]["scheme_status"]
+          updated_at: string
+        }
+        Insert: {
+          age_max?: number | null
+          age_min?: number | null
+          application_link?: string | null
+          application_process?: string | null
+          benefit_amount: string
+          category?: Database["public"]["Enums"]["scholarship_category"]
+          course_type?: string | null
+          created_at?: string
+          department: string
+          description: string
+          education_level?: Database["public"]["Enums"]["education_level"]
+          eligibility_criteria: string
+          end_date?: string | null
+          gender_eligibility?: Database["public"]["Enums"]["gender_eligibility"]
+          government_type?: Database["public"]["Enums"]["government_type"]
+          id?: string
+          income_limit?: number | null
+          name: string
+          required_documents?: string[]
+          start_date?: string | null
+          state?: string
+          status?: Database["public"]["Enums"]["scheme_status"]
+          updated_at?: string
+        }
+        Update: {
+          age_max?: number | null
+          age_min?: number | null
+          application_link?: string | null
+          application_process?: string | null
+          benefit_amount?: string
+          category?: Database["public"]["Enums"]["scholarship_category"]
+          course_type?: string | null
+          created_at?: string
+          department?: string
+          description?: string
+          education_level?: Database["public"]["Enums"]["education_level"]
+          eligibility_criteria?: string
+          end_date?: string | null
+          gender_eligibility?: Database["public"]["Enums"]["gender_eligibility"]
+          government_type?: Database["public"]["Enums"]["government_type"]
+          id?: string
+          income_limit?: number | null
+          name?: string
+          required_documents?: string[]
+          start_date?: string | null
+          state?: string
+          status?: Database["public"]["Enums"]["scheme_status"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -188,7 +266,15 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      education_level:
+        | "School"
+        | "College"
+        | "Engineering"
+        | "Medical"
+        | "Postgraduate"
+        | "All"
       expense_status: "Verified" | "Pending" | "Flagged" | "Rejected"
+      gender_eligibility: "Boys" | "Girls" | "Both"
       government_type: "Central" | "State"
       scheme_category:
         | "Education"
@@ -201,6 +287,15 @@ export type Database = {
         | "Women & Child"
         | "Social Justice"
       scheme_status: "Active" | "Completed" | "Upcoming" | "Suspended"
+      scholarship_category:
+        | "Merit"
+        | "Financial"
+        | "Minority"
+        | "SC/ST"
+        | "BC/OBC"
+        | "Women"
+        | "Disability"
+        | "General"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -328,7 +423,16 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      education_level: [
+        "School",
+        "College",
+        "Engineering",
+        "Medical",
+        "Postgraduate",
+        "All",
+      ],
       expense_status: ["Verified", "Pending", "Flagged", "Rejected"],
+      gender_eligibility: ["Boys", "Girls", "Both"],
       government_type: ["Central", "State"],
       scheme_category: [
         "Education",
@@ -342,6 +446,16 @@ export const Constants = {
         "Social Justice",
       ],
       scheme_status: ["Active", "Completed", "Upcoming", "Suspended"],
+      scholarship_category: [
+        "Merit",
+        "Financial",
+        "Minority",
+        "SC/ST",
+        "BC/OBC",
+        "Women",
+        "Disability",
+        "General",
+      ],
     },
   },
 } as const
