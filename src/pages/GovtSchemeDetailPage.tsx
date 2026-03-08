@@ -1,9 +1,10 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Shield, MapPin, Users, IndianRupee, FileText, ExternalLink, CheckCircle2, AlertCircle, Heart, Clock } from "lucide-react";
+import { ArrowLeft, Shield, MapPin, Users, IndianRupee, FileText, CheckCircle2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useGovernmentScheme } from "@/hooks/useGovernmentSchemes";
+import SchemeApplyButton from "@/components/SchemeApplyButton";
 import { motion } from "framer-motion";
 
 const GovtSchemeDetailPage = () => {
