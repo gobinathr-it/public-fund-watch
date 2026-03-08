@@ -209,23 +209,23 @@ const LoginPage = () => {
         {role === "government" && (
           <form onSubmit={govForm.handleSubmit(onGovSubmit)} className="space-y-4 rounded-2xl border border-white/10 p-6 shadow-2xl backdrop-blur-xl" style={{ background: "rgba(0,0,0,0.35)" }}>
             <div>
-              <Label htmlFor="gov-email">Government Email ID</Label>
-              <Input id="gov-email" type="email" placeholder="name@gov.in" {...govForm.register("email")} />
-              {govForm.formState.errors.email && <p className="mt-1 text-xs text-destructive">{govForm.formState.errors.email.message}</p>}
+              <Label htmlFor="gov-email" className="text-white/80">Government Email ID</Label>
+              <Input id="gov-email" type="email" placeholder="name@gov.in" className={glassInputClass} {...govForm.register("email")} />
+              {govForm.formState.errors.email && <p className="mt-1 text-xs text-red-400">{govForm.formState.errors.email.message}</p>}
             </div>
             <div>
-              <Label htmlFor="gov-dept">Department</Label>
+              <Label htmlFor="gov-dept" className="text-white/80">Department</Label>
               <select
                 id="gov-dept"
                 {...govForm.register("department")}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className={glassInputClass}
               >
-                <option value="">Select Department</option>
+                <option value="" className="bg-neutral-900 text-white">Select Department</option>
                 {DEPARTMENTS.map((d) => (
-                  <option key={d} value={d}>{d}</option>
+                  <option key={d} value={d} className="bg-neutral-900 text-white">{d}</option>
                 ))}
               </select>
-              {govForm.formState.errors.department && <p className="mt-1 text-xs text-destructive">{govForm.formState.errors.department.message}</p>}
+              {govForm.formState.errors.department && <p className="mt-1 text-xs text-red-400">{govForm.formState.errors.department.message}</p>}
             </div>
             <PasswordField id="gov-pw" registerProps={govForm.register("password")} error={govForm.formState.errors.password?.message} />
             <Button type="submit" className="w-full rounded-xl font-semibold" disabled={submitting}>
