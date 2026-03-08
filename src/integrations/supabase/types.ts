@@ -14,7 +14,160 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      district_allocations: {
+        Row: {
+          allocated: number
+          created_at: string
+          district: string
+          id: string
+          scheme_id: string
+          spent: number
+        }
+        Insert: {
+          allocated: number
+          created_at?: string
+          district: string
+          id?: string
+          scheme_id: string
+          spent?: number
+        }
+        Update: {
+          allocated?: number
+          created_at?: string
+          district?: string
+          id?: string
+          scheme_id?: string
+          spent?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "district_allocations_scheme_id_fkey"
+            columns: ["scheme_id"]
+            isOneToOne: false
+            referencedRelation: "schemes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      expenses: {
+        Row: {
+          amount: number
+          category: string
+          created_at: string
+          department: string
+          description: string | null
+          district: string
+          expense_date: string
+          geo_lat: number | null
+          geo_lng: number | null
+          has_proof: boolean
+          id: string
+          proof_url: string | null
+          scheme_id: string
+          status: Database["public"]["Enums"]["expense_status"]
+          title: string
+        }
+        Insert: {
+          amount: number
+          category: string
+          created_at?: string
+          department: string
+          description?: string | null
+          district: string
+          expense_date: string
+          geo_lat?: number | null
+          geo_lng?: number | null
+          has_proof?: boolean
+          id?: string
+          proof_url?: string | null
+          scheme_id: string
+          status?: Database["public"]["Enums"]["expense_status"]
+          title: string
+        }
+        Update: {
+          amount?: number
+          category?: string
+          created_at?: string
+          department?: string
+          description?: string | null
+          district?: string
+          expense_date?: string
+          geo_lat?: number | null
+          geo_lng?: number | null
+          has_proof?: boolean
+          id?: string
+          proof_url?: string | null
+          scheme_id?: string
+          status?: Database["public"]["Enums"]["expense_status"]
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "expenses_scheme_id_fkey"
+            columns: ["scheme_id"]
+            isOneToOne: false
+            referencedRelation: "schemes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      schemes: {
+        Row: {
+          announcement_date: string | null
+          category: Database["public"]["Enums"]["scheme_category"]
+          created_at: string
+          department: string
+          description: string
+          description_ta: string | null
+          end_date: string | null
+          id: string
+          name: string
+          name_ta: string | null
+          spent: number
+          start_date: string | null
+          status: Database["public"]["Enums"]["scheme_status"]
+          target_beneficiaries: string | null
+          total_budget: number
+          updated_at: string
+        }
+        Insert: {
+          announcement_date?: string | null
+          category: Database["public"]["Enums"]["scheme_category"]
+          created_at?: string
+          department: string
+          description: string
+          description_ta?: string | null
+          end_date?: string | null
+          id?: string
+          name: string
+          name_ta?: string | null
+          spent?: number
+          start_date?: string | null
+          status?: Database["public"]["Enums"]["scheme_status"]
+          target_beneficiaries?: string | null
+          total_budget: number
+          updated_at?: string
+        }
+        Update: {
+          announcement_date?: string | null
+          category?: Database["public"]["Enums"]["scheme_category"]
+          created_at?: string
+          department?: string
+          description?: string
+          description_ta?: string | null
+          end_date?: string | null
+          id?: string
+          name?: string
+          name_ta?: string | null
+          spent?: number
+          start_date?: string | null
+          status?: Database["public"]["Enums"]["scheme_status"]
+          target_beneficiaries?: string | null
+          total_budget?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +176,18 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      expense_status: "Verified" | "Pending" | "Flagged" | "Rejected"
+      scheme_category:
+        | "Education"
+        | "Healthcare"
+        | "Agriculture"
+        | "Welfare"
+        | "Infrastructure"
+        | "Housing"
+        | "Employment"
+        | "Women & Child"
+        | "Social Justice"
+      scheme_status: "Active" | "Completed" | "Upcoming" | "Suspended"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +314,20 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      expense_status: ["Verified", "Pending", "Flagged", "Rejected"],
+      scheme_category: [
+        "Education",
+        "Healthcare",
+        "Agriculture",
+        "Welfare",
+        "Infrastructure",
+        "Housing",
+        "Employment",
+        "Women & Child",
+        "Social Justice",
+      ],
+      scheme_status: ["Active", "Completed", "Upcoming", "Suspended"],
+    },
   },
 } as const

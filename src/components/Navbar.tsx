@@ -21,12 +21,14 @@ const Navbar = () => {
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
             <Shield className="h-5 w-5 text-primary-foreground" />
           </div>
-          <span className="font-display text-lg font-bold text-foreground">
-            PFT<span className="text-secondary"> India</span>
-          </span>
+          <div className="flex flex-col">
+            <span className="font-display text-base font-bold leading-tight text-foreground">
+              TN Fund Tracker
+            </span>
+            <span className="text-[10px] leading-tight text-muted-foreground">Tamil Nadu Transparency</span>
+          </div>
         </Link>
 
-        {/* Desktop */}
         <nav className="hidden items-center gap-1 md:flex">
           {navItems.map((item) => (
             <Link
@@ -48,13 +50,11 @@ const Navbar = () => {
           <Button size="sm" className="bg-secondary text-secondary-foreground hover:bg-secondary/90">Sign In</Button>
         </div>
 
-        {/* Mobile toggle */}
         <button onClick={() => setOpen(!open)} className="md:hidden p-2">
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
 
-      {/* Mobile menu */}
       {open && (
         <div className="border-t bg-card p-4 md:hidden">
           <nav className="flex flex-col gap-1">
@@ -64,9 +64,7 @@ const Navbar = () => {
                 to={item.path}
                 onClick={() => setOpen(false)}
                 className={`rounded-md px-3 py-2 text-sm font-medium ${
-                  location.pathname === item.path
-                    ? "bg-muted text-foreground"
-                    : "text-muted-foreground"
+                  location.pathname === item.path ? "bg-muted text-foreground" : "text-muted-foreground"
                 }`}
               >
                 {item.label}

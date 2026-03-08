@@ -7,11 +7,11 @@ const Footer = () => (
         <div className="flex items-center gap-2">
           <Shield className="h-5 w-5 text-secondary" />
           <span className="font-display text-sm font-bold text-foreground">
-            Public Fund Transparency
+            Tamil Nadu Fund Tracker
           </span>
         </div>
         <p className="text-xs text-muted-foreground text-center">
-          An initiative to promote transparency and accountability in public spending. © 2026 PFT India.
+          தமிழ்நாடு அரசு நிதி வெளிப்படைத்தன்மை தளம் • An initiative for public fund transparency. © 2026
         </p>
       </div>
     </div>
