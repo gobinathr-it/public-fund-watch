@@ -40,6 +40,7 @@ const App = () => (
             </Routes>
           </main>
           <Footer />
+          <Chatbot />
         </div>
       </BrowserRouter>
     </TooltipProvider>
