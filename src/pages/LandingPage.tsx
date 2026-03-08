@@ -30,31 +30,38 @@ const LandingPage = () => {
   return (
     <div className="flex flex-col">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-background py-24 md:py-32 pattern-dots">
+      <section className="relative overflow-hidden py-24 md:py-32" style={{ background: "linear-gradient(135deg, hsl(145 65% 30%) 0%, hsl(145 55% 22%) 30%, hsl(0 0% 10%) 60%, hsl(0 0% 7%) 100%)" }}>
+        {/* Decorative colored orbs */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -top-20 -left-20 h-[400px] w-[400px] rounded-full bg-primary/20 blur-[120px]" />
+          <div className="absolute -bottom-20 -right-20 h-[350px] w-[350px] rounded-full bg-saffron/15 blur-[100px]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[300px] w-[300px] rounded-full bg-primary/10 blur-[80px]" />
+        </div>
+        <div className="absolute inset-0 pattern-dots opacity-20" />
         <div className="container relative">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="mx-auto max-w-3xl text-center">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-accent px-5 py-2 text-sm"
+              className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-5 py-2 text-sm backdrop-blur-sm"
             >
-              <Landmark className="h-4 w-4 text-primary" />
-              <span className="text-muted-foreground font-medium">{t("landing.badge")}</span>
+              <Landmark className="h-4 w-4 text-saffron" />
+              <span className="text-white/70 font-medium">{t("landing.badge")}</span>
             </motion.div>
-            <h1 className="font-display text-4xl font-extrabold leading-[1.1] text-foreground md:text-5xl lg:text-6xl">
+            <h1 className="font-display text-4xl font-extrabold leading-[1.1] text-white md:text-5xl lg:text-6xl">
               {t("landing.title1")}{" "}
-              <span className="text-primary">{t("landing.title2")}</span>{" "}
+              <span className="text-saffron">{t("landing.title2")}</span>{" "}
               {t("landing.title3")}
             </h1>
-            <p className="mx-auto mt-6 max-w-xl text-base text-muted-foreground md:text-lg leading-relaxed">
+            <p className="mx-auto mt-6 max-w-xl text-base text-white/60 md:text-lg leading-relaxed">
               {t("landing.subtitle")}
             </p>
             <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
               <Button asChild size="lg" className="gap-2 rounded-xl px-8 font-semibold shadow-glow ripple-effect">
                 <Link to="/dashboard">{t("landing.exploreDashboard")} <ArrowRight className="h-4 w-4" /></Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-xl px-8 font-semibold ripple-effect">
+              <Button asChild variant="outline" size="lg" className="rounded-xl px-8 font-semibold border-white/20 text-white bg-white/10 hover:bg-white/20 ripple-effect">
                 <Link to="/schemes">{t("landing.viewAllSchemes")}</Link>
               </Button>
             </div>
@@ -63,12 +70,12 @@ const LandingPage = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.6 }}
-              className="mt-12 flex items-center justify-center gap-6 text-[11px] text-muted-foreground"
+              className="mt-12 flex items-center justify-center gap-6 text-[11px] text-white/40"
             >
               <span className="flex items-center gap-1.5"><Scale className="h-3.5 w-3.5" /> Transparent</span>
-              <span className="h-3 w-px bg-border" />
+              <span className="h-3 w-px bg-white/15" />
               <span className="flex items-center gap-1.5"><Shield className="h-3.5 w-3.5" /> Verified Data</span>
-              <span className="h-3 w-px bg-border" />
+              <span className="h-3 w-px bg-white/15" />
               <span className="flex items-center gap-1.5"><Users className="h-3.5 w-3.5" /> For Citizens</span>
             </motion.div>
           </motion.div>
