@@ -26,15 +26,17 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const [schemesRes, expensesRes, allocationsRes] = await Promise.all([
+    const [schemesRes, expensesRes, allocationsRes, scholarshipsRes] = await Promise.all([
       supabase.from("schemes").select("*").order("total_budget", { ascending: false }),
       supabase.from("expenses").select("*").order("expense_date", { ascending: false }).limit(50),
       supabase.from("district_allocations").select("*"),
+      supabase.from("scholarships").select("*").order("name"),
     ]);
 
     const schemes = schemesRes.data || [];
     const expenses = expensesRes.data || [];
     const allocations = allocationsRes.data || [];
+    const scholarships = scholarshipsRes.data || [];
 
     const formatCr = (amt: number) => `₹${(amt / 10000000).toFixed(0)} Cr`;
     const totalBudget = schemes.reduce((s: number, sc: any) => s + sc.total_budget, 0);
@@ -68,6 +70,21 @@ serve(async (req) => {
   ${expStr ? `- Expenses: ${expStr}` : ""}`;
     }).join("\n\n");
 
+    // Build scholarship context
+    const scholarshipContext = scholarships.map((sc: any) => {
+      return `**${sc.name}**
+  - State: ${sc.state} | Type: ${sc.government_type} | Category: ${sc.category}
+  - Education Level: ${sc.education_level} | Gender: ${sc.gender_eligibility}
+  - Department: ${sc.department}
+  - Benefit: ${sc.benefit_amount}
+  - Eligibility: ${sc.eligibility_criteria}
+  - Income Limit: ${sc.income_limit ? `₹${(sc.income_limit / 100000).toFixed(1)} Lakh` : "No limit"}
+  - Age: ${sc.age_min || "N/A"}-${sc.age_max || "N/A"} years
+  - Documents: ${(sc.required_documents || []).join(", ")}
+  - How to Apply: ${sc.application_process || "N/A"}
+  - ID: ${sc.id}`;
+    }).join("\n\n");
+
     const systemPrompt = `You are the India Fund Tracker AI Assistant — a helpful, multilingual chatbot for India's Public Fund & Scheme Transparency platform.
 
 The user's preferred language is: ${preferredLang}. ALWAYS respond in ${preferredLang} unless the user writes in a different language, in which case respond in that language.
@@ -80,15 +97,20 @@ ${stateSummary}
 ALL SCHEMES:
 ${schemeContext}
 
+ALL SCHOLARSHIPS (${scholarships.length} total):
+${scholarshipContext}
+
 Your role:
-- Help citizens understand government schemes across ALL Indian states and Central Government
+- Help citizens understand government schemes AND scholarships across ALL Indian states and Central Government
 - Answer accurately using ONLY the data above
-- When asked about a specific state, filter and show only relevant schemes
+- When asked about a specific state, filter and show only relevant schemes/scholarships
+- When asked about scholarships, provide eligibility details, benefit amounts, required documents, and application process
 - Your default response language is ${preferredLang}. If the user writes in another language, respond in that language instead.
 - Use ₹ currency and Indian formatting (Crore, Lakh)
 - Use markdown: tables, bold, bullet points
 - When referencing a scheme, include navigation link: [View Details](/schemes/{scheme_id})
-- Clearly distinguish between Central Government and State Government schemes
+- When referencing a scholarship, include navigation link: [View Details](/scholarships/{scholarship_id})
+- Clearly distinguish between Central Government and State Government schemes/scholarships
 - Suggest follow-up questions
 - If asked about data not available, say so honestly`;
 
