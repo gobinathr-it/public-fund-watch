@@ -33,9 +33,13 @@ const Navbar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-md">
-      {/* Green accent line */}
-      <div className="tricolor-bar" />
+    <header className="sticky top-0 z-50 border-b border-border/40 bg-background/95 backdrop-blur-md">
+      {/* Tricolor accent line */}
+      <div className="flex h-[3px]">
+        <div className="flex-1 bg-saffron" />
+        <div className="flex-1 bg-background" />
+        <div className="flex-1 bg-primary" />
+      </div>
       <div className="container flex h-[68px] items-center justify-between">
         <Link to="/" className="flex items-center gap-3 group min-w-[220px] lg:min-w-[260px] shrink-0">
           <img src={logo} alt="India Fund & Scheme Tracker" className="h-10 w-10 shrink-0 transition-transform duration-200 group-hover:scale-105" />
