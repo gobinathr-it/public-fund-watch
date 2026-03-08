@@ -1,5 +1,5 @@
 import { BarChart3, TrendingUp, FileCheck, AlertTriangle, IndianRupee, Building2, MapPin } from "lucide-react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
 import StatCard from "@/components/StatCard";
 import SchemeCard from "@/components/SchemeCard";
 import { useSchemes, useAllDistrictAllocations, useExpenses, formatCurrency } from "@/hooks/useSchemes";
@@ -9,8 +9,8 @@ import { motion } from "framer-motion";
 import { useMemo } from "react";
 
 const COLORS = [
-  "hsl(215, 50%, 15%)", "hsl(160, 84%, 30%)", "hsl(38, 92%, 50%)",
-  "hsl(210, 100%, 50%)", "hsl(280, 60%, 50%)", "hsl(0, 72%, 51%)",
+  "hsl(222, 47%, 20%)", "hsl(152, 69%, 31%)", "hsl(25, 95%, 53%)",
+  "hsl(217, 91%, 60%)", "hsl(280, 60%, 50%)", "hsl(0, 72%, 51%)",
   "hsl(180, 60%, 40%)", "hsl(330, 70%, 50%)",
 ];
 
@@ -46,7 +46,7 @@ const Dashboard = () => {
       map[st].spent += s.spent;
     });
     return Object.entries(map).map(([name, v]) => ({
-      name: name.length > 15 ? name.slice(0, 12) + "..." : name,
+      name: name.length > 15 ? name.slice(0, 12) + "…" : name,
       allocated: Math.round(v.allocated / 10000000),
       spent: Math.round(v.spent / 10000000),
     })).sort((a, b) => b.allocated - a.allocated).slice(0, 12);
@@ -60,7 +60,7 @@ const Dashboard = () => {
       map[s.department].spent += s.spent;
     });
     return Object.entries(map).map(([name, v]) => ({
-      name: name.length > 25 ? name.slice(0, 22) + "..." : name,
+      name: name.length > 25 ? name.slice(0, 22) + "…" : name,
       allocated: Math.round(v.allocated / 10000000),
       spent: Math.round(v.spent / 10000000),
     })).sort((a, b) => b.allocated - a.allocated);
@@ -82,15 +82,18 @@ const Dashboard = () => {
   const stateLabel = selectedState === "All India" ? "All India" : selectedState;
 
   return (
-    <div className="py-6 md:py-8">
+    <div className="py-8 md:py-10">
       <div className="container space-y-8">
-        <div>
+        {/* Header */}
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+          <p className="text-[11px] font-semibold uppercase tracking-widest text-secondary mb-1">Overview</p>
           <h1 className="font-display text-2xl font-bold md:text-3xl">{t("dashboard.title")}</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             {t("dashboard.subtitle")} — {stateLabel}
           </p>
-        </div>
+        </motion.div>
 
+        {/* Stats */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <StatCard icon={IndianRupee} title={t("stat.totalBudget")} value={formatCurrency(totalBudget)} subtitle={`${schemes.length} ${t("nav.schemes").toLowerCase()}`} variant="info" />
           <StatCard icon={TrendingUp} title={t("stat.totalSpent")} value={formatCurrency(totalSpent)} subtitle={`${utilization}% ${t("stat.utilized")}`} variant="success" />
@@ -98,76 +101,83 @@ const Dashboard = () => {
           <StatCard icon={AlertTriangle} title={t("stat.flaggedItems")} value={String(flaggedCount)} subtitle={t("stat.needsReview")} variant="warning" />
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-3">
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="rounded-lg border bg-card p-5 shadow-card lg:col-span-2">
-            <div className="flex items-center gap-2">
-              <MapPin className="h-4 w-4 text-muted-foreground" />
-              <h3 className="font-display text-base font-semibold">
+        {/* Charts row */}
+        <div className="grid gap-5 lg:grid-cols-3">
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="rounded-2xl border border-border/60 bg-card p-6 shadow-card lg:col-span-2">
+            <div className="flex items-center gap-2 mb-1">
+              <MapPin className="h-4 w-4 text-secondary" />
+              <h3 className="font-display text-sm font-semibold">
                 {selectedState === "All India" ? t("dashboard.stateAllocation") : t("dashboard.topDistricts")}
               </h3>
             </div>
-            <p className="text-xs text-muted-foreground">{t("dashboard.budgetVsSpent")}</p>
-            <div className="mt-4 h-[300px]">
+            <p className="text-[11px] text-muted-foreground mb-4">{t("dashboard.budgetVsSpent")}</p>
+            <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={selectedState === "All India" ? stateData : districtData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(214,20%,90%)" />
-                  <XAxis dataKey="name" tick={{ fontSize: 10 }} angle={-25} textAnchor="end" height={60} />
-                  <YAxis tick={{ fontSize: 11 }} />
-                  <Tooltip formatter={(v: number) => `₹${v} Cr`} />
-                  <Bar dataKey="allocated" fill="hsl(215,50%,15%)" radius={[4, 4, 0, 0]} name="Allocated" barSize={16} />
-                  <Bar dataKey="spent" fill="hsl(160,84%,30%)" radius={[4, 4, 0, 0]} name="Spent" barSize={16} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(220,13%,91%)" strokeOpacity={0.7} />
+                  <XAxis dataKey="name" tick={{ fontSize: 10, fill: "hsl(220,9%,46%)" }} angle={-25} textAnchor="end" height={60} />
+                  <YAxis tick={{ fontSize: 10, fill: "hsl(220,9%,46%)" }} />
+                  <Tooltip
+                    formatter={(v: number) => `₹${v} Cr`}
+                    contentStyle={{ borderRadius: 12, border: "1px solid hsl(220,13%,91%)", boxShadow: "0 4px 16px rgba(0,0,0,0.06)" }}
+                  />
+                  <Bar dataKey="allocated" fill="hsl(222,47%,20%)" radius={[6, 6, 0, 0]} name="Allocated" barSize={14} />
+                  <Bar dataKey="spent" fill="hsl(152,69%,31%)" radius={[6, 6, 0, 0]} name="Spent" barSize={14} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="rounded-lg border bg-card p-5 shadow-card">
-            <h3 className="font-display text-base font-semibold">{t("dashboard.byCategory")}</h3>
-            <p className="text-xs text-muted-foreground">{t("dashboard.fundDistribution")}</p>
-            <div className="mt-4 h-[220px]">
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="rounded-2xl border border-border/60 bg-card p-6 shadow-card">
+            <h3 className="font-display text-sm font-semibold">{t("dashboard.byCategory")}</h3>
+            <p className="text-[11px] text-muted-foreground mb-2">{t("dashboard.fundDistribution")}</p>
+            <div className="h-[200px]">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
-                  <Pie data={categoryData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={50} outerRadius={80} paddingAngle={3}>
+                  <Pie data={categoryData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={48} outerRadius={76} paddingAngle={3} strokeWidth={0}>
                     {categoryData.map((entry, i) => <Cell key={i} fill={entry.fill} />)}
                   </Pie>
-                  <Tooltip formatter={(v: number) => `${v}%`} />
+                  <Tooltip formatter={(v: number) => `${v}%`} contentStyle={{ borderRadius: 12, border: "1px solid hsl(220,13%,91%)" }} />
                 </PieChart>
               </ResponsiveContainer>
             </div>
-            <div className="mt-2 space-y-1.5">
+            <div className="mt-3 space-y-1.5">
               {categoryData.map(c => (
-                <div key={c.name} className="flex items-center gap-2 text-xs">
-                  <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: c.fill }} />
-                  <span className="text-muted-foreground">{c.name}</span>
-                  <span className="ml-auto font-medium">{c.value}%</span>
+                <div key={c.name} className="flex items-center gap-2 text-[11px]">
+                  <span className="h-2 w-2 rounded-full flex-shrink-0" style={{ backgroundColor: c.fill }} />
+                  <span className="text-muted-foreground truncate">{c.name}</span>
+                  <span className="ml-auto font-semibold text-foreground">{c.value}%</span>
                 </div>
               ))}
             </div>
           </motion.div>
         </div>
 
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="rounded-lg border bg-card p-5 shadow-card">
-          <div className="flex items-center gap-2">
-            <Building2 className="h-4 w-4 text-muted-foreground" />
-            <h3 className="font-display text-base font-semibold">{t("dashboard.deptSpending")}</h3>
+        {/* Department chart */}
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="rounded-2xl border border-border/60 bg-card p-6 shadow-card">
+          <div className="flex items-center gap-2 mb-4">
+            <Building2 className="h-4 w-4 text-secondary" />
+            <h3 className="font-display text-sm font-semibold">{t("dashboard.deptSpending")}</h3>
           </div>
-          <div className="mt-4 h-[300px]">
+          <div className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={deptData} layout="vertical">
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(214,20%,90%)" />
-                <XAxis type="number" tick={{ fontSize: 11 }} />
-                <YAxis dataKey="name" type="category" tick={{ fontSize: 11 }} width={180} />
-                <Tooltip formatter={(v: number) => `₹${v} Cr`} />
-                <Bar dataKey="allocated" fill="hsl(215,50%,15%)" radius={[0, 4, 4, 0]} name="Allocated" barSize={14} />
-                <Bar dataKey="spent" fill="hsl(160,84%,30%)" radius={[0, 4, 4, 0]} name="Spent" barSize={14} />
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(220,13%,91%)" strokeOpacity={0.7} />
+                <XAxis type="number" tick={{ fontSize: 10, fill: "hsl(220,9%,46%)" }} />
+                <YAxis dataKey="name" type="category" tick={{ fontSize: 10, fill: "hsl(220,9%,46%)" }} width={180} />
+                <Tooltip formatter={(v: number) => `₹${v} Cr`} contentStyle={{ borderRadius: 12, border: "1px solid hsl(220,13%,91%)" }} />
+                <Bar dataKey="allocated" fill="hsl(222,47%,20%)" radius={[0, 6, 6, 0]} name="Allocated" barSize={12} />
+                <Bar dataKey="spent" fill="hsl(152,69%,31%)" radius={[0, 6, 6, 0]} name="Spent" barSize={12} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </motion.div>
 
+        {/* Schemes */}
         <div>
+          <p className="text-[11px] font-semibold uppercase tracking-widest text-secondary mb-2">All Programmes</p>
           <h2 className="font-display text-xl font-bold">{t("dashboard.allActiveSchemes")}</h2>
-          <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {schemes.map((s, i) => <SchemeCard key={s.id} scheme={s} index={i} />)}
           </div>
         </div>
