@@ -165,6 +165,42 @@
     box-shadow: var(--shadow-elevated);
   }
 
+  /* Button glow on hover */
+  .btn-glow {
+    @apply relative overflow-hidden;
+  }
+  .btn-glow::before {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), hsl(var(--secondary) / 0.25) 0%, transparent 60%);
+  }
+  .btn-glow:hover::before {
+    opacity: 1;
+  }
+
+  /* Ripple effect */
+  .ripple-effect {
+    @apply relative overflow-hidden;
+  }
+  .ripple-effect::after {
+    content: '';
+    @apply absolute rounded-full bg-foreground/5 pointer-events-none;
+    width: 100px;
+    height: 100px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  .ripple-effect:active::after {
+    animation: ripple-anim 0.4s ease-out;
+  }
+
+  @keyframes ripple-anim {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 0.4; }
+    100% { transform: translate(-50%, -50%) scale(4); opacity: 0; }
+  }
+
   /* Subtle shine effect */
   .shine-effect {
     position: relative;

@@ -4,6 +4,7 @@ import { ArrowRight, BarChart3, Eye, FileCheck, Shield, TrendingUp, Users, MapPi
 import { Button } from "@/components/ui/button";
 import StatCard from "@/components/StatCard";
 import SchemeCard from "@/components/SchemeCard";
+import TricolorBackground from "@/components/TricolorBackground";
 import { useSchemes, formatCurrency } from "@/hooks/useSchemes";
 import { useStateContext } from "@/contexts/StateContext";
 import { useLanguage } from "@/contexts/LanguageContext";
