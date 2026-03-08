@@ -12,6 +12,8 @@ import LandingPage from "./pages/LandingPage";
 import Dashboard from "./pages/Dashboard";
 import SchemesPage from "./pages/SchemesPage";
 import SchemeDetailPage from "./pages/SchemeDetailPage";
+import ScholarshipsPage from "./pages/ScholarshipsPage";
+import ScholarshipDetailPage from "./pages/ScholarshipDetailPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import NotFound from "./pages/NotFound";
 
