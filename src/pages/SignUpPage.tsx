@@ -88,14 +88,22 @@ const SignUpPage = () => {
     <div className="relative flex min-h-screen items-center justify-center bg-background px-4 py-10 overflow-hidden">
       {/* Layer 1: Subtle gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-muted/20 via-background to-muted/20" />
-      {/* Layer 2: Ashoka Lion Capital watermark */}
-      <img
-        src={ashokaEmblem}
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px] md:w-[400px] lg:w-[500px] opacity-[0.06] select-none grayscale"
-        style={{ filter: "grayscale(100%) brightness(1.2)" }}
-      />
+      {/* Layer 2: Ashoka Chakra watermark */}
+      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none">
+        <svg viewBox="0 0 200 200" className="h-[280px] w-[280px] md:h-[420px] md:w-[420px] lg:h-[520px] lg:w-[520px] text-ashoka-blue/[0.06]" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="90" stroke="currentColor" strokeWidth="1.5" />
+          <circle cx="100" cy="100" r="20" stroke="currentColor" strokeWidth="1.5" />
+          <circle cx="100" cy="100" r="50" stroke="currentColor" strokeWidth="0.5" opacity="0.6" />
+          {Array.from({ length: 24 }).map((_, i) => {
+            const angle = (i * 15 * Math.PI) / 180;
+            const x1 = 100 + 22 * Math.cos(angle);
+            const y1 = 100 + 22 * Math.sin(angle);
+            const x2 = 100 + 88 * Math.cos(angle);
+            const y2 = 100 + 88 * Math.sin(angle);
+            return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="0.8" />;
+          })}
+        </svg>
+      </div>
       {/* Layer 3: Form card */}
       <div className="relative z-10 w-full max-w-md space-y-6">
         <div className="text-center">
