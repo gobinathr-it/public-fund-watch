@@ -193,9 +193,9 @@ const LoginPage = () => {
         {role === "public" && (
           <form onSubmit={publicForm.handleSubmit(onPublicSubmit)} className="space-y-4 rounded-2xl border border-white/10 p-6 shadow-2xl backdrop-blur-xl" style={{ background: "rgba(0,0,0,0.35)" }}>
             <div>
-              <Label htmlFor="pub-mobile">Mobile Number</Label>
-              <Input id="pub-mobile" placeholder="10-digit mobile number" {...publicForm.register("mobileNumber")} />
-              {publicForm.formState.errors.mobileNumber && <p className="mt-1 text-xs text-destructive">{publicForm.formState.errors.mobileNumber.message}</p>}
+              <Label htmlFor="pub-mobile" className="text-white/80">Mobile Number</Label>
+              <Input id="pub-mobile" placeholder="10-digit mobile number" className={glassInputClass} {...publicForm.register("mobileNumber")} />
+              {publicForm.formState.errors.mobileNumber && <p className="mt-1 text-xs text-red-400">{publicForm.formState.errors.mobileNumber.message}</p>}
             </div>
             <PasswordField id="pub-pw" registerProps={publicForm.register("password")} error={publicForm.formState.errors.password?.message} />
             <Button type="submit" className="w-full rounded-xl font-semibold" disabled={submitting}>
