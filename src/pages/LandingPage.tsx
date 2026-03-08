@@ -66,13 +66,11 @@ const LandingPage = () => {
       </div>
 
       {/* Hero */}
-      <section className="relative overflow-hidden py-28 md:py-36" style={{ background: "linear-gradient(145deg, hsl(145 65% 28%) 0%, hsl(145 50% 18%) 25%, hsl(210 15% 10%) 55%, hsl(0 0% 5%) 100%)" }}>
-        {/* Ashoka Chakra watermark */}
+      <section className="relative overflow-hidden py-28 md:py-36 bg-hero">
+        {/* Ashoka Chakra watermark - slow spinning */}
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <AshokaChakra className="h-[500px] w-[500px] md:h-[650px] md:w-[650px] text-white/[0.06]" />
+          <AshokaChakra className="h-[500px] w-[500px] md:h-[650px] md:w-[650px] text-white/[0.05] animate-slow-spin" />
         </div>
-
-        {/* India map outline removed for cleaner look */}
 
         {/* Decorative orbs */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -81,7 +79,7 @@ const LandingPage = () => {
           <div className="absolute top-1/3 left-1/4 h-[250px] w-[250px] rounded-full bg-ashoka-blue/8 blur-[100px]" />
         </div>
 
-        <div className="absolute inset-0 pattern-dots opacity-15" />
+        <div className="absolute inset-0 pattern-dots opacity-10" />
 
         <div className="container relative">
           <motion.div
