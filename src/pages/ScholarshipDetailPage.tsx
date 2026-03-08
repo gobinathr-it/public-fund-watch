@@ -1,10 +1,10 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, GraduationCap, MapPin, Calendar, Users, IndianRupee, FileText, ExternalLink, CheckCircle2, AlertCircle } from "lucide-react";
+import { ArrowLeft, GraduationCap, MapPin, Users, IndianRupee, FileText, CheckCircle2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { useScholarship } from "@/hooks/useScholarships";
+import SchemeApplyButton from "@/components/SchemeApplyButton";
 import { motion } from "framer-motion";
 
 const ScholarshipDetailPage = () => {
