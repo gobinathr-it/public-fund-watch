@@ -30,8 +30,7 @@ const ScholarshipCard = ({ s, index }: { s: Scholarship; index: number }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.04, duration: 0.35 }}
     >
-      <Link to={`/scholarships/${s.id}`}>
-        <Card className="group hover-lift cursor-pointer border-border/60 bg-card transition-all duration-300 hover:border-secondary/40 hover:shadow-md">
+        <Card className="group hover-lift border-border/60 bg-card transition-all duration-300 hover:border-secondary/40 hover:shadow-md">
           <CardContent className="p-5 space-y-3">
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1 min-w-0">
