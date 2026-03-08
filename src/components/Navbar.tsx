@@ -15,6 +15,7 @@ const Navbar = () => {
     { label: t("nav.home"), path: "/" },
     { label: t("nav.dashboard"), path: "/dashboard" },
     { label: t("nav.schemes"), path: "/schemes" },
+    { label: "Scholarships", path: "/scholarships" },
     { label: t("nav.analytics"), path: "/analytics" },
   ];
 
