@@ -67,9 +67,11 @@ const LandingPage = () => {
 
       {/* Hero */}
       <section className="relative overflow-hidden py-28 md:py-36 bg-hero">
-        {/* Ashoka Chakra watermark - slow spinning */}
+        {/* Ashoka Chakra watermark - spinning with glow */}
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <AshokaChakra className="h-[500px] w-[500px] md:h-[650px] md:w-[650px] text-white/[0.05] animate-slow-spin" />
+          {/* Radial glow behind chakra */}
+          <div className="absolute h-[550px] w-[550px] md:h-[700px] md:w-[700px] rounded-full bg-ashoka-blue/[0.06] blur-[80px]" />
+          <AshokaChakra className="h-[550px] w-[550px] md:h-[700px] md:w-[700px] text-white/[0.10] animate-[slow-spin_28s_linear_infinite]" />
         </div>
 
         {/* Decorative orbs */}
