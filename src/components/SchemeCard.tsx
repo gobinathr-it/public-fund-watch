@@ -3,6 +3,7 @@ import { ArrowRight, Building2, MapPin } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency, type Scheme } from "@/hooks/useSchemes";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { motion } from "framer-motion";
 
 const statusColors: Record<string, string> = {
@@ -13,6 +14,7 @@ const statusColors: Record<string, string> = {
 };
 
 const SchemeCard = ({ scheme, index }: { scheme: Scheme; index: number }) => {
+  const { t } = useLanguage();
   const progress = scheme.total_budget > 0 ? Math.round((scheme.spent / scheme.total_budget) * 100) : 0;
 
   return (
@@ -36,7 +38,7 @@ const SchemeCard = ({ scheme, index }: { scheme: Scheme; index: number }) => {
               </Badge>
               {scheme.government_type === "Central" && (
                 <Badge variant="outline" className="bg-info/10 text-info border-info/20 text-[10px]">
-                  Central
+                  {t("card.centralGovt")}
                 </Badge>
               )}
             </div>
@@ -65,12 +67,12 @@ const SchemeCard = ({ scheme, index }: { scheme: Scheme; index: number }) => {
         <div className="mt-4 space-y-2">
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">
-              Spent: <span className="font-semibold text-foreground">{formatCurrency(scheme.spent)}</span>
+              {t("card.spent")}: <span className="font-semibold text-foreground">{formatCurrency(scheme.spent)}</span>
             </span>
-            <span className="text-muted-foreground">of {formatCurrency(scheme.total_budget)}</span>
+            <span className="text-muted-foreground">{t("card.budget")}: {formatCurrency(scheme.total_budget)}</span>
           </div>
           <Progress value={progress} className="h-2" />
-          <p className="text-right text-xs font-medium text-muted-foreground">{progress}% utilized</p>
+          <p className="text-right text-xs font-medium text-muted-foreground">{progress}% {t("stat.utilized")}</p>
         </div>
       </Link>
     </motion.div>
