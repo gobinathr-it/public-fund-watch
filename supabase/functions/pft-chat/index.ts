@@ -17,7 +17,6 @@ serve(async (req) => {
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
-    // Fetch live scheme data from database
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseKey);
@@ -32,44 +31,59 @@ serve(async (req) => {
     const expenses = expensesRes.data || [];
     const allocations = allocationsRes.data || [];
 
-    // Build dynamic context
     const formatCr = (amt: number) => `₹${(amt / 10000000).toFixed(0)} Cr`;
     const totalBudget = schemes.reduce((s: number, sc: any) => s + sc.total_budget, 0);
     const totalSpent = schemes.reduce((s: number, sc: any) => s + sc.spent, 0);
+
+    // Group by state
+    const stateMap: Record<string, { budget: number; spent: number; count: number }> = {};
+    schemes.forEach((s: any) => {
+      const st = s.state || "Unknown";
+      if (!stateMap[st]) stateMap[st] = { budget: 0, spent: 0, count: 0 };
+      stateMap[st].budget += s.total_budget;
+      stateMap[st].spent += s.spent;
+      stateMap[st].count++;
+    });
+    const stateSummary = Object.entries(stateMap).map(([name, v]) => `${name}: ${v.count} schemes, Budget ${formatCr(v.budget)}, Spent ${formatCr(v.spent)}`).join("\n");
 
     let schemeContext = schemes.map((s: any) => {
       const pct = Math.round((s.spent / s.total_budget) * 100);
       const dists = allocations.filter((a: any) => a.scheme_id === s.id);
       const exps = expenses.filter((e: any) => e.scheme_id === s.id);
       const distStr = dists.map((d: any) => `${d.district}: Allocated ${formatCr(d.allocated)}, Spent ${formatCr(d.spent)}`).join("; ");
-      const expStr = exps.slice(0, 5).map((e: any) => `${e.title} (${formatCr(e.amount)}, ${e.status}, ${e.district}, ${e.expense_date})`).join("; ");
+      const expStr = exps.slice(0, 3).map((e: any) => `${e.title} (${formatCr(e.amount)}, ${e.status})`).join("; ");
 
       return `**${s.name}** (${s.name_ta || ""})
-  - ID: ${s.id} | Category: ${s.category} | Status: ${s.status}
+  - State: ${s.state || "N/A"} | Type: ${s.government_type} | Category: ${s.category} | Status: ${s.status}
   - Department: ${s.department}
   - Budget: ${formatCr(s.total_budget)} | Spent: ${formatCr(s.spent)} (${pct}%) | Remaining: ${formatCr(s.total_budget - s.spent)}
   - Beneficiaries: ${s.target_beneficiaries || "N/A"}
-  - Description: ${s.description}
+  - ID: ${s.id}
   ${distStr ? `- Districts: ${distStr}` : ""}
-  ${expStr ? `- Recent Expenses: ${expStr}` : ""}`;
+  ${expStr ? `- Expenses: ${expStr}` : ""}`;
     }).join("\n\n");
 
-    const systemPrompt = `You are the Tamil Nadu Fund Tracker AI Assistant — a helpful, multilingual chatbot for Tamil Nadu's Public Fund & Scheme Transparency platform.
+    const systemPrompt = `You are the India Fund Tracker AI Assistant — a helpful, multilingual chatbot for India's Public Fund & Scheme Transparency platform.
 
-LIVE DATABASE DATA (Total: ${formatCr(totalBudget)} budget, ${formatCr(totalSpent)} spent, ${Math.round(totalSpent / totalBudget * 100)}% utilized):
+NATIONAL OVERVIEW: ${formatCr(totalBudget)} total budget, ${formatCr(totalSpent)} spent (${Math.round(totalSpent / totalBudget * 100)}% utilized)
 
+STATE-WISE SUMMARY:
+${stateSummary}
+
+ALL SCHEMES:
 ${schemeContext}
 
 Your role:
-- Help citizens understand Tamil Nadu government schemes, budgets, and spending
+- Help citizens understand government schemes across ALL Indian states and Central Government
 - Answer accurately using ONLY the data above
-- Respond in the SAME LANGUAGE the user writes in (Tamil, Hindi, Telugu, Malayalam, Kannada, Bengali, Marathi, English)
+- When asked about a specific state, filter and show only relevant schemes
+- Respond in the SAME LANGUAGE the user writes in (Tamil, Hindi, Telugu, Malayalam, Kannada, Bengali, Marathi, English, etc.)
 - Use ₹ currency and Indian formatting (Crore, Lakh)
 - Use markdown: tables, bold, bullet points
 - When referencing a scheme, include navigation link: [View Details](/schemes/{scheme_id})
+- Clearly distinguish between Central Government and State Government schemes
 - Suggest follow-up questions
-- If asked about data not available, say so honestly
-- Explain complex financial data simply for citizens`;
+- If asked about data not available, say so honestly`;
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",

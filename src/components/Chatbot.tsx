@@ -10,21 +10,18 @@ type Msg = { role: "user" | "assistant"; content: string };
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/pft-chat`;
 
 const suggestions = [
-  "Show all Tamil Nadu government schemes",
-  "Which scheme has the highest budget?",
-  "சென்னையில் எந்த திட்டங்கள் நடைபெறுகின்றன?",
-  "Show spending details of breakfast scheme",
-  "கலைஞர் மகளிர் உரிமைத் திட்டம் பற்றி சொல்லுங்கள்",
-  "Which district received the most funds?",
-  "Show healthcare schemes",
-  "How much has been spent on housing?",
+  "Show all Central Government schemes",
+  "What schemes are running in Tamil Nadu?",
+  "Show all schemes in Karnataka",
+  "Which state received the highest funding?",
+  "कर्नाटक में कौन सी योजनाएं चल रही हैं?",
+  "Show healthcare schemes across India",
+  "கேரளாவில் என்ன திட்டங்கள் உள்ளன?",
+  "Compare spending across states",
 ];
 
 async function streamChat({
-  messages,
-  onDelta,
-  onDone,
-  onError,
+  messages, onDelta, onDone, onError,
 }: {
   messages: Msg[];
   onDelta: (text: string) => void;
@@ -179,8 +176,8 @@ const Chatbot = () => {
               <div className="flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-secondary" />
                 <div>
-                  <span className="font-display text-sm font-semibold text-primary-foreground">TN Fund Tracker AI</span>
-                  <p className="text-[10px] text-primary-foreground/60">Multilingual • Live Data</p>
+                  <span className="font-display text-sm font-semibold text-primary-foreground">India Fund Tracker AI</span>
+                  <p className="text-[10px] text-primary-foreground/60">Multilingual • All States • Live Data</p>
                 </div>
               </div>
               <button onClick={() => setOpen(false)} className="text-primary-foreground/70 hover:text-primary-foreground">
@@ -192,7 +189,7 @@ const Chatbot = () => {
               {messages.length === 0 && (
                 <div className="space-y-3">
                   <p className="text-sm text-muted-foreground">
-                    👋 வணக்கம்! I can help you explore Tamil Nadu government schemes and spending data. Ask in any language.
+                    🇮🇳 Namaste! I can help you explore government schemes and spending data across all Indian states. Ask in any language.
                   </p>
                   <div className="space-y-2">
                     <p className="text-xs font-medium text-muted-foreground">Quick questions:</p>
@@ -233,7 +230,7 @@ const Chatbot = () => {
                 <button type="button" onClick={toggleVoice} className={`flex-shrink-0 rounded-md p-2 transition-colors ${listening ? "bg-destructive/10 text-destructive" : "text-muted-foreground hover:bg-muted"}`} title="Voice input">
                   {listening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
                 </button>
-                <input ref={inputRef} value={input} onChange={e => setInput(e.target.value)} placeholder="Ask about any scheme..." className="flex-1 rounded-md border bg-background px-3 py-2 text-sm outline-none focus:ring-1 focus:ring-secondary" disabled={loading} />
+                <input ref={inputRef} value={input} onChange={e => setInput(e.target.value)} placeholder="Ask about any scheme or state..." className="flex-1 rounded-md border bg-background px-3 py-2 text-sm outline-none focus:ring-1 focus:ring-secondary" disabled={loading} />
                 <Button type="submit" size="sm" disabled={!input.trim() || loading} className="bg-secondary text-secondary-foreground hover:bg-secondary/90 h-9 w-9 p-0">
                   <Send className="h-4 w-4" />
                 </Button>
