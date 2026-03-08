@@ -234,7 +234,7 @@ const LoginPage = () => {
 
         {/* Admin Form */}
         {role === "admin" && (
-          <form onSubmit={adminForm.handleSubmit(onAdminSubmit)} className="space-y-4 rounded-2xl border border-border bg-card/95 backdrop-blur-sm p-6 shadow-lg">
+          <form onSubmit={adminForm.handleSubmit(onAdminSubmit)} className="space-y-4 rounded-2xl border border-white/10 p-6 shadow-2xl backdrop-blur-xl" style={{ background: "rgba(0,0,0,0.35)" }}>
             <div>
               <Label htmlFor="admin-email">Admin Email</Label>
               <Input id="admin-email" type="email" placeholder="admin@platform.gov.in" {...adminForm.register("email")} />
