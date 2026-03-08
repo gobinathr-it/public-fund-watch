@@ -67,7 +67,7 @@ const SignUpPage = () => {
       }
 
       toast({ title: "Account created!", description: "Welcome to the platform." });
-      navigate("/dashboard");
+      navigate("/");
     } catch (err: any) {
       toast({ title: "Sign up failed", description: err.message, variant: "destructive" });
     } finally {
