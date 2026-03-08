@@ -90,18 +90,25 @@ export const universalFallback = {
 
 /**
  * Get the best fallback portal for a scheme/scholarship.
+ * Priority: scheme name → category → state → universal fallback
  */
 export function getFallbackPortal(
   state: string,
   category: string,
-  governmentType: string
+  governmentType: string,
+  schemeName?: string
 ): { name: string; url: string } {
-  // For central schemes, try category-specific portal first
+  // 1. Try scheme-specific portal first (highest priority)
+  if (schemeName && schemeSpecificPortals[schemeName]) {
+    return schemeSpecificPortals[schemeName];
+  }
+
+  // 2. For central schemes, try category-specific portal
   if (governmentType === "Central") {
     return centralPortals[category] || universalFallback;
   }
 
-  // For state schemes, try state portal first
+  // 3. For state schemes, try state portal
   return statePortals[state] || universalFallback;
 }
 
