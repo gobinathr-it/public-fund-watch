@@ -72,10 +72,7 @@ const LandingPage = () => {
           <AshokaChakra className="h-[500px] w-[500px] md:h-[650px] md:w-[650px] text-white/[0.06]" />
         </div>
 
-        {/* India map outline */}
-        <div className="pointer-events-none absolute right-0 top-0 h-full">
-          <IndiaMapOutline className="h-full w-auto text-white" />
-        </div>
+        {/* India map outline removed for cleaner look */}
 
         {/* Decorative orbs */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
