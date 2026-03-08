@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Search, Heart, Shield, Users, Accessibility, Clock, Baby, Tractor, ArrowRight, MapPin, IndianRupee } from "lucide-react";
+import { Search, Heart, Shield, Users, Accessibility, Clock, Baby, Tractor, ArrowRight, MapPin, IndianRupee, ExternalLink } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
