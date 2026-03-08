@@ -39,6 +39,8 @@ const App = () => (
                   <Route path="/schemes/:id" element={<SchemeDetailPage />} />
                   <Route path="/scholarships" element={<ScholarshipsPage />} />
                   <Route path="/scholarships/:id" element={<ScholarshipDetailPage />} />
+                  <Route path="/govt-schemes" element={<GovtSchemesPage />} />
+                  <Route path="/govt-schemes/:id" element={<GovtSchemeDetailPage />} />
                   <Route path="/analytics" element={<AnalyticsPage />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>

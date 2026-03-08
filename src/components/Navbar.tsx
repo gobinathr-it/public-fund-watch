@@ -16,6 +16,7 @@ const Navbar = () => {
     { label: t("nav.dashboard"), path: "/dashboard" },
     { label: t("nav.schemes"), path: "/schemes" },
     { label: "Scholarships", path: "/scholarships" },
+    { label: "Govt Schemes", path: "/govt-schemes" },
     { label: t("nav.analytics"), path: "/analytics" },
   ];
 
