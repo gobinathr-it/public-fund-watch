@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Building2 } from "lucide-react";
+import { ArrowRight, Building2, MapPin } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency, type Scheme } from "@/hooks/useSchemes";
@@ -34,6 +34,11 @@ const SchemeCard = ({ scheme, index }: { scheme: Scheme; index: number }) => {
               <Badge variant="outline" className="text-muted-foreground">
                 {scheme.category}
               </Badge>
+              {scheme.government_type === "Central" && (
+                <Badge variant="outline" className="bg-info/10 text-info border-info/20 text-[10px]">
+                  Central
+                </Badge>
+              )}
             </div>
             <h3 className="font-display text-lg font-semibold text-foreground group-hover:text-secondary transition-colors">
               {scheme.name}
@@ -41,9 +46,17 @@ const SchemeCard = ({ scheme, index }: { scheme: Scheme; index: number }) => {
             {scheme.name_ta && (
               <p className="text-sm text-muted-foreground">{scheme.name_ta}</p>
             )}
-            <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-              <Building2 className="h-3.5 w-3.5" />
-              {scheme.department}
+            <div className="flex items-center gap-3 text-xs text-muted-foreground flex-wrap">
+              <span className="flex items-center gap-1">
+                <Building2 className="h-3.5 w-3.5" />
+                {scheme.department}
+              </span>
+              {scheme.state && (
+                <span className="flex items-center gap-1">
+                  <MapPin className="h-3.5 w-3.5" />
+                  {scheme.state}
+                </span>
+              )}
             </div>
           </div>
           <ArrowRight className="h-5 w-5 text-muted-foreground opacity-0 transition-all group-hover:opacity-100 group-hover:translate-x-1" />

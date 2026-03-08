@@ -63,19 +63,24 @@ const SchemeDetailPage = () => {
           <Link to="/schemes"><ArrowLeft className="h-4 w-4" /> All Schemes</Link>
         </Button>
 
-        {/* Header card */}
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="rounded-lg border bg-card p-6 shadow-card">
           <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
             <div className="space-y-2">
               <div className="flex flex-wrap items-center gap-2">
                 <Badge variant="outline" className="bg-success/10 text-success border-success/20">{scheme.status}</Badge>
                 <Badge variant="outline">{scheme.category}</Badge>
+                {scheme.government_type === "Central" && (
+                  <Badge variant="outline" className="bg-info/10 text-info border-info/20">Central Govt</Badge>
+                )}
               </div>
               <h1 className="font-display text-2xl font-bold md:text-3xl">{scheme.name}</h1>
               {scheme.name_ta && <p className="text-lg text-muted-foreground">{scheme.name_ta}</p>}
               <p className="max-w-2xl text-sm text-muted-foreground">{scheme.description}</p>
               <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
                 <span className="flex items-center gap-1"><Building2 className="h-3.5 w-3.5" />{scheme.department}</span>
+                {scheme.state && (
+                  <span className="flex items-center gap-1"><MapPin className="h-3.5 w-3.5" />{scheme.state}</span>
+                )}
                 {scheme.target_beneficiaries && (
                   <span className="flex items-center gap-1"><Users className="h-3.5 w-3.5" />{scheme.target_beneficiaries}</span>
                 )}
@@ -100,7 +105,6 @@ const SchemeDetailPage = () => {
         </motion.div>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          {/* District chart */}
           {districtData.length > 0 && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="rounded-lg border bg-card p-5 shadow-card">
               <h3 className="font-display text-base font-semibold">District-wise Allocation</h3>
@@ -119,7 +123,6 @@ const SchemeDetailPage = () => {
             </motion.div>
           )}
 
-          {/* Expenses */}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }} className="rounded-lg border bg-card p-5 shadow-card">
             <h3 className="font-display text-base font-semibold">Recent Expenses ({expenses.length})</h3>
             <div className="mt-4 space-y-3 max-h-[350px] overflow-y-auto">
@@ -154,7 +157,6 @@ const SchemeDetailPage = () => {
           </motion.div>
         </div>
 
-        {/* District table */}
         {allocations.length > 0 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="rounded-lg border bg-card p-5 shadow-card">
             <h3 className="font-display text-base font-semibold">District Breakdown</h3>
