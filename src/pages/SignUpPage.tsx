@@ -105,14 +105,14 @@ const SignUpPage = () => {
         </svg>
       </div>
       {/* Layer 3: Form card */}
-      <div className="relative z-10 w-full max-w-md space-y-6">
+      <div className="relative z-10 w-full max-w-[560px] space-y-6 px-2 sm:px-0">
         <div className="text-center">
           <img src={logo} alt="India Fund & Scheme Tracker" className="mx-auto mb-4 h-16 w-16" />
           <h1 className="font-display text-2xl font-bold text-white">Create Account</h1>
           <p className="mt-1 text-sm text-white/60">Join India Fund & Scheme Tracker</p>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 rounded-2xl border border-white/10 p-6 shadow-2xl backdrop-blur-xl" style={{ background: "rgba(0,0,0,0.35)" }}>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 rounded-2xl border border-white/10 p-7 sm:p-9 shadow-2xl backdrop-blur-xl" style={{ background: "rgba(0,0,0,0.35)" }}>
           <div>
             <Label htmlFor="fullName" className="text-white/80">Full Name</Label>
             <Input id="fullName" placeholder="Enter your full name" className="border-white/15 bg-white/[0.08] text-white placeholder:text-white/40 focus-visible:ring-primary/50" {...register("fullName")} />
