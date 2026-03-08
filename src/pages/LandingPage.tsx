@@ -30,7 +30,14 @@ const LandingPage = () => {
   return (
     <div className="flex flex-col">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-background py-24 md:py-32 pattern-dots">
+      <section className="relative overflow-hidden py-24 md:py-32" style={{ background: "linear-gradient(135deg, hsl(145 65% 30%) 0%, hsl(145 55% 22%) 30%, hsl(0 0% 10%) 60%, hsl(0 0% 7%) 100%)" }}>
+        {/* Decorative colored orbs */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -top-20 -left-20 h-[400px] w-[400px] rounded-full bg-primary/20 blur-[120px]" />
+          <div className="absolute -bottom-20 -right-20 h-[350px] w-[350px] rounded-full bg-saffron/15 blur-[100px]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[300px] w-[300px] rounded-full bg-primary/10 blur-[80px]" />
+        </div>
+        <div className="absolute inset-0 pattern-dots opacity-20" />
         <div className="container relative">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="mx-auto max-w-3xl text-center">
             <motion.div
