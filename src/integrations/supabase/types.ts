@@ -22,6 +22,7 @@ export type Database = {
           id: string
           scheme_id: string
           spent: number
+          state: string | null
         }
         Insert: {
           allocated: number
@@ -30,6 +31,7 @@ export type Database = {
           id?: string
           scheme_id: string
           spent?: number
+          state?: string | null
         }
         Update: {
           allocated?: number
@@ -38,6 +40,7 @@ export type Database = {
           id?: string
           scheme_id?: string
           spent?: number
+          state?: string | null
         }
         Relationships: [
           {
@@ -64,6 +67,7 @@ export type Database = {
           id: string
           proof_url: string | null
           scheme_id: string
+          state: string | null
           status: Database["public"]["Enums"]["expense_status"]
           title: string
         }
@@ -81,6 +85,7 @@ export type Database = {
           id?: string
           proof_url?: string | null
           scheme_id: string
+          state?: string | null
           status?: Database["public"]["Enums"]["expense_status"]
           title: string
         }
@@ -98,6 +103,7 @@ export type Database = {
           id?: string
           proof_url?: string | null
           scheme_id?: string
+          state?: string | null
           status?: Database["public"]["Enums"]["expense_status"]
           title?: string
         }
@@ -120,11 +126,13 @@ export type Database = {
           description: string
           description_ta: string | null
           end_date: string | null
+          government_type: Database["public"]["Enums"]["government_type"]
           id: string
           name: string
           name_ta: string | null
           spent: number
           start_date: string | null
+          state: string | null
           status: Database["public"]["Enums"]["scheme_status"]
           target_beneficiaries: string | null
           total_budget: number
@@ -138,11 +146,13 @@ export type Database = {
           description: string
           description_ta?: string | null
           end_date?: string | null
+          government_type?: Database["public"]["Enums"]["government_type"]
           id?: string
           name: string
           name_ta?: string | null
           spent?: number
           start_date?: string | null
+          state?: string | null
           status?: Database["public"]["Enums"]["scheme_status"]
           target_beneficiaries?: string | null
           total_budget: number
@@ -156,11 +166,13 @@ export type Database = {
           description?: string
           description_ta?: string | null
           end_date?: string | null
+          government_type?: Database["public"]["Enums"]["government_type"]
           id?: string
           name?: string
           name_ta?: string | null
           spent?: number
           start_date?: string | null
+          state?: string | null
           status?: Database["public"]["Enums"]["scheme_status"]
           target_beneficiaries?: string | null
           total_budget?: number
@@ -177,6 +189,7 @@ export type Database = {
     }
     Enums: {
       expense_status: "Verified" | "Pending" | "Flagged" | "Rejected"
+      government_type: "Central" | "State"
       scheme_category:
         | "Education"
         | "Healthcare"
@@ -316,6 +329,7 @@ export const Constants = {
   public: {
     Enums: {
       expense_status: ["Verified", "Pending", "Flagged", "Rejected"],
+      government_type: ["Central", "State"],
       scheme_category: [
         "Education",
         "Healthcare",
