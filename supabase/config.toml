@@ -1,0 +1,4 @@
+project_id = "uexrqarilvcjxbolouma"
+
+[functions.pft-chat]
+verify_jwt = false
