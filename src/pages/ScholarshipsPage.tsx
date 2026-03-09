@@ -106,8 +106,8 @@ const ScholarshipsPage = () => {
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
           <div className="flex items-center gap-2 mb-1">
-            <GraduationCap className="h-5 w-5 text-secondary" />
-            <p className="text-[11px] font-semibold uppercase tracking-widest text-secondary">Explore</p>
+            <GraduationCap className="h-5 w-5 text-primary" />
+            <p className="text-[11px] font-semibold uppercase tracking-widest text-primary">Explore</p>
           </div>
           <h1 className="font-display text-2xl font-bold md:text-3xl">
             {selectedState === "All India" ? "All India Scholarships" : `${selectedState} Scholarships`}
