@@ -9,9 +9,14 @@ import { motion } from "framer-motion";
 import { useMemo } from "react";
 
 const COLORS = [
-  "hsl(145, 65%, 30%)", "hsl(0, 0%, 20%)", "hsl(25, 95%, 53%)",
-  "hsl(217, 70%, 50%)", "hsl(280, 50%, 45%)", "hsl(0, 72%, 51%)",
-  "hsl(180, 50%, 35%)", "hsl(330, 60%, 45%)",
+  "hsl(221, 83%, 53%)", // primary blue
+  "hsl(217, 91%, 60%)", // lighter blue
+  "hsl(200, 95%, 45%)", // cyan
+  "hsl(160, 60%, 45%)", // teal
+  "hsl(35, 95%, 55%)",  // orange
+  "hsl(280, 65%, 60%)", // purple
+  "hsl(340, 75%, 60%)", // pink
+  "hsl(220, 20%, 65%)", // muted blue-gray
 ];
 
 const Dashboard = () => {
