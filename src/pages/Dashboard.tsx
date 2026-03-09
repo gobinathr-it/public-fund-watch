@@ -126,8 +126,8 @@ const Dashboard = () => {
                     formatter={(v: number) => `₹${v} Cr`}
                     contentStyle={{ borderRadius: 12, border: "1px solid hsl(220,13%,91%)", boxShadow: "0 4px 16px rgba(0,0,0,0.06)" }}
                   />
-                  <Bar dataKey="allocated" fill="hsl(222,47%,20%)" radius={[6, 6, 0, 0]} name="Allocated" barSize={14} />
-                  <Bar dataKey="spent" fill="hsl(152,69%,31%)" radius={[6, 6, 0, 0]} name="Spent" barSize={14} />
+                  <Bar dataKey="allocated" fill="hsl(214, 32%, 85%)" radius={[6, 6, 0, 0]} name="Allocated" barSize={14} />
+                  <Bar dataKey="spent" fill="hsl(221, 83%, 53%)" radius={[6, 6, 0, 0]} name="Spent" barSize={14} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
