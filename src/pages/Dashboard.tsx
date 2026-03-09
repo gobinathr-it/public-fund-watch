@@ -161,7 +161,7 @@ const Dashboard = () => {
         {/* Department chart */}
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="rounded-2xl border border-border/60 bg-card p-6 shadow-card">
           <div className="flex items-center gap-2 mb-4">
-            <Building2 className="h-4 w-4 text-secondary" />
+            <Building2 className="h-4 w-4 text-primary" />
             <h3 className="font-display text-sm font-semibold">{t("dashboard.deptSpending")}</h3>
           </div>
           <div className="h-[300px]">
