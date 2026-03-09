@@ -14,7 +14,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
   if (!user) {
     // Redirect unauthenticated users to welcome/payment page first
-    return <Navigate to="/welcome" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   return <>{children}</>;

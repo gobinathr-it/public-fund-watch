@@ -1,10 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Smartphone, QrCode, ArrowRight, Heart, Shield, Users, IndianRupee } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 const PaymentPage = () => {
+  const { user, loading } = useAuth();
+
+  if (loading) return null;
+  if (!user) return <Navigate to="/login" replace />;
   const upiId = "gobinathr735-1@okicici";
   const upiQrUrl = `upi://pay?pa=${upiId}&pn=India%20Fund%20Tracker&am=&cu=INR`;
 
@@ -138,7 +143,7 @@ const PaymentPage = () => {
                 </a>
               </Button>
               <Button asChild variant="outline" className="w-full rounded-xl border-white/15 bg-white/[0.08] text-white hover:bg-white/15 hover:text-white h-12 text-base">
-                <Link to="/login">
+                <Link to="/">
                   Skip & Continue
                   <ArrowRight className="h-5 w-5 ml-2" />
                 </Link>
