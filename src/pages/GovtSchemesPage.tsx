@@ -118,8 +118,8 @@ const GovtSchemesPage = () => {
       <div className="container space-y-6">
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
           <div className="flex items-center gap-2 mb-1">
-            <Shield className="h-5 w-5 text-secondary" />
-            <p className="text-[11px] font-semibold uppercase tracking-widest text-secondary">Explorer</p>
+            <Shield className="h-5 w-5 text-primary" />
+            <p className="text-[11px] font-semibold uppercase tracking-widest text-primary">Explorer</p>
           </div>
           <h1 className="font-display text-2xl font-bold md:text-3xl">
             {selectedState === "All India" ? "All India Government Schemes" : `${selectedState} Government Schemes`}
