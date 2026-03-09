@@ -10,6 +10,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Chatbot from "./components/Chatbot";
+import PaymentPage from "./pages/PaymentPage";
 import LandingPage from "./pages/LandingPage";
 import Dashboard from "./pages/Dashboard";
 import SchemesPage from "./pages/SchemesPage";
@@ -46,7 +47,8 @@ const App = () => (
             <Sonner />
             <BrowserRouter>
               <Routes>
-                {/* Public routes */}
+                {/* Public routes - Payment first, then auth */}
+                <Route path="/welcome" element={<PaymentPage />} />
                 <Route path="/signup" element={<SignUpPage />} />
                 <Route path="/login" element={<LoginPage />} />
 
