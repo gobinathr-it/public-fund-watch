@@ -59,7 +59,7 @@ const SchemeCard = ({ s, index }: { s: GovernmentScheme; index: number }) => (
           <p className="text-xs text-muted-foreground line-clamp-2">{s.description}</p>
 
           <div className="flex flex-wrap gap-1.5">
-            <Badge variant="outline" className={`text-[10px] px-2 py-0.5 ${categoryColors[s.category] || ""}`}>
+            <Badge variant="outline" className={`text-[10px] px-2 py-0.5 ${categoryBadgeClass}`}>
               {s.category}
             </Badge>
             <Badge variant="outline" className="text-[10px] px-2 py-0.5">
