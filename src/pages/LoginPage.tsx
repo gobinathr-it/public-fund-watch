@@ -65,7 +65,7 @@ const LoginPage = () => {
   const adminForm = useForm<AdminForm>({ resolver: zodResolver(adminSchema) });
 
   if (loading) return null;
-  if (user) return <Navigate to="/" replace />;
+  if (user) return <Navigate to="/welcome" replace />;
 
   const handleLogin = async (email: string, password: string) => {
     setSubmitting(true);
