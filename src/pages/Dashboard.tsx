@@ -9,9 +9,14 @@ import { motion } from "framer-motion";
 import { useMemo } from "react";
 
 const COLORS = [
-  "hsl(145, 65%, 30%)", "hsl(0, 0%, 20%)", "hsl(25, 95%, 53%)",
-  "hsl(217, 70%, 50%)", "hsl(280, 50%, 45%)", "hsl(0, 72%, 51%)",
-  "hsl(180, 50%, 35%)", "hsl(330, 60%, 45%)",
+  "hsl(221, 83%, 53%)", // primary blue
+  "hsl(217, 91%, 60%)", // lighter blue
+  "hsl(200, 95%, 45%)", // cyan
+  "hsl(160, 60%, 45%)", // teal
+  "hsl(35, 95%, 55%)",  // orange
+  "hsl(280, 65%, 60%)", // purple
+  "hsl(340, 75%, 60%)", // pink
+  "hsl(220, 20%, 65%)", // muted blue-gray
 ];
 
 const Dashboard = () => {
@@ -121,8 +126,8 @@ const Dashboard = () => {
                     formatter={(v: number) => `₹${v} Cr`}
                     contentStyle={{ borderRadius: 12, border: "1px solid hsl(220,13%,91%)", boxShadow: "0 4px 16px rgba(0,0,0,0.06)" }}
                   />
-                  <Bar dataKey="allocated" fill="hsl(222,47%,20%)" radius={[6, 6, 0, 0]} name="Allocated" barSize={14} />
-                  <Bar dataKey="spent" fill="hsl(152,69%,31%)" radius={[6, 6, 0, 0]} name="Spent" barSize={14} />
+                  <Bar dataKey="allocated" fill="hsl(214, 32%, 85%)" radius={[6, 6, 0, 0]} name="Allocated" barSize={14} />
+                  <Bar dataKey="spent" fill="hsl(221, 83%, 53%)" radius={[6, 6, 0, 0]} name="Spent" barSize={14} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -166,8 +171,8 @@ const Dashboard = () => {
                 <XAxis type="number" tick={{ fontSize: 10, fill: "hsl(220,9%,46%)" }} />
                 <YAxis dataKey="name" type="category" tick={{ fontSize: 10, fill: "hsl(220,9%,46%)" }} width={180} />
                 <Tooltip formatter={(v: number) => `₹${v} Cr`} contentStyle={{ borderRadius: 12, border: "1px solid hsl(220,13%,91%)" }} />
-                <Bar dataKey="allocated" fill="hsl(222,47%,20%)" radius={[0, 6, 6, 0]} name="Allocated" barSize={12} />
-                <Bar dataKey="spent" fill="hsl(152,69%,31%)" radius={[0, 6, 6, 0]} name="Spent" barSize={12} />
+                <Bar dataKey="allocated" fill="hsl(214, 32%, 85%)" radius={[0, 6, 6, 0]} name="Allocated" barSize={12} />
+                <Bar dataKey="spent" fill="hsl(221, 83%, 53%)" radius={[0, 6, 6, 0]} name="Spent" barSize={12} />
               </BarChart>
             </ResponsiveContainer>
           </div>
