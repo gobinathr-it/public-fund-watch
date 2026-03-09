@@ -143,7 +143,7 @@ const PaymentPage = () => {
                 </a>
               </Button>
               <Button asChild variant="outline" className="w-full rounded-xl border-white/15 bg-white/[0.08] text-white hover:bg-white/15 hover:text-white h-12 text-base">
-                <Link to="/login">
+                <Link to="/">
                   Skip & Continue
                   <ArrowRight className="h-5 w-5 ml-2" />
                 </Link>
