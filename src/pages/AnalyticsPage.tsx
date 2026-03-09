@@ -126,8 +126,8 @@ const AnalyticsPage = () => {
                   <XAxis dataKey="name" tick={{ fontSize: 9, fill: "hsl(220,9%,46%)" }} angle={-30} textAnchor="end" height={70} />
                   <YAxis tick={{ fontSize: 10, fill: "hsl(220,9%,46%)" }} />
                   <Tooltip formatter={(v: number) => `₹${v} Cr`} contentStyle={{ borderRadius: 12, border: "1px solid hsl(220,13%,91%)" }} />
-                  <Bar dataKey="allocated" fill="hsl(222,47%,20%)" radius={[6, 6, 0, 0]} name="Budget" barSize={12} />
-                  <Bar dataKey="spent" fill="hsl(152,69%,31%)" radius={[6, 6, 0, 0]} name="Spent" barSize={12} />
+                  <Bar dataKey="allocated" fill="hsl(var(--primary-dark))" radius={[6, 6, 0, 0]} name="Budget" barSize={12} />
+                  <Bar dataKey="spent" fill="hsl(var(--primary))" radius={[6, 6, 0, 0]} name="Spent" barSize={12} />
                 </BarChart>
               </ResponsiveContainer>
             </div>

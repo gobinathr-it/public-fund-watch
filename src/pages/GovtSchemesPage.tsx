@@ -178,7 +178,7 @@ const GovtSchemesPage = () => {
         {isLoading ? (
           <div className="py-20 text-center">
             <div className="inline-flex items-center gap-2 text-muted-foreground">
-              <div className="h-4 w-4 rounded-full border-2 border-secondary border-t-transparent animate-spin" />
+              <div className="h-4 w-4 rounded-full border-2 border-primary border-t-transparent animate-spin" />
               <span className="text-sm">Loading schemes...</span>
             </div>
           </div>
