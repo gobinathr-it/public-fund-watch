@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { StateProvider } from "@/contexts/StateContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AuthProvider } from "@/contexts/AuthContext";
@@ -23,6 +23,7 @@ import GovtSchemeDetailPage from "./pages/GovtSchemeDetailPage";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
 import NotFound from "./pages/NotFound";
+import { Heart } from "lucide-react";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,14 @@ const ProtectedLayout = ({ children }: { children: React.ReactNode }) => (
       <main className="flex-1">{children}</main>
       <Footer />
       <Chatbot />
+      {/* Floating Support Button */}
+      <Link
+        to="/welcome"
+        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground shadow-lg transition-transform hover:scale-105 hover:shadow-xl"
+      >
+        <Heart className="h-4 w-4" />
+        Support
+      </Link>
     </div>
   </ProtectedRoute>
 );
