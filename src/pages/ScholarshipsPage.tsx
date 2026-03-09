@@ -73,7 +73,7 @@ const ScholarshipCard = ({ s, index }: { s: Scholarship; index: number }) => {
               </Link>
               {s.application_link && (
                 <a href={s.application_link} target="_blank" rel="noopener noreferrer" className="flex-1" onClick={(e) => e.stopPropagation()}>
-                  <Button size="sm" className="w-full text-xs h-8 rounded-lg gap-1 bg-emerald-600 hover:bg-emerald-700 text-white">
+                  <Button size="sm" className="w-full text-xs h-8 rounded-lg gap-1">
                     <ExternalLink className="h-3 w-3" /> Apply Now
                   </Button>
                 </a>
