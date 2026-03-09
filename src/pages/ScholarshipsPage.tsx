@@ -36,7 +36,7 @@ const ScholarshipCard = ({ s, index }: { s: Scholarship; index: number }) => {
             </div>
 
             <div className="flex flex-wrap gap-1.5">
-              <Badge variant="outline" className={`text-[10px] px-2 py-0.5 ${levelColors[s.education_level]}`}>
+              <Badge variant="outline" className={`text-[10px] px-2 py-0.5 ${levelBadgeClass}`}>
                 {s.education_level}
               </Badge>
               <Badge variant="outline" className="text-[10px] px-2 py-0.5">
