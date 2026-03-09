@@ -91,7 +91,7 @@ const Dashboard = () => {
       <div className="container space-y-8">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
-          <p className="text-[11px] font-semibold uppercase tracking-widest text-secondary mb-1">Overview</p>
+          <p className="text-[11px] font-semibold uppercase tracking-widest text-primary mb-1">Overview</p>
           <h1 className="font-display text-2xl font-bold md:text-3xl">{t("dashboard.title")}</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             {t("dashboard.subtitle")} — {stateLabel}
