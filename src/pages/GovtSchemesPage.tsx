@@ -44,11 +44,11 @@ const SchemeCard = ({ s, index }: { s: GovernmentScheme; index: number }) => (
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay: index * 0.03, duration: 0.3 }}
   >
-      <Card className="group hover-lift border-border/60 bg-card transition-all duration-300 hover:border-secondary/40 hover:shadow-md h-full">
+      <Card className="group hover-lift border-border/60 bg-card transition-all duration-300 hover:border-primary/40 hover:shadow-md h-full">
         <CardContent className="p-5 space-y-3">
           <div className="flex items-start justify-between gap-2">
             <div className="flex-1 min-w-0">
-              <h3 className="font-display text-sm font-semibold leading-snug text-foreground line-clamp-2 group-hover:text-secondary transition-colors">
+              <h3 className="font-display text-sm font-semibold leading-snug text-foreground line-clamp-2 group-hover:text-primary transition-colors">
                 {s.name}
               </h3>
               <p className="mt-1 text-xs text-muted-foreground line-clamp-1">{s.department}</p>
