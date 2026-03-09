@@ -47,7 +47,7 @@ const App = () => (
             <Sonner />
             <BrowserRouter>
               <Routes>
-                {/* Public routes - Payment first, then auth */}
+                {/* Auth-required but pre-home routes */}
                 <Route path="/welcome" element={<PaymentPage />} />
                 <Route path="/signup" element={<SignUpPage />} />
                 <Route path="/login" element={<LoginPage />} />
