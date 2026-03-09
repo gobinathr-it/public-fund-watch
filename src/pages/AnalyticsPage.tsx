@@ -88,7 +88,7 @@ const AnalyticsPage = () => {
     <div className="py-8 md:py-10">
       <div className="container space-y-8">
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
-          <p className="text-[11px] font-semibold uppercase tracking-widest text-secondary mb-1">Insights</p>
+          <p className="text-[11px] font-semibold uppercase tracking-widest text-primary mb-1">Insights</p>
           <h1 className="font-display text-2xl font-bold md:text-3xl">{t("analytics.title")}</h1>
           <p className="mt-1 text-sm text-muted-foreground">{t("analytics.subtitle")} — {stateLabel}</p>
         </motion.div>
