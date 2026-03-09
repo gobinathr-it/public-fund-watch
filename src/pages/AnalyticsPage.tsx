@@ -8,9 +8,14 @@ import { motion } from "framer-motion";
 import { useMemo } from "react";
 
 const COLORS = [
-  "hsl(222, 47%, 20%)", "hsl(152, 69%, 31%)", "hsl(25, 95%, 53%)",
-  "hsl(217, 91%, 60%)", "hsl(280, 60%, 50%)", "hsl(0, 72%, 51%)",
-  "hsl(180, 60%, 40%)", "hsl(330, 70%, 50%)", "hsl(60, 80%, 45%)",
+  "hsl(var(--chart-1))",
+  "hsl(var(--chart-2))",
+  "hsl(var(--chart-3))",
+  "hsl(var(--chart-4))",
+  "hsl(var(--chart-5))",
+  "hsl(var(--chart-6))",
+  "hsl(var(--chart-7))",
+  "hsl(var(--chart-8))",
 ];
 
 const AnalyticsPage = () => {
@@ -83,7 +88,7 @@ const AnalyticsPage = () => {
     <div className="py-8 md:py-10">
       <div className="container space-y-8">
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
-          <p className="text-[11px] font-semibold uppercase tracking-widest text-secondary mb-1">Insights</p>
+          <p className="text-[11px] font-semibold uppercase tracking-widest text-primary mb-1">Insights</p>
           <h1 className="font-display text-2xl font-bold md:text-3xl">{t("analytics.title")}</h1>
           <p className="mt-1 text-sm text-muted-foreground">{t("analytics.subtitle")} — {stateLabel}</p>
         </motion.div>
@@ -121,8 +126,8 @@ const AnalyticsPage = () => {
                   <XAxis dataKey="name" tick={{ fontSize: 9, fill: "hsl(220,9%,46%)" }} angle={-30} textAnchor="end" height={70} />
                   <YAxis tick={{ fontSize: 10, fill: "hsl(220,9%,46%)" }} />
                   <Tooltip formatter={(v: number) => `₹${v} Cr`} contentStyle={{ borderRadius: 12, border: "1px solid hsl(220,13%,91%)" }} />
-                  <Bar dataKey="allocated" fill="hsl(222,47%,20%)" radius={[6, 6, 0, 0]} name="Budget" barSize={12} />
-                  <Bar dataKey="spent" fill="hsl(152,69%,31%)" radius={[6, 6, 0, 0]} name="Spent" barSize={12} />
+                  <Bar dataKey="allocated" fill="hsl(var(--primary-dark))" radius={[6, 6, 0, 0]} name="Budget" barSize={12} />
+                  <Bar dataKey="spent" fill="hsl(var(--primary))" radius={[6, 6, 0, 0]} name="Spent" barSize={12} />
                 </BarChart>
               </ResponsiveContainer>
             </div>

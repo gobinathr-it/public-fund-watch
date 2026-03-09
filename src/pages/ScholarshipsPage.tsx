@@ -15,14 +15,7 @@ const genderOptions = ["All", "Boys", "Girls"];
 const categories = ["All", "Merit", "Financial", "Minority", "SC/ST", "BC/OBC", "Women", "General"];
 
 const ScholarshipCard = ({ s, index }: { s: Scholarship; index: number }) => {
-  const levelColors: Record<string, string> = {
-    School: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
-    College: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300",
-    Engineering: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
-    Medical: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300",
-    Postgraduate: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
-    All: "bg-muted text-muted-foreground",
-  };
+  const levelBadgeClass = "bg-primary/10 text-primary border-primary/20";
 
   return (
     <motion.div
@@ -30,11 +23,11 @@ const ScholarshipCard = ({ s, index }: { s: Scholarship; index: number }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.04, duration: 0.35 }}
     >
-        <Card className="group hover-lift border-border/60 bg-card transition-all duration-300 hover:border-secondary/40 hover:shadow-md">
+        <Card className="group hover-lift border-border/60 bg-card transition-all duration-300 hover:border-primary/40 hover:shadow-md">
           <CardContent className="p-5 space-y-3">
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1 min-w-0">
-                <h3 className="font-display text-sm font-semibold leading-snug text-foreground line-clamp-2 group-hover:text-secondary transition-colors">
+                <h3 className="font-display text-sm font-semibold leading-snug text-foreground line-clamp-2 group-hover:text-primary transition-colors">
                   {s.name}
                 </h3>
                 <p className="mt-1 text-xs text-muted-foreground">{s.department}</p>
@@ -43,7 +36,7 @@ const ScholarshipCard = ({ s, index }: { s: Scholarship; index: number }) => {
             </div>
 
             <div className="flex flex-wrap gap-1.5">
-              <Badge variant="outline" className={`text-[10px] px-2 py-0.5 ${levelColors[s.education_level]}`}>
+              <Badge variant="outline" className={`text-[10px] px-2 py-0.5 ${levelBadgeClass}`}>
                 {s.education_level}
               </Badge>
               <Badge variant="outline" className="text-[10px] px-2 py-0.5">
@@ -80,7 +73,7 @@ const ScholarshipCard = ({ s, index }: { s: Scholarship; index: number }) => {
               </Link>
               {s.application_link && (
                 <a href={s.application_link} target="_blank" rel="noopener noreferrer" className="flex-1" onClick={(e) => e.stopPropagation()}>
-                  <Button size="sm" className="w-full text-xs h-8 rounded-lg gap-1 bg-emerald-600 hover:bg-emerald-700 text-white">
+                  <Button size="sm" className="w-full text-xs h-8 rounded-lg gap-1">
                     <ExternalLink className="h-3 w-3" /> Apply Now
                   </Button>
                 </a>
@@ -113,8 +106,8 @@ const ScholarshipsPage = () => {
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
           <div className="flex items-center gap-2 mb-1">
-            <GraduationCap className="h-5 w-5 text-secondary" />
-            <p className="text-[11px] font-semibold uppercase tracking-widest text-secondary">Explore</p>
+            <GraduationCap className="h-5 w-5 text-primary" />
+            <p className="text-[11px] font-semibold uppercase tracking-widest text-primary">Explore</p>
           </div>
           <h1 className="font-display text-2xl font-bold md:text-3xl">
             {selectedState === "All India" ? "All India Scholarships" : `${selectedState} Scholarships`}
@@ -130,7 +123,7 @@ const ScholarshipsPage = () => {
             <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               placeholder="Search scholarships by name, state, department..."
-              className="pl-11 h-11 rounded-xl border-border/60 focus-visible:ring-secondary/30"
+              className="pl-11 h-11 rounded-xl border-border/60 focus-visible:ring-primary/30"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -170,7 +163,7 @@ const ScholarshipsPage = () => {
               variant={category === c ? "default" : "outline"}
               className={`cursor-pointer transition-all duration-200 rounded-lg px-3.5 py-1.5 text-xs ${
                 category === c
-                  ? "bg-secondary text-secondary-foreground shadow-sm"
+                  ? "bg-primary text-primary-foreground shadow-sm"
                   : "hover:bg-muted border-border/60"
               }`}
               onClick={() => setCategory(c)}
@@ -190,7 +183,7 @@ const ScholarshipsPage = () => {
         {isLoading ? (
           <div className="py-20 text-center">
             <div className="inline-flex items-center gap-2 text-muted-foreground">
-              <div className="h-4 w-4 rounded-full border-2 border-secondary border-t-transparent animate-spin" />
+              <div className="h-4 w-4 rounded-full border-2 border-primary border-t-transparent animate-spin" />
               <span className="text-sm">Loading scholarships...</span>
             </div>
           </div>

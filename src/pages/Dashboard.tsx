@@ -9,14 +9,14 @@ import { motion } from "framer-motion";
 import { useMemo } from "react";
 
 const COLORS = [
-  "hsl(221, 83%, 53%)", // primary blue
-  "hsl(217, 91%, 60%)", // lighter blue
-  "hsl(200, 95%, 45%)", // cyan
-  "hsl(160, 60%, 45%)", // teal
-  "hsl(35, 95%, 55%)",  // orange
-  "hsl(280, 65%, 60%)", // purple
-  "hsl(340, 75%, 60%)", // pink
-  "hsl(220, 20%, 65%)", // muted blue-gray
+  "hsl(var(--chart-1))",
+  "hsl(var(--chart-2))",
+  "hsl(var(--chart-3))",
+  "hsl(var(--chart-4))",
+  "hsl(var(--chart-5))",
+  "hsl(var(--chart-6))",
+  "hsl(var(--chart-7))",
+  "hsl(var(--chart-8))",
 ];
 
 const Dashboard = () => {
@@ -91,7 +91,7 @@ const Dashboard = () => {
       <div className="container space-y-8">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
-          <p className="text-[11px] font-semibold uppercase tracking-widest text-secondary mb-1">Overview</p>
+          <p className="text-[11px] font-semibold uppercase tracking-widest text-primary mb-1">Overview</p>
           <h1 className="font-display text-2xl font-bold md:text-3xl">{t("dashboard.title")}</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             {t("dashboard.subtitle")} — {stateLabel}
@@ -110,7 +110,7 @@ const Dashboard = () => {
         <div className="grid gap-5 lg:grid-cols-3">
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="rounded-2xl border border-border/60 bg-card p-6 shadow-card lg:col-span-2">
             <div className="flex items-center gap-2 mb-1">
-              <MapPin className="h-4 w-4 text-secondary" />
+              <MapPin className="h-4 w-4 text-primary" />
               <h3 className="font-display text-sm font-semibold">
                 {selectedState === "All India" ? t("dashboard.stateAllocation") : t("dashboard.topDistricts")}
               </h3>
@@ -126,8 +126,8 @@ const Dashboard = () => {
                     formatter={(v: number) => `₹${v} Cr`}
                     contentStyle={{ borderRadius: 12, border: "1px solid hsl(220,13%,91%)", boxShadow: "0 4px 16px rgba(0,0,0,0.06)" }}
                   />
-                  <Bar dataKey="allocated" fill="hsl(214, 32%, 85%)" radius={[6, 6, 0, 0]} name="Allocated" barSize={14} />
-                  <Bar dataKey="spent" fill="hsl(221, 83%, 53%)" radius={[6, 6, 0, 0]} name="Spent" barSize={14} />
+                  <Bar dataKey="allocated" fill="hsl(var(--muted))" radius={[6, 6, 0, 0]} name="Allocated" barSize={14} />
+                  <Bar dataKey="spent" fill="hsl(var(--primary))" radius={[6, 6, 0, 0]} name="Spent" barSize={14} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -161,7 +161,7 @@ const Dashboard = () => {
         {/* Department chart */}
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="rounded-2xl border border-border/60 bg-card p-6 shadow-card">
           <div className="flex items-center gap-2 mb-4">
-            <Building2 className="h-4 w-4 text-secondary" />
+            <Building2 className="h-4 w-4 text-primary" />
             <h3 className="font-display text-sm font-semibold">{t("dashboard.deptSpending")}</h3>
           </div>
           <div className="h-[300px]">
@@ -171,8 +171,8 @@ const Dashboard = () => {
                 <XAxis type="number" tick={{ fontSize: 10, fill: "hsl(220,9%,46%)" }} />
                 <YAxis dataKey="name" type="category" tick={{ fontSize: 10, fill: "hsl(220,9%,46%)" }} width={180} />
                 <Tooltip formatter={(v: number) => `₹${v} Cr`} contentStyle={{ borderRadius: 12, border: "1px solid hsl(220,13%,91%)" }} />
-                <Bar dataKey="allocated" fill="hsl(214, 32%, 85%)" radius={[0, 6, 6, 0]} name="Allocated" barSize={12} />
-                <Bar dataKey="spent" fill="hsl(221, 83%, 53%)" radius={[0, 6, 6, 0]} name="Spent" barSize={12} />
+                <Bar dataKey="allocated" fill="hsl(var(--muted))" radius={[0, 6, 6, 0]} name="Allocated" barSize={12} />
+                <Bar dataKey="spent" fill="hsl(var(--primary))" radius={[0, 6, 6, 0]} name="Spent" barSize={12} />
               </BarChart>
             </ResponsiveContainer>
           </div>
