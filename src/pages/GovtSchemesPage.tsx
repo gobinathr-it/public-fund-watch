@@ -157,9 +157,9 @@ const GovtSchemesPage = () => {
             <Badge
               key={c}
               variant={category === c ? "default" : "outline"}
-              className={`cursor-pointer transition-all duration-200 rounded-lg px-3.5 py-1.5 text-xs gap-1.5 ${
+               className={`cursor-pointer transition-all duration-200 rounded-lg px-3.5 py-1.5 text-xs gap-1.5 ${
                 category === c
-                  ? "bg-secondary text-secondary-foreground shadow-sm"
+                  ? "bg-primary text-primary-foreground shadow-sm"
                   : "hover:bg-muted border-border/60"
               }`}
               onClick={() => setCategory(c)}
