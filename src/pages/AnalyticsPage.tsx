@@ -8,9 +8,14 @@ import { motion } from "framer-motion";
 import { useMemo } from "react";
 
 const COLORS = [
-  "hsl(222, 47%, 20%)", "hsl(152, 69%, 31%)", "hsl(25, 95%, 53%)",
-  "hsl(217, 91%, 60%)", "hsl(280, 60%, 50%)", "hsl(0, 72%, 51%)",
-  "hsl(180, 60%, 40%)", "hsl(330, 70%, 50%)", "hsl(60, 80%, 45%)",
+  "hsl(var(--chart-1))",
+  "hsl(var(--chart-2))",
+  "hsl(var(--chart-3))",
+  "hsl(var(--chart-4))",
+  "hsl(var(--chart-5))",
+  "hsl(var(--chart-6))",
+  "hsl(var(--chart-7))",
+  "hsl(var(--chart-8))",
 ];
 
 const AnalyticsPage = () => {
