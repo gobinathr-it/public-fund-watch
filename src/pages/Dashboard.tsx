@@ -110,7 +110,7 @@ const Dashboard = () => {
         <div className="grid gap-5 lg:grid-cols-3">
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="rounded-2xl border border-border/60 bg-card p-6 shadow-card lg:col-span-2">
             <div className="flex items-center gap-2 mb-1">
-              <MapPin className="h-4 w-4 text-secondary" />
+              <MapPin className="h-4 w-4 text-primary" />
               <h3 className="font-display text-sm font-semibold">
                 {selectedState === "All India" ? t("dashboard.stateAllocation") : t("dashboard.topDistricts")}
               </h3>
